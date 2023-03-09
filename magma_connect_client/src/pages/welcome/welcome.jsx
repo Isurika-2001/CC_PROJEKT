@@ -176,6 +176,7 @@ const Welcome = () => {
               Reserved. Design and Developed By Jayodya, Isurika &amp; Annika
             </p>
           </div>
+          <div>modified</div>
         </div>
       </div>
     </div>
