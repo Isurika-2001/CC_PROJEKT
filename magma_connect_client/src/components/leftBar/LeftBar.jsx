@@ -42,11 +42,15 @@ export const LeftBarEntre = () => {
           <hr />
           <div className="item">
             <img src={Entrepreneur} alt="" />
-            <span>Entrepreneurs</span>
+            <NavLink activeClassName="active" to="/searchentrepreneur">
+              <span>Entrepreneurs</span>
+            </NavLink>
           </div>
           <div className="item">
             <img src={Consultant} alt="" />
-            <span>Consultants</span>
+            <NavLink activeClassName="active" to="/searchconsultant">
+              <span>Consultants</span>
+            </NavLink>
           </div>
           <hr />
           <div className="item">
