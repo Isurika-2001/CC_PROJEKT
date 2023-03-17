@@ -2,6 +2,7 @@ import Posts from "../../components/posts/Posts"
 import Share from "../../components/share/Share"
 import { Payment } from "../../components/payment/payment"
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur"
+import { GetCustomers } from "../../components/search/consultant"
 import { UserRequests, StartupRequests, EntreprenureRequests, ConsultantRequests, DistributorRequests } from "../../components/admin/admin"
 import "./home.scss"
 
@@ -18,6 +19,14 @@ export const SearchEntrepreneur = () => {
   return (
     <div className="home">
       <Entrepreneur/>
+    </div>
+  )
+}
+
+export const Consultations = () => {
+  return (
+    <div className="home">
+      <GetCustomers/>
     </div>
   )
 }

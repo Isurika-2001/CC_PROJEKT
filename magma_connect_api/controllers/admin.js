@@ -57,20 +57,4 @@ export const declineRequests = (req, res) => {
   });
 };
 
-export const getEntreprenures = (req, res) => {
-  const sql =
-    "SELECT users.username, business.description, business.category, business.business_name, business.reg_no, business.address FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 1";
-  db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-};
 
-export const getConsultants = (req, res) => {
-  const sql =
-    "SELECT users.username, users.name, consultant.id, consultant.description, consultant.qualification, consultant.fee from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=1)  ";
-  db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-};

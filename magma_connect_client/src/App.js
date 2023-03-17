@@ -22,6 +22,7 @@ import {
   StartupReq,
   UserReq,
   Startuppayment,
+  Consultations,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
 import Profile from "./pages/profile/Profile";
@@ -119,6 +120,10 @@ function App() {
         {
           path: "/startuppayment",
           element: currentUser ? <Startuppayment /> : <Welcome />,
+        },
+        {
+          path: "/consultations",
+          element: currentUser ? <Consultations /> : <Welcome />,
         },
       ],
     },

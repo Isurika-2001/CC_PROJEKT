@@ -6,8 +6,6 @@ import {
   getDistributorRequests,
   approveRequests,
   declineRequests,
-  getEntreprenures,
-  getConsultants,
 } from "../controllers/admin.js";
 
 const router = express.Router();
@@ -34,8 +32,5 @@ router.get("/getDistributorRequests", getDistributorRequests);
 router.put("/approveRequests/:username", approveRequests);
 router.put("/declineRequests/:username", declineRequests);
 
-router.get("/getEntreprenures", getEntreprenures);
-
-router.get("/getConsultants", getConsultants);
 
 export default router;

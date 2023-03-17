@@ -3,7 +3,7 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import "./entrepreneur.scss";
+import "./search.scss";
 
 export const Entrepreneur = () => {
   const [users, setUsers] = useState([]);
@@ -12,7 +12,7 @@ export const Entrepreneur = () => {
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
     axios
-      .get("http://localhost:8800/api/admins/getEntreprenures")
+      .get("http://localhost:8800/api/auth/getEntreprenures")
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -100,7 +100,7 @@ export const Consultant = () => {
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
     axios
-      .get("http://localhost:8800/api/admins/getConsultants")
+      .get("http://localhost:8800/api/auth/getConsultants")
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
   }, []);
