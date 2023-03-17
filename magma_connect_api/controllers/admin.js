@@ -68,7 +68,7 @@ export const getEntreprenures = (req, res) => {
 
 export const getConsultants = (req, res) => {
   const sql =
-    "SELECT users.username, users.name, consultant.description, consultant.qualification, consultant.fee from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=1)  ";
+    "SELECT users.username, users.name, consultant.id, consultant.description, consultant.qualification, consultant.fee from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=1)  ";
   db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);

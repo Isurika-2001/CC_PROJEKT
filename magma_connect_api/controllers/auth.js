@@ -249,7 +249,9 @@ export const login = (req, res) => {
     if (!checkPassword)
       return res.status(400).json("Wrong password or Username!");
     else if (data[0].reg_status === 0)
-      return res.status(400).json("Please wait for the approval. Come back later!");
+      return res
+        .status(400)
+        .json("Please wait for the approval. Come back later!");
     else {
       const token = jwt.sign({ id: data[0].id }, "secretkey");
 
@@ -301,6 +303,27 @@ export const adminLogin = (req, res) => {
         })
         .status(200)
         .json(others);
+    }
+  });
+};
+
+export const consultationPayment = (req, res) => {
+  console.log(req.body);
+
+  const q =
+    "INSERT INTO startup_payment (`startup_id`,`const_id`,`amount`,`description`) VALUE (?)";
+
+  const values = {
+    startup_id: req.body.startup_id,
+    const_id: req.body.const_id,
+    amount: req.body.amount,
+    description: req.body.description,
+  };
+
+  db.query(q, [Object.values(values)], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length) {
+      return res.status(400).json("error!");
     }
   });
 };

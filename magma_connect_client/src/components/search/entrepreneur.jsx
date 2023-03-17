@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 import "./entrepreneur.scss";
 
 export const Entrepreneur = () => {
@@ -93,6 +94,7 @@ export const Entrepreneur = () => {
 export const Consultant = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { currentUser } = useContext(AuthContext);
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -107,9 +109,26 @@ export const Consultant = () => {
     // go to the target profile
   };
 
-  const handleHire = (username) => {
-    // go to payment portal
-    // navigate("/payment");
+  const handleToken = async (token, user) => {
+    try {
+      const amount = user.fee;
+      const startup_id = currentUser.username;
+      const const_id = user.username;
+      const { name, description } = user;
+
+      await axios.post("http://localhost:8800/api/auth/consultationPayment", {
+        token,
+        amount,
+        name,
+        startup_id,
+        const_id,
+        description,
+      });
+
+      console.log("Payment success");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSearch = (event) => {
@@ -145,11 +164,11 @@ export const Consultant = () => {
                 </button>
                 <StripeCheckout
                   className="hireBtn"
-                  onClick={() => handleHire(user.username)}
                   stripeKey="pk_test_51MjHDhIEmwpzpx2CznjamGPiR01TA7FIV9TJyvlDFMPLMcwJvpZLTeU0YX3uknfaJ16v6Yzr7pABzqY1WeIAIS4g007Do8qbJI"
                   amount={user.fee * 100}
                   name={user.name}
                   description="Consultation Fee"
+                  token={(token) => handleToken(token, user)}
                 ></StripeCheckout>
 
                 {/* <button

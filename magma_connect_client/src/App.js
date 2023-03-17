@@ -23,8 +23,6 @@ import {
   UserReq,
   Startuppayment,
 } from "./pages/home/Home";
-
-import { AddProducts } from "./components/addProducts/AddProduct"
 import Welcome from "./pages/welcome/welcome";
 import Profile from "./pages/profile/Profile";
 import "./style.scss";
@@ -121,14 +119,6 @@ function App() {
         {
           path: "/startuppayment",
           element: currentUser ? <Startuppayment /> : <Welcome />,
-        },
-        {
-          path: "/startuppayment",
-          element: currentUser ? <Startuppayment /> : <Welcome />,
-        },
-        {
-          path: "/addproducts",
-          element: currentUser ? <AddProducts /> : <Welcome />,
         },
       ],
     },

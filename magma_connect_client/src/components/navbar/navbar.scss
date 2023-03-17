@@ -11,10 +11,10 @@
     position: sticky;
     top: 0;
     background-color: themed("bg");
-    color:themed("textColor");
+    color: themed("textColor");
     z-index: 999;
 
-    .logout_btn{
+    .logout_btn {
       display: inline-block;
       padding: 7px 15px;
       background-color: #007bff;
@@ -34,8 +34,6 @@
         outline: none;
         box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
       }
-
-
     }
 
     .left {
@@ -63,29 +61,27 @@
           background-color: transparent;
           color: themed("textColor");
 
-          @include mobile{
+          @include mobile {
             display: none;
           }
 
-          @include tablet{
+          @include tablet {
             width: 200px;
           }
         }
       }
     }
 
-    .middle{
+    .middle {
       display: flex;
       align-items: center;
       gap: 30px;
-      
+
       span {
         font-weight: bold;
         font-size: 20px;
         color: themed("logo");
       }
-
-
     }
 
     .right {
@@ -93,11 +89,11 @@
       align-items: center;
       gap: 20px;
 
-      @include mobile{
+      @include mobile {
         display: none;
       }
 
-      .logout_btn{
+      .logout_btn {
         display: inline-block;
         padding: 7px 15px;
         background-color: #007bff;
@@ -117,8 +113,6 @@
           outline: none;
           box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
         }
-
-
       }
 
       .user {
@@ -127,7 +121,7 @@
         gap: 10px;
         font-weight: 500;
 
-        @include tablet{
+        @include tablet {
           display: none;
         }
 
@@ -137,9 +131,11 @@
           border-radius: 50%;
           object-fit: cover;
         }
-
-
       }
+    }
+
+    &--hidden {
+      transform: translateY(-70px);
     }
   }
 }

@@ -51,9 +51,7 @@ export const LeftBarEntre = () => {
           <hr />
           <div className="item">
             <img src={ListProd} alt="" />
-            <NavLink activeClassName="active" to="/addproducts">
-              <span>List Products</span>
-            </NavLink>
+            <span>List Products</span>
           </div>
         </div>
       </div>
