@@ -1,20 +1,24 @@
-import "./welcome.scss";
-import videoBg from "../../assets/backgroundvideo.mp4";
-import allinone from "../../assets//a user freindly.png";
-import consultant from "../../assets/consultant.jpg";
-import network from "../../assets/networkk.jpg";
-import ecommerce from "../../assets/ecommerce.jpg";
+import "./welcome.scss"
+import allinone from '../../assets//a user freindly.png'
+import consultant from '../../assets/consultant.jpg'
+import network from '../../assets/networkk.jpg'
+import ecommerce from '../../assets/ecommerce.jpg'
+import backgroundVideo from '../../assets/backgroundvideo.mp4'
 
 const Welcome = () => {
+
   function scrollToSection(id) {
     const section = document.getElementById(id);
     section.scrollIntoView({ behavior: "smooth" });
   }
+  
+ 
 
   return (
-    <div className="welcome">
-      <div className="main-sec">
-        <video className="bgVideo" src={videoBg} autoPlay loop muted></video>
+  <div className="welcome">
+
+<div className="main-sec">
+{/* <video className="bgVideo" src={backgroundVideo} autoPlay loop muted></video> */}
         <div className="container">
           <span>
             <h1>Welcome to Empower Lanka </h1>
@@ -28,9 +32,12 @@ const Welcome = () => {
             Get Started{" "}
           </button>
         </div>
-      </div>
+  </div>
 
-      <div className="features_section" id="features_section">
+
+
+
+<div className="features_section" id="features_section">
         <h2>Our Features</h2>
         <div className="features" id="features">
           <div className="feature">
@@ -176,11 +183,16 @@ const Welcome = () => {
               Reserved. Design and Developed By Jayodya, Isurika &amp; Annika
             </p>
           </div>
-          <div>modified</div>
         </div>
       </div>
-    </div>
-  );
-};
+
+    
+
+
+    
+  </div>
+
+);
+}
 
 export default Welcome;

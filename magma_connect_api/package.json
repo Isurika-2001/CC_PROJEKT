@@ -7,9 +7,7 @@
     "joi": "^17.8.3",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.20",
-    "stripe": "^11.13.0",
-    "uuid": "^9.0.0"
+    "nodemon": "^2.0.20"
   },
   "name": "magma_connect_api",
   "version": "1.0.0",

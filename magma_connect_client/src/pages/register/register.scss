@@ -7,6 +7,7 @@
   padding: 50px;
 
   .card {
+
     display: flex;
     flex-direction: row-reverse;
     background-color: white;
@@ -30,14 +31,15 @@
         line-height: 100px;
       }
 
-      p {
+      p{
         font-size: 17px;
       }
+      
 
       span {
         font-size: 14px;
       }
-
+      
       button {
         width: 50%;
         padding: 10px;
@@ -47,6 +49,8 @@
         font-weight: bold;
         cursor: pointer;
       }
+
+     
     }
 
     .right {
@@ -57,10 +61,11 @@
       gap: 50px;
       justify-content: center;
 
-      h1 {
-        color: #555;
+      h1 { 
+      color: #555;
       }
 
+      
       form {
         display: flex;
         flex-direction: column;
@@ -68,18 +73,20 @@
         overflow-y: scroll;
         max-height: 500px;
 
+        
+
         input {
-          border: none;
-          border-bottom: 1px solid lightgray;
-          padding: 10px 10px;
+        border: none;
+        border-bottom: 1px solid lightgray;
+        padding: 10px 10px;
         }
 
-        select {
+        select{
           padding: 10px 10px;
           border: none;
-          border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
         }
-
+        
         button {
           width: 50%;
           padding: 10px;
@@ -90,10 +97,10 @@
           cursor: pointer;
         }
 
-        .error {
+         .error{
           font-size: small;
           font-style: italic;
-        }
+      }
       }
     }
   }

@@ -2,7 +2,9 @@ import Posts from "../../components/posts/Posts"
 import Share from "../../components/share/Share"
 import { Payment } from "../../components/payment/payment"
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur"
+
 import { UserRequests, StartupRequests, EntreprenureRequests, ConsultantRequests, DistributorRequests } from "../../components/admin/admin"
+import { } from "../../components/addProducts/AddProduct"
 import "./home.scss"
 
 export const Home = () => {
@@ -77,4 +79,25 @@ export const DistributorReq = () => {
       <DistributorRequests/>
     </div>
   )
+
+
+
+  
 }
+
+
+export const EntreAddProducts = () => {
+  return (
+    <div className="home">
+      <DistributorRequests/>
+    </div>
+  )
+
+
+
+  
+}
+
+
+
+

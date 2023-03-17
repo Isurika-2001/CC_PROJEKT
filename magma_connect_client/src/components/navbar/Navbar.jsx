@@ -7,15 +7,21 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
 import { AuthAdminContext } from "../../context/authAdminContext";
 import ProfilePic from "../../assets/user.png";
-import React, { useState, useEffect } from "react";
 
 export const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   const logout = () => {
     localStorage.removeItem("user");
     window.location.reload();
+  };
+
+  const login_register = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
   };
 
   return (
@@ -78,33 +84,8 @@ export const NavbarDefault = () => {
     navigate("/login");
   };
 
-  // Hide navigation plane when we are scrolling down
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-
-      if (prevScrollPos > currentScrollPos) {
-        setIsScrolled(false);
-      } else {
-        setIsScrolled(true);
-      }
-
-      setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos]);
-
   return (
-    <div
-      className={`navbar ${isScrolled ? "navbar--hidden" : ""}`}
-      style={{ transition: "all 0.5s ease-in-out" }}
-    >
+    <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>Empower Lanka</span>
@@ -146,6 +127,7 @@ export const NavbarAdmin = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentAdmin } = useContext(AuthAdminContext);
 
+  const navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("admin");
