@@ -112,7 +112,7 @@ export const Consultant = () => {
   const handleToken = async (token, user) => {
     try {
       const amount = user.fee;
-      const startup_id = currentUser.username;
+      const username = currentUser.username;
       const const_id = user.username;
       const { name, description } = user;
 
@@ -120,7 +120,7 @@ export const Consultant = () => {
         token,
         amount,
         name,
-        startup_id,
+        username,
         const_id,
         description,
       });

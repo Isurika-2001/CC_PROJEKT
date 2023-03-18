@@ -311,10 +311,10 @@ export const consultationPayment = (req, res) => {
   console.log(req.body);
 
   const q =
-    "INSERT INTO startup_payment (`startup_id`,`const_id`,`amount`,`description`) VALUE (?)";
+    "INSERT INTO consultation_payment (`username`,`const_id`,`amount`,`description`) VALUE (?)";
 
   const values = {
-    startup_id: req.body.startup_id,
+    username: req.body.username,
     const_id: req.body.const_id,
     amount: req.body.amount,
     description: req.body.description,
