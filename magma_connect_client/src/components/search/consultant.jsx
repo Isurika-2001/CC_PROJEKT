@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 // import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/authContext";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 import "./search.scss";
 
 export const GetCustomers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
+    const thisUser = currentUser.username
     axios
-      .get("http://localhost:8800/api/auth/getEntreprenures")
+      .get("http://localhost:8800/api/auth/getConsultations?thisUser=" + thisUser)
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -38,13 +40,11 @@ export const GetCustomers = () => {
   };
 
   const filteredUsers = users.filter((user) => {
-    const business_name = user.business_name.toLowerCase();
-    const category = user.category.toLowerCase();
+    const username = user.username.toLowerCase();
     const lowerSearchTerm = searchTerm.toLowerCase();
 
     return (
-      business_name.includes(lowerSearchTerm) ||
-      category.includes(lowerSearchTerm)
+      username.includes(lowerSearchTerm)
     );
   });
 
@@ -57,7 +57,7 @@ export const GetCustomers = () => {
         <div className="request" key={user.username}>
           <div className="container">
             <div className="top">
-              <h2 className="left">{user.business_name}</h2>
+              <h2 className="left">{user.username}</h2>
               <div className="right">
                 <button
                   className="profileBtn"
@@ -76,8 +76,12 @@ export const GetCustomers = () => {
             <hr />
             <div className="content">
               <span>
-                <span className="label">Category : </span>
-                <span className="data">{user.category}</span>
+                <span className="label">Payment amount : </span>
+                <span className="data">{user.amount}</span>
+              </span>
+              <span>
+                <span className="label">Hired Date : </span>
+                <span className="data">{user.date}</span>
               </span>
               <span>
                 <span className="label">Description : </span>
