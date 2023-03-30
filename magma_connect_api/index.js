@@ -16,7 +16,6 @@ const stripeInstance = stripe(
 
 import { v4 as uuidv4 } from "uuid";
 const myUuid = uuidv4();
-// comment
 
 import cors from "cors";
 import cookieParser from "cookie-parser";
