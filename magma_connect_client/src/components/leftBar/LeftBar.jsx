@@ -132,10 +132,6 @@ export const LeftBarConsultant = () => {
               <span>Blog</span>
             </NavLink>
           </div>
-          <div className="item">
-            <img src={Payment} alt="" />
-            <span>Payments</span>
-          </div>
         </div>
       </div>
     </div>
