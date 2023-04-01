@@ -11,7 +11,7 @@ import {
   LeftBarDistributor,
   LeftBarAdmin,
 } from "./components/leftBar/LeftBar";
-import RightBar from "./components/rightBar/RightBar";
+import { RightBarChat } from "./components/rightBar/RightBar";
 import {
   ConsultantReq,
   DistributorReq,
@@ -59,7 +59,7 @@ function App() {
               <div style={{ flex: 6 }}>
                 <Outlet />
               </div>
-              <RightBar />
+              {<RightBarChat />}
             </div>
           </div>
         ) : (
