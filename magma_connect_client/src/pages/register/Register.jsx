@@ -67,7 +67,7 @@ const Register = () => {
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
       resetInputs();
-      setErr("Successfully registered");
+      setErr("Successfully submitted. Please wait for the approval.");
     } catch (err) {
       setErr(err.response.data);
     }
@@ -273,7 +273,7 @@ const Register = () => {
                 className="error"
                 style={{
                   color:
-                    err === "Successfully registered"
+                    err === "Successfully submitted. Please wait for the approval."
                       ? "rgb(0, 172, 95)"
                       : "red",
                 }}
