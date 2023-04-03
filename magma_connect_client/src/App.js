@@ -21,7 +21,7 @@ import {
   SearchEntrepreneur,
   StartupReq,
   UserReq,
-  Startuppayment,
+  PaymentP,
   Consultations,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
@@ -111,19 +111,52 @@ function App() {
         },
         {
           path: "/searchentrepreneur",
-          element: currentUser ? <SearchEntrepreneur /> : <Welcome />,
+          element:
+            currentUser &&
+            (currentUser.roll === "existing" ||
+              currentUser.roll === "startup") ? (
+              <SearchEntrepreneur />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
         },
         {
           path: "/searchconsultant",
-          element: currentUser ? <SearchConsultant /> : <Welcome />,
+          element:
+            currentUser &&
+            (currentUser.roll === "existing" ||
+              currentUser.roll === "startup") ? (
+              <SearchConsultant />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
         },
         {
-          path: "/startuppayment",
-          element: currentUser ? <Startuppayment /> : <Welcome />,
+          path: "/payment",
+          element: currentUser &&
+          (currentUser.roll === "existing" ||
+            currentUser.roll === "startup") ? (
+            <PaymentP />
+          ) : !currentUser ? (
+            <Welcome />
+          ) : (
+            <Home />
+          ),
         },
         {
           path: "/consultations",
-          element: currentUser ? <Consultations /> : <Welcome />,
+          element:
+            currentUser && currentUser.roll == "consultant" ? (
+              <Consultations />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
         },
       ],
     },

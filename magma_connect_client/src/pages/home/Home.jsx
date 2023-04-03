@@ -31,7 +31,7 @@ export const Consultations = () => {
   )
 }
 
-export const Startuppayment = () => {
+export const PaymentP = () => {
   return (
     <div className="home">
       <Payment/>

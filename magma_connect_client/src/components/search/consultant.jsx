@@ -57,7 +57,7 @@ export const GetCustomers = () => {
         <div className="request" key={user.username}>
           <div className="container">
             <div className="top">
-              <h2 className="left">{user.username}</h2>
+              <h2 className="left">{user.name}</h2>
               <div className="right">
                 <button
                   className="profileBtn"
