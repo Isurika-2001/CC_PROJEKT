@@ -40,7 +40,7 @@ export const RightBarChat = () => {
       </form>
     </div>
 
-      Hiiiiiiiiiiiiiiiiii
+
 
 
     </div>
