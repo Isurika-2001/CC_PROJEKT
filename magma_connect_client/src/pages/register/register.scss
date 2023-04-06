@@ -4,19 +4,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px;
+  padding: 0px;
 
   .card {
     display: flex;
+    width: 100%;
+    height: 100vh;
     flex-direction: row-reverse;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 0px;
     overflow: hidden;
 
     .left {
-      flex: 1;
-      background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-        url("https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600")
+      flex: 2;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://cdn.firespring.com/images/2184b077-632a-4a3c-bd93-65160393a58b.jpg")
           center;
       background-size: cover;
       padding: 50px;
@@ -28,22 +30,29 @@
       h1 {
         font-size: 100px;
         line-height: 100px;
+        padding: 6%;
       }
 
       p {
         font-size: 17px;
+        padding-left: 6%;
+        padding-right: 6%;
       }
 
       span {
         font-size: 14px;
+        padding-left: 6%;
+        padding-right: 6%;
       }
 
       button {
-        width: 50%;
+        width: 30%;
+        margin: 6%;
+        margin-top: 0px;
         padding: 10px;
         border: none;
-        background-color: white;
-        color: rebeccapurple;
+        background-color: #9A0F0F;
+        color: white;
         font-weight: bold;
         cursor: pointer;
       }
@@ -51,14 +60,14 @@
 
     .right {
       flex: 1;
-      padding: 50px;
+      padding: 70px;
       display: flex;
       flex-direction: column;
       gap: 50px;
       justify-content: center;
 
       h1 {
-        color: #555;
+        color: #000000;
       }
 
       form {
@@ -78,13 +87,14 @@
           padding: 10px 10px;
           border: none;
           border-bottom: 1px solid lightgray;
+          color: #555;
         }
 
         button {
           width: 50%;
           padding: 10px;
           border: none;
-          background-color: #938eef;
+          background-color: #9A0F0F;
           color: white;
           font-weight: bold;
           cursor: pointer;

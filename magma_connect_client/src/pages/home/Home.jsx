@@ -9,8 +9,7 @@ import "./home.scss"
 export const Home = () => {
   return (
     <div className="home">
-      <Share/>
-      <Posts/>
+     <h1> Home </h1>
     </div>
   )
 }
