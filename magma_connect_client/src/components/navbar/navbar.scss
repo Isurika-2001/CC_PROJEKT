@@ -11,7 +11,7 @@
     position: sticky;
     top: 0;
     background-color: themed("bg");
-    color: themed("textColor");
+    color: black;
     z-index: 999;
 
     .logout_btn {
@@ -96,7 +96,7 @@
       .logout_btn {
         display: inline-block;
         padding: 7px 15px;
-        background-color: #007bff;
+        background-color: #9A0F0F;
         color: #fff;
         font-size: 17px;
         font-weight: bold;
@@ -106,7 +106,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: #0062cc;
+          background-color: #b40000;
         }
 
         &:focus {

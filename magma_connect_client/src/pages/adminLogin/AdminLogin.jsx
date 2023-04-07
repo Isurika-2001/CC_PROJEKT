@@ -43,7 +43,7 @@ const AdminLogin = () => {
       };
 
   return (
-    <div className="login">
+    <div className="admininlogin">
     <div className="card">
       <div className="left">
         <h1>Welcome to Empower Lanka's admin panel. <br />  </h1>

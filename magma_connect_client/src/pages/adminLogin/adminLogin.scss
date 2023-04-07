@@ -1,6 +1,6 @@
-.login {
+.admininlogin {
     height: 100vh;
-    background-color: rgb(193, 190, 255);
+    background-color: rgb(0, 0, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,8 +16,8 @@
   
       .left {
         height: 400px;
-        background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-          url("https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600")
+        background: linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.5)),
+          url("https://cdn.pixabay.com/photo/2017/01/14/10/56/people-1979261_960_720.jpg")
             center;
         background-size: cover;
         padding: 50px;
@@ -39,16 +39,7 @@
           font-size: clamp(14px, 2vw, 20px);
         }
   
-        button {
-          width: 50%;
-          max-width: 200px;
-          padding: 10px;
-          border: none;
-          background-color: white;
-          color: rebeccapurple;
-          font-weight: bold;
-          cursor: pointer;
-        }
+      
       }
   
       .right {
@@ -59,7 +50,7 @@
         justify-content: center;
   
         h1 {
-          color: #555;
+          color: #000000;
           font-size: clamp(24px, 5vw, 36px);
           line-height: 1.2;
         }
@@ -71,8 +62,9 @@
   
           input {
             border: none;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 1px solid rgb(0, 0, 0);
             padding: 20px 10px;
+
           }
   
           button {
@@ -80,7 +72,7 @@
             max-width: 200px;
             padding: 10px;
             border: none;
-            background-color: #938eef;
+            background-color: #9A0F0F;
             color: white;
             font-weight: bold;
             cursor: pointer;
