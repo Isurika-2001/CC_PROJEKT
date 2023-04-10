@@ -15,16 +15,16 @@ export const register = (req, res) => {
 
   //  insert query
   const q =
-    "INSERT INTO users (`username`,`email`,`password`,`telephone`,`name`,`roll`) VALUE (?)";
+    "INSERT INTO users (`username`,`email`,`password`,`telephone`,`name`,`roll`,`address`) VALUE (?)";
 
   // sub queries
   const q1 = {
-    startup: "INSERT INTO startup (`username`,`nic`) VALUE (?)",
+    startup: "INSERT INTO startup (`username`,`nic`,`category`,`target_area`) VALUE (?)",
     entrepreneur: "INSERT INTO entrepreneur (`username`) VALUE (?)",
 
     distributor: "INSERT INTO distributor (`username`,`drl_no`) VALUE (?)",
     consultant:
-      "INSERT INTO consultant (`username`,`qualification`,`fee`) VALUE (?)",
+      "INSERT INTO consultant (`username`,`qualification`,`fee`,`institute`,`experiences`) VALUE (?)",
   };
 
   // inner queries
@@ -46,11 +46,14 @@ export const register = (req, res) => {
     telephone: req.body.telephone,
     name: req.body.name,
     roll: req.body.roll,
+    Paddress: req.body.Paddress,
   };
 
   const startupValues = {
     username: req.body.username,
     nic: req.body.nic,
+    ex_category: req.body.ex_category,
+    area: req.body.area,
   };
 
   const entrepreneurValues = {
@@ -78,6 +81,8 @@ export const register = (req, res) => {
     username: req.body.username,
     qualification: req.body.qualification,
     consultationFee: req.body.consultationFee,
+    institute: req.body.institute,
+    experiences: req.body.experiences,
   };
 
   // run check queries

@@ -13,6 +13,7 @@ const Register = () => {
     password: "",
     telephone: "",
     name: "",
+    Paddress: "",
     roll: "",
     nic: "",
     category: "",
@@ -24,6 +25,10 @@ const Register = () => {
     driveLicNo: "",
     vehicleType: "",
     vehicleNo: "",
+    ex_category: "",
+    area: "",
+    institute: "",
+    experiences: "",
   });
 
   const navigate = useNavigate();
@@ -51,6 +56,7 @@ const Register = () => {
       email: "",
       password: "",
       telephone: "",
+      Paddress: "",
       name: "",
       roll: "",
       nic: "",
@@ -63,6 +69,10 @@ const Register = () => {
       driveLicNo: "",
       vehicleType: "",
       vehicleNo: "",
+      ex_category: "",
+      area: "",
+      institute: "",
+      experiences: "",
     });
   };
 
@@ -160,9 +170,19 @@ const Register = () => {
             />
             <input
               type="text"
-              placeholder="Phone Number"
+              placeholder="Contact Number"
               name="telephone"
               value={inputs.telephone}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+
+            <input
+              type="text"
+              placeholder="Personal Address"
+              name="Paddress"
+              value={inputs.Paddress}
               onChange={handleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -199,7 +219,7 @@ const Register = () => {
                 />
                 <input
                   type="text"
-                  placeholder="Address"
+                  placeholder="Business Address"
                   name="address"
                   value={inputs.address}
                   onChange={handleChange}
@@ -216,6 +236,24 @@ const Register = () => {
                   placeholder="NIC"
                   name="nic"
                   value={inputs.nic}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+                <input
+                  type="text"
+                  placeholder="Your Expected Business Category (ex: Apparel Industry)"
+                  name="ex_category"
+                  value={inputs.ex_category}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+                <input
+                  type="text"
+                  placeholder="Target area (ex: Colombo West)"
+                  name="area"
+                  value={inputs.area}
                   onChange={handleChange}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
@@ -252,14 +290,12 @@ const Register = () => {
                   onBlur={handleBlur}
                 />
               </>
-
-              // drive lic no, vehicle type, vehicle no
             )}
             {showAdditionalFields && inputs.roll === "consultant" && (
               <>
                 <input
                   type="text"
-                  placeholder="qualification"
+                  placeholder="Highest Education Qualification (min: dip in relevent field)"
                   name="qualification"
                   value={inputs.qualification}
                   onChange={handleChange}
@@ -268,7 +304,25 @@ const Register = () => {
                 />
                 <input
                   type="text"
-                  placeholder="Consultation Fee Per Session"
+                  placeholder="Institute"
+                  name="institute"
+                  value={inputs.institute}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+                <textarea
+                  type="text"
+                  placeholder="Work experiences (Company, title and duration)"
+                  name="experiences"
+                  value={inputs.experiences}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+                <input
+                  type="text"
+                  placeholder="Consultation Fee Per Session (LKR)"
                   name="consultationFee"
                   value={inputs.consultationFee}
                   onChange={handleChange}
