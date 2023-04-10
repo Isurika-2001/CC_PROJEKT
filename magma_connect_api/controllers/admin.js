@@ -49,12 +49,14 @@ export const approveRequests = (req, res) => {
 
 // Decline requests
 export const declineRequests = (req, res) => {
-  const sql = "DELETE FROM users WHERE username = ?";
-  const username = req.params.username;
-  db.query(sql, username, (err, result) => {
+  const sql = "UPDATE users SET comment = ? WHERE username = ?";
+  const { username, comment } = req.body;
+  
+  db.query(sql, [comment, username], (err, result) => {
     if (err) throw err;
     res.json({ message: `User with username ${username} has been declined.` });
   });
 };
+
 
 

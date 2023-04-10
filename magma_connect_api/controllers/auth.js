@@ -250,6 +250,7 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE username = ?";
+  const q1 = "SELECT comment FROM users WHERE username = ?";
 
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -263,11 +264,18 @@ export const login = (req, res) => {
 
     if (!checkPassword)
       return res.status(400).json("Wrong password or Username!");
-    else if (data[0].reg_status === 0)
-      return res
-        .status(400)
-        .json("Please wait for the approval. Come back later!");
-    else {
+    else if (data[0].reg_status === 0) {
+      db.query(q1, [req.body.username], (err, data) => {
+        if (data[0].comment === null) {
+          return res
+            .status(400)
+            .json("Please wait for the approval. Come back later!");
+        } else {
+          const comment = data[0].comment;
+          return res.status(400).json(comment);
+        }
+      });
+    } else {
       const token = jwt.sign({ id: data[0].id }, "secretkey");
 
       const { password, ...others } = data[0];

@@ -6,7 +6,6 @@
   align-items: center;
   padding-top: 1px;
   padding-left: 10px;
-  
 
   .request {
     @include themify($themes) {
@@ -15,7 +14,7 @@
       box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
       border-radius: 20px;
       background-color: themed("bg");
-      color: themed("textColor");
+      color: rgb(0, 0, 0);
       margin: 20px;
       width: 60%;
 
@@ -77,6 +76,12 @@
           border: none;
           height: 0.5px;
           background-color: themed("border");
+        }
+        .comment {
+          margin-top: 30px;
+          padding: 10px;
+          font-size: small;
+          width: 95%;
         }
       }
     }

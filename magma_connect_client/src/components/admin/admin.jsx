@@ -12,6 +12,7 @@ export const UserRequests = () => {
 
 export const StartupRequests = () => {
   const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     // Fetch all users with registration status = 0 from the backend API
@@ -34,15 +35,36 @@ export const StartupRequests = () => {
   };
 
   const handleDecline = (username) => {
+    // Check if a comment has been entered
+    if (!comments[username]) {
+      alert("Please enter a comment before declining the request.");
+      return;
+    }
+
     // Delete the user from the database
     axios
-      .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
+      .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        comment: comments[username],
+        username: username,
+      })
       .then((res) => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
+        // Clear the comment for the user
+        setComments({
+          ...comments,
+          [username]: "",
+        });
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleCommentChange = (username, value) => {
+    setComments({
+      ...comments,
+      [username]: value,
+    });
   };
 
   return (
@@ -82,6 +104,17 @@ export const StartupRequests = () => {
                 <span className="data">{user.nic}</span>
               </span>
             </div>
+            <form>
+              <input
+                className="comment"
+                type="text"
+                placeholder="put a comment"
+                value={comments[user.username] || ""}
+                onChange={(e) =>
+                  handleCommentChange(user.username, e.target.value)
+                }
+              ></input>
+            </form>
           </div>
         </div>
       ))}
@@ -91,6 +124,7 @@ export const StartupRequests = () => {
 
 export const EntreprenureRequests = () => {
   const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     // Fetch all users with registration status = 0 from the backend API
@@ -113,15 +147,36 @@ export const EntreprenureRequests = () => {
   };
 
   const handleDecline = (username) => {
+    // Check if a comment has been entered
+    if (!comments[username]) {
+      alert("Please enter a comment before declining the request.");
+      return;
+    }
+
     // Delete the user from the database
     axios
-      .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
+      .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        comment: comments[username],
+        username: username,
+      })
       .then((res) => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
+        // Clear the comment for the user
+        setComments({
+          ...comments,
+          [username]: "",
+        });
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleCommentChange = (username, value) => {
+    setComments({
+      ...comments,
+      [username]: value,
+    });
   };
 
   return (
@@ -148,7 +203,7 @@ export const EntreprenureRequests = () => {
             </div>
             <hr />
             <div className="content">
-            <span>
+              <span>
                 <span className="label">Phone No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
@@ -173,6 +228,17 @@ export const EntreprenureRequests = () => {
                 <span className="data">{user.reg_no}</span>
               </span>
             </div>
+            <form>
+              <input
+                className="comment"
+                type="text"
+                placeholder="put a comment"
+                value={comments[user.username] || ""}
+                onChange={(e) =>
+                  handleCommentChange(user.username, e.target.value)
+                }
+              ></input>
+            </form>
           </div>
         </div>
       ))}
@@ -182,6 +248,7 @@ export const EntreprenureRequests = () => {
 
 export const ConsultantRequests = () => {
   const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     // Fetch all users with registration status = 0 from the backend API
@@ -204,15 +271,36 @@ export const ConsultantRequests = () => {
   };
 
   const handleDecline = (username) => {
+    // Check if a comment has been entered
+    if (!comments[username]) {
+      alert("Please enter a comment before declining the request.");
+      return;
+    }
+
     // Delete the user from the database
     axios
-      .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
+      .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        comment: comments[username],
+        username: username,
+      })
       .then((res) => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
+        // Clear the comment for the user
+        setComments({
+          ...comments,
+          [username]: "",
+        });
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleCommentChange = (username, value) => {
+    setComments({
+      ...comments,
+      [username]: value,
+    });
   };
 
   return (
@@ -239,7 +327,7 @@ export const ConsultantRequests = () => {
             </div>
             <hr />
             <div className="content">
-            <span>
+              <span>
                 <span className="label">Phone No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
@@ -256,6 +344,17 @@ export const ConsultantRequests = () => {
                 <span className="data">{user.fee}</span>
               </span>
             </div>
+            <form>
+              <input
+                className="comment"
+                type="text"
+                placeholder="put a comment"
+                value={comments[user.username] || ""}
+                onChange={(e) =>
+                  handleCommentChange(user.username, e.target.value)
+                }
+              ></input>
+            </form>
           </div>
         </div>
       ))}
@@ -265,6 +364,7 @@ export const ConsultantRequests = () => {
 
 export const DistributorRequests = () => {
   const [users, setUsers] = useState([]);
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     // Fetch all users with registration status = 0 from the backend API
@@ -287,15 +387,36 @@ export const DistributorRequests = () => {
   };
 
   const handleDecline = (username) => {
+    // Check if a comment has been entered
+    if (!comments[username]) {
+      alert("Please enter a comment before declining the request.");
+      return;
+    }
+
     // Delete the user from the database
     axios
-      .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
+      .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        comment: comments[username],
+        username: username,
+      })
       .then((res) => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
+        // Clear the comment for the user
+        setComments({
+          ...comments,
+          [username]: "",
+        });
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleCommentChange = (username, value) => {
+    setComments({
+      ...comments,
+      [username]: value,
+    });
   };
 
   return (
@@ -322,7 +443,7 @@ export const DistributorRequests = () => {
             </div>
             <hr />
             <div className="content">
-            <span>
+              <span>
                 <span className="label">Phone No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
@@ -343,6 +464,17 @@ export const DistributorRequests = () => {
                 <span className="data">{user.vehicle_no}</span>
               </span>
             </div>
+            <form>
+              <input
+                className="comment"
+                type="text"
+                placeholder="put a comment"
+                value={comments[user.username] || ""}
+                onChange={(e) =>
+                  handleCommentChange(user.username, e.target.value)
+                }
+              ></input>
+            </form>
           </div>
         </div>
       ))}
