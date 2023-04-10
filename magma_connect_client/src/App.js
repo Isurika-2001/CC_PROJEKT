@@ -62,7 +62,7 @@ function App() {
               <div style={{ flex: 6 }}>
                 <Outlet />
               </div>
-              {<RightBarChat />}
+              {currentUser.roll !== "customer" && <RightBarChat />}
             </div>
           </div>
         ) : (
