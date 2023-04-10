@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
 
 import { Link } from "react-router-dom";
 import "./register.scss";
@@ -24,9 +26,11 @@ const Register = () => {
     vehicleNo: "",
   });
 
+  const navigate = useNavigate();
   const [err, setErr] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -67,7 +71,12 @@ const Register = () => {
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
       resetInputs();
-      setErr("Successfully submitted. Please wait for the approval.");
+      if (inputs.roll === "customer") {
+        await login(inputs);
+        navigate("/");
+      } else {
+        setErr("Successfully submitted. Please wait for the approval.");
+      }
     } catch (err) {
       setErr(err.response.data);
     }
@@ -99,6 +108,20 @@ const Register = () => {
         <div className="right">
           <h1>Register</h1>
           <form>
+            <select
+              name="roll"
+              value={inputs.roll}
+              onChange={handleRoleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            >
+              <option value="">Select Role</option>
+              <option value="customer">Customer</option>
+              <option value="startup">Startup Entrepreneur</option>
+              <option value="existing">Existing Entrepreneur</option>
+              <option value="distributor">Distributor</option>
+              <option value="consultant">Consultant</option>
+            </select>
             <input
               type="text"
               placeholder="Username"
@@ -144,19 +167,6 @@ const Register = () => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
-            <select
-              name="roll"
-              value={inputs.roll}
-              onChange={handleRoleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            >
-              <option value="">Select Role</option>
-              <option value="startup">Startup Entrepreneur</option>
-              <option value="existing">Existing Entrepreneur</option>
-              <option value="distributor">Distributor</option>
-              <option value="consultant">Consultant</option>
-            </select>
 
             {showAdditionalFields && inputs.roll === "existing" && (
               <>
@@ -273,7 +283,8 @@ const Register = () => {
                 className="error"
                 style={{
                   color:
-                    err === "Successfully submitted. Please wait for the approval."
+                    err ===
+                    "Successfully submitted. Please wait for the approval."
                       ? "rgb(0, 172, 95)"
                       : "red",
                 }}

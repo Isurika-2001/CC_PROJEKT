@@ -9,7 +9,7 @@ export const registerValidation = (data) => {
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(5).required(),
         telephone: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required(),
         name: Joi.string().required(),
-        roll: Joi.string().valid('startup', 'existing', 'distributor', 'consultant').required(),
+        roll: Joi.string().valid('customer','startup', 'existing', 'distributor', 'consultant').required(),
 
         // startup validations
         nic: Joi.when('roll', { is: 'startup', then: Joi.string().min(10).max(12).required() }),

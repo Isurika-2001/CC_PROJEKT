@@ -1,28 +1,36 @@
 .login {
   height: 100vh;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
 
   .card {
-    width: 70%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
     background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
 
     .left {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://assets.entrepreneur.com/content/3x2/2000/20191101154159-GettyImages-972581734.jpeg?format=pjeg&auto=webp&crop=16:9&width=675&height=380");
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://assets.entrepreneur.com/content/3x2/2000/20191101154159-GettyImages-972581734.jpeg?format=pjeg&auto=webp&crop=16:9&width=675&height=380");
+      background-repeat: no-repeat;
       background-size: cover;
+      overflow: hidden;
       padding: 50px;
       display: flex;
       flex-direction: column;
       gap: 30px;
       color: white;
+      flex-basis: 70% !important;
 
       h1 {
+        padding-top: 20%;
         font-size: clamp(24px, 5vw, 36px);
         line-height: 1.2;
       }
@@ -40,7 +48,7 @@
         max-width: 200px;
         padding: 10px;
         border: none;
-        background-color: #9A0F0F;
+        background-color: #9a0f0f;
         color: rgb(255, 255, 255);
         font-weight: bold;
         cursor: pointer;
@@ -53,9 +61,10 @@
       flex-direction: column;
       gap: 30px;
       justify-content: center;
+      flex-basis: 30% !important;
 
       h1 {
-        color: #555;
+        color: #000000;
         font-size: clamp(24px, 5vw, 36px);
         line-height: 1.2;
       }
@@ -76,13 +85,13 @@
           max-width: 200px;
           padding: 10px;
           border: none;
-          background-color: #9A0F0F;
+          background-color: #9a0f0f;
           color: white;
           font-weight: bold;
           cursor: pointer;
         }
 
-        .error{
+        .error {
           font-size: small;
           font-style: italic;
           color: red;
@@ -98,11 +107,11 @@
 
       .left {
         height: auto;
-        flex: 2;
+        flex-basis: 60%;
       }
 
       .right {
-        flex: 1;
+        flex-basis: 40%;
       }
     }
   }

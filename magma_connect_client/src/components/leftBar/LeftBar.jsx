@@ -168,6 +168,34 @@ export const LeftBarDistributor = () => {
   );
 };
 
+export const LeftBarCustomer = () => {
+  const { currentUser } = useContext(AuthContext);
+
+  return (
+    <div className="leftBar">
+      <div className="container">
+        <div className="menu">
+          <div className="user">
+            <img src={ProfilePic} alt="" />
+            <NavLink activeClassName="active" to="/">
+              <span>{currentUser.name}</span>
+            </NavLink>
+          </div>
+
+          {/* <div className="item">
+            <img src={OrdersRequests} alt="" />
+            <span>Order Requests</span>
+          </div>
+          <div className="item">
+            <img src={OnGoing} alt="" />
+            <span>Ongoing Orders</span>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const LeftBarAdmin = () => {
   return (
     <div className="leftBar">

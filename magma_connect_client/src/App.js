@@ -9,6 +9,7 @@ import {
   LeftBarEntre,
   LeftBarSEntre,
   LeftBarDistributor,
+  LeftBarCustomer,
   LeftBarAdmin,
 } from "./components/leftBar/LeftBar";
 import { RightBarChat } from "./components/rightBar/RightBar";
@@ -53,6 +54,8 @@ function App() {
                 <LeftBarDistributor />
               ) : currentUser.roll === "startup" ? (
                 <LeftBarSEntre />
+              ) : currentUser.roll === "customer" ? (
+                <LeftBarCustomer />
               ) : (
                 <LeftBarEntre />
               )}
@@ -137,20 +140,21 @@ function App() {
         },
         {
           path: "/payment",
-          element: currentUser &&
-          (currentUser.roll === "existing" ||
-            currentUser.roll === "startup") ? (
-            <PaymentP />
-          ) : !currentUser ? (
-            <Welcome />
-          ) : (
-            <Home />
-          ),
+          element:
+            currentUser &&
+            (currentUser.roll === "existing" ||
+              currentUser.roll === "startup") ? (
+              <PaymentP />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
         },
         {
           path: "/consultations",
           element:
-            currentUser && currentUser.roll == "consultant" ? (
+            currentUser && currentUser.roll === "consultant" ? (
               <Consultations />
             ) : !currentUser ? (
               <Welcome />

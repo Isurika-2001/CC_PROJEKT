@@ -94,6 +94,21 @@ export const register = (req, res) => {
       return res.status(400).send(errorMessages);
     }
 
+    if (values.roll === "customer") {
+      const sql = "UPDATE users SET reg_status = 1 WHERE username = ?";
+      db.query(q, [Object.values(values)], (err, data) => {
+        if (err) {
+          return res.status(500).json("Error while saving user!");
+        }
+        db.query(sql, values.username, (err, result) => {
+          if (err) throw err;
+          res.status(200).json({
+            message: "Customer added successfully and user has been approved.",
+          });
+        });
+      });
+    }
+
     if (values.roll === "startup") {
       db.query(check.nic, startupValues.nic, (err, data) => {
         if (err) return res.status(500).json(err);
@@ -349,7 +364,7 @@ export const getConsultants = (req, res) => {
 export const getConsultations = (req, res) => {
   const sql =
     "SELECT consultation_payment.username, consultation_payment.amount, consultation_payment.description, consultation_payment.date, users.name from consultation_payment, users where consultation_payment.username = users.username and const_id = ?";
-    const thisUser = req.query.thisUser;
+  const thisUser = req.query.thisUser;
   db.query(sql, thisUser, (err, results) => {
     if (err) throw err;
     res.json(results);
