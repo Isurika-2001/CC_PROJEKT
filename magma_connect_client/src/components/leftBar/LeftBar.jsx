@@ -25,7 +25,7 @@ export const LeftBarEntre = () => {
         <div className="menu">
           <div className="user">
             <img src={ProfilePic} alt="" />
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/profile/:id">
               <span>{currentUser.name}</span>
             </NavLink>
           </div>
@@ -74,7 +74,7 @@ export const LeftBarSEntre = () => {
         <div className="menu">
           <div className="user">
             <img src={ProfilePic} alt="" />
-            <NavLink to="/">
+            <NavLink to="/profile/:id">
               <span>{currentUser.name}</span>
             </NavLink>
           </div>
@@ -118,7 +118,7 @@ export const LeftBarConsultant = () => {
         <div className="menu">
           <div className="user">
             <img src={ProfilePic} alt="" />
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/profile/:id">
               <span>{currentUser.name}</span>
             </NavLink>
           </div>
@@ -149,7 +149,7 @@ export const LeftBarDistributor = () => {
         <div className="menu">
           <div className="user">
             <img src={ProfilePic} alt="" />
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/profile/:id">
               <span>{currentUser.name}</span>
             </NavLink>
           </div>
@@ -177,7 +177,7 @@ export const LeftBarCustomer = () => {
         <div className="menu">
           <div className="user">
             <img src={ProfilePic} alt="" />
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/profile/:id">
               <span>{currentUser.name}</span>
             </NavLink>
           </div>

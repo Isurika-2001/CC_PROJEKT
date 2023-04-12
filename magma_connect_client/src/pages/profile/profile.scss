@@ -58,31 +58,21 @@
           padding: 20px;
           margin-top: 100px;
         }
-
-        .left {
-          flex: 1;
-          display: flex;
-          gap: 10px;
-
-          @include tablet{
-            flex-wrap: wrap;
-          }
-
-          a{
-            color: themed("textColorSoft");
-          }
-        }
-
         .center {
           flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 10px;
+          color: black;
 
-          span {
-            font-size: 30px;
+          .userName{
+            font-size: 20px;
             font-weight: 500;
+          }
+
+          .userRoll{
+            font-size: 15px;
           }
 
           .info {
@@ -111,13 +101,14 @@
             cursor: pointer;
           }
         }
-
-        .right {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 10px;
+      }
+    }
+    .userDetail{
+      .uInfo{
+        form{
+          span{
+            color: black;
+          }
         }
       }
     }

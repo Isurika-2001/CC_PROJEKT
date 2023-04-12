@@ -1,16 +1,24 @@
 import "./profile.scss";
-import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import PlaceIcon from "@mui/icons-material/Place";
-import LanguageIcon from "@mui/icons-material/Language";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Posts from "../../components/posts/Posts"
+import { AuthContext } from "../../context/authContext";
+import { useContext } from "react";
 
 const Profile = () => {
+  const { currentUser } = useContext(AuthContext);
+
+  const userRoll = () => {
+    if (currentUser.roll === "existing") {
+      return "Entrepreneur";
+    } else if (currentUser.roll === "consultant") {
+      return "Consultant";
+    } else if (currentUser.roll === "customer") {
+      return "Customer";
+    } else if (currentUser.roll === "startup") {
+      return "Startup Entrepreneur";
+    } else if (currentUser.roll === "distributor") {
+      return "Distributor";
+    }
+  };
+
   return (
     <div className="profile">
       <div className="images">
@@ -27,43 +35,98 @@ const Profile = () => {
       </div>
       <div className="profileContainer">
         <div className="uInfo">
-          <div className="left">
-            <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
-            </a>
-          </div>
           <div className="center">
-            <span>Jane Doe</span>
-            <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>USA</span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>lama.dev</span>
-              </div>
-            </div>
+            <span className="userName">{currentUser.name}</span>
+            <span className="userRoll">{userRoll()}</span>
             <button>follow</button>
           </div>
-          <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
-          </div>
         </div>
-      <Posts/>
+      </div>
+      <div className="userDetails">
+        <div className="uInfo">
+          <form>
+            <div>
+              <span>Name </span>
+              <input type="text" placeholder="Name" />
+            </div>
+            <div>
+              <span>Email </span>
+              <input type="text" placeholder="Email" />
+            </div>
+            <div>
+              <span>Address </span>
+              <input type="text" placeholder="Address" />
+            </div>
+            <div>
+              <span>Contact Number </span>
+              <input type="text" placeholder="Contact Number" />
+            </div>
+            {currentUser.roll === "startup" && (
+              <>
+                <div>
+                  <span>NIC </span>
+                  <input type="text" placeholder="NIC" />
+                </div>
+                <div>
+                  <span>Do you already have a business?</span>
+                  <button>Swith to entreprenure</button>
+                </div>
+              </>
+            )}
+            {currentUser.roll === "existing" && (
+              <>
+                <div>
+                  <span>Business Category </span>
+                  <input type="text" placeholder="Business Category" />
+                </div>
+                <div>
+                  <span>Business Name </span>
+                  <input type="text" placeholder="Business Name" />
+                </div>
+                <div>
+                  <span>Business Address </span>
+                  <input type="text" placeholder="Business Address" />
+                </div>
+              </>
+            )}
+            {currentUser.roll === "consultant" && (
+              <>
+                <div>
+                  <span>Qualifications </span>
+                  <input type="text" placeholder="Qualifications" />
+                </div>
+                <div>
+                  <span>Institute </span>
+                  <input type="text" placeholder="Institute" />
+                </div>
+                <div>
+                  <span>Experiences </span>
+                  <input type="text" placeholder="Experiences" />
+                </div>
+                <div>
+                  <span>Consultation Fee </span>
+                  <input type="text" placeholder="Experiences" />
+                </div>
+              </>
+            )}
+            {currentUser.roll === "distributor" && (
+              <>
+                <div>
+                  <span>Vehicle Type </span>
+                  <input type="text" placeholder="Vehicle Type" />
+                </div>
+                <div>
+                  <span>Vehicle Number </span>
+                  <input type="text" placeholder="Vehicle Number" />
+                </div>
+                <div>
+                  <span>Description </span>
+                  <input type="text" placeholder="Description" />
+                </div>
+              </>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );
