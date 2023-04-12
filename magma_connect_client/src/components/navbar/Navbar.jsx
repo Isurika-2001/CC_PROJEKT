@@ -129,11 +129,6 @@ export const NavbarDefault = () => {
       </div>
 
       <div className="right">
-        {darkMode ? (
-          <WbSunnyOutlinedIcon onClick={toggle} />
-        ) : (
-          <DarkModeOutlinedIcon onClick={toggle} />
-        )}
         <button className="logout_btn" onClick={login_register}>
           Login/Register
         </button>

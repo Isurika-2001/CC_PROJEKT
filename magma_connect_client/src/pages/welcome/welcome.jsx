@@ -1,6 +1,6 @@
 import "./welcome.scss";
 import videoBg from "../../assets/backgroundvideo.mp4";
-import allinone from "../../assets//a user freindly.png";
+import allinone from "../../assets//a user freindly.jpg";
 import consultant from "../../assets/consultant.jpg";
 import network from "../../assets/networkk.jpg";
 import ecommerce from "../../assets/ecommerce.jpg";
@@ -121,6 +121,27 @@ const Welcome = () => {
           </div>
         </div>
       </div>
+
+      <div className="user_friendly">
+      <h1> User Friendly Interface</h1>
+
+      <div className="content">
+
+        <p>
+          Our platform is user-friendly, intuitive, and designed with a simple yet effective interface. We have created a
+          video demonstration to showcase its features and ease of use. Our goal is to provide an accessible and streamlined
+          experience for all users, regardless of their level of expertise. We welcome feedback to continually improve our
+          platform and ensure the best possible user experience.
+        </p>
+        <div className="video-container">
+          <video controls>
+            <source src={videoBg} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+
+
 
       <div className="testimonial">
         <h2>Testimonials</h2>

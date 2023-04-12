@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    height: 50px;
+    height: 35px;
     border-bottom: 1px solid themed("border");
     position: sticky;
     top: 0;
@@ -79,7 +79,7 @@
 
       span {
         font-weight: bold;
-        font-size: 20px;
+        font-size: 18px;
         color: themed("logo");
       }
     }
@@ -95,10 +95,10 @@
 
       .logout_btn {
         display: inline-block;
-        padding: 7px 15px;
+        padding: 6px 9px;
         background-color: #9A0F0F;
         color: #fff;
-        font-size: 17px;
+        font-size: 15px;
         font-weight: bold;
         border: none;
         border-radius: 5px;
