@@ -124,7 +124,7 @@
           font-weight: bold;
           margin-bottom: 1rem;
           padding-top: 10px;
-          color: #9A0F0F;
+          color: #000000;
         }
 
         p {
@@ -415,8 +415,8 @@
 }
 
 // Set global variables for easy customization
-$primary-color: rgba(10, 0, 74, 0.897);
-$secondary-color: #f7931e;
+$primary-color: #9a0f0f;
+$secondary-color: #ff0051;
 
 .footer {
   background-color: $primary-color;
