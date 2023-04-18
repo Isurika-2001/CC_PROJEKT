@@ -100,8 +100,20 @@ export const StartupRequests = () => {
                 <span className="data">{user.email}</span>
               </span>
               <span>
+                <span className="label">Address : </span>
+                <span className="data">{user.address}</span>
+              </span>
+              <span>
                 <span className="label">NIC : </span>
                 <span className="data">{user.nic}</span>
+              </span>
+              <span>
+                <span className="label">Category : </span>
+                <span className="data">{user.category}</span>
+              </span>
+              <span>
+                <span className="label">Target Area : </span>
+                <span className="data">{user.target_area}</span>
               </span>
             </div>
             <form>
@@ -212,8 +224,8 @@ export const EntreprenureRequests = () => {
                 <span className="data">{user.email}</span>
               </span>
               <span>
-                <span className="label">Address : </span>
-                <span className="data">{user.address}</span>
+                <span className="label">Personal Address : </span>
+                <span className="data">{user.pddress}</span>
               </span>
               <span>
                 <span className="label">Category : </span>
@@ -222,6 +234,10 @@ export const EntreprenureRequests = () => {
               <span>
                 <span className="label">Business Name : </span>
                 <span className="data">{user.business_name}</span>
+              </span>
+              <span>
+                <span className="label">Business Address : </span>
+                <span className="data">{user.address}</span>
               </span>
               <span>
                 <span className="label">Business Registration No : </span>
@@ -336,8 +352,20 @@ export const ConsultantRequests = () => {
                 <span className="data">{user.email}</span>
               </span>
               <span>
+                <span className="label">Address : </span>
+                <span className="data">{user.address}</span>
+              </span>
+              <span>
                 <span className="label">Qualifications : </span>
                 <span className="data">{user.qualification}</span>
+              </span>
+              <span>
+                <span className="label">Institute : </span>
+                <span className="data">{user.institute}</span>
+              </span>
+              <span>
+                <span className="label">Experiences : </span>
+                <span className="data">{user.experiences}</span>
               </span>
               <span>
                 <span className="label">Consultation Fee Per Session : </span>
@@ -450,6 +478,10 @@ export const DistributorRequests = () => {
               <span>
                 <span className="label">Email : </span>
                 <span className="data">{user.email}</span>
+              </span>
+              <span>
+                <span className="label">Address : </span>
+                <span className="data">{user.address}</span>
               </span>
               <span>
                 <span className="label">Driving License No : </span>
