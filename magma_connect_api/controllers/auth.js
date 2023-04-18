@@ -19,7 +19,8 @@ export const register = (req, res) => {
 
   // sub queries
   const q1 = {
-    startup: "INSERT INTO startup (`username`,`nic`,`category`,`target_area`) VALUE (?)",
+    startup:
+      "INSERT INTO startup (`username`,`nic`,`category`,`target_area`) VALUE (?)",
     entrepreneur: "INSERT INTO entrepreneur (`username`) VALUE (?)",
 
     distributor: "INSERT INTO distributor (`username`,`drl_no`) VALUE (?)",
@@ -381,5 +382,45 @@ export const getConsultations = (req, res) => {
   db.query(sql, thisUser, (err, results) => {
     if (err) throw err;
     res.json(results);
+  });
+};
+
+export const getStartupDetails = (req, res) => {
+  const sql = "SELECT * FROM startup WHERE username = ?";
+  const username = req.params.username;
+
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+export const getEntreprenureDetails = (req, res) => {
+  const sql = "SELECT business.* FROM business INNER JOIN entrepreneur ON entrepreneur.id = business.entr_id WHERE entrepreneur.username = ?";
+  const username = req.params.username;
+
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+export const getConsultantDetails = (req, res) => {
+  const sql = "SELECT * FROM consultant WHERE username = ?";
+  const username = req.params.username;
+
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+export const getDistributorDetails = (req, res) => {
+  const sql = "SELECT distributor.*, vehicle.* FROM distributor, vehicle WHERE distributor.id = vehicle.distributor_id and username = ?";
+  const username = req.params.username;
+
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
   });
 };
