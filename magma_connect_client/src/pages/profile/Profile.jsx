@@ -1,6 +1,7 @@
 import "./profile.scss";
 import { AuthContext } from "../../context/authContext";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
@@ -38,52 +39,75 @@ const Profile = () => {
           <div className="center">
             <span className="userName">{currentUser.name}</span>
             <span className="userRoll">{userRoll()}</span>
-            <button>follow</button>
+            {currentUser.roll === "startup" && (
+              <button>Swith to entreprenure</button>
+            )}
+            {currentUser.roll === "existing" && (
+              <button>Add new Business</button>
+            )}
+            {currentUser.roll === "distributor" && (
+              <button>Add new Vehicle</button>
+            )}
           </div>
         </div>
       </div>
       <div className="userDetails">
-        <div className="uInfo">
-          <form>
-            <div>
+        <div className="PInfo">
+          <form className="userForm">
+            <h2>Personal Information</h2>
+            <div className="element">
               <span>Name </span>
-              <input type="text" placeholder="Name" />
+              <input type="text" placeholder={currentUser.name} />
             </div>
-            <div>
+            <div className="element">
               <span>Email </span>
-              <input type="text" placeholder="Email" />
+              <input type="text" placeholder={currentUser.email} />
             </div>
-            <div>
+            <div className="element">
               <span>Address </span>
-              <input type="text" placeholder="Address" />
+              <input type="text" placeholder={currentUser.address} />
             </div>
-            <div>
+            <div className="element">
               <span>Contact Number </span>
-              <input type="text" placeholder="Contact Number" />
+              <input type="text" placeholder={currentUser.telephone} />
             </div>
             {currentUser.roll === "startup" && (
               <>
-                <div>
+                <div className="element">
                   <span>NIC </span>
                   <input type="text" placeholder="NIC" />
                 </div>
-                <div>
-                  <span>Do you already have a business?</span>
-                  <button>Swith to entreprenure</button>
+                <h2 className="moreDetails">Other Information</h2>
+                <div className="element">
+                  <span>Expected Business Category </span>
+                  <input type="text" placeholder="Business Category" />
+                </div>
+                <div className="element">
+                  <span>Target Business Area </span>
+                  <input type="text" placeholder="Target Area" />
                 </div>
               </>
             )}
             {currentUser.roll === "existing" && (
               <>
-                <div>
+                <h2 className="moreDetails">Business Information</h2>
+                <div className="element">
                   <span>Business Category </span>
                   <input type="text" placeholder="Business Category" />
                 </div>
-                <div>
+                <div className="element">
                   <span>Business Name </span>
                   <input type="text" placeholder="Business Name" />
                 </div>
-                <div>
+                <div className="element">
+                  <span>Business Name </span>
+                  <input type="text" placeholder="Business Name" />
+                </div>
+                <div className="element">
+                  <span>Registration Number </span>
+                  <input type="text" placeholder="Registration Number" />
+                </div>
+                <div className="element">
                   <span>Business Address </span>
                   <input type="text" placeholder="Business Address" />
                 </div>
@@ -91,40 +115,47 @@ const Profile = () => {
             )}
             {currentUser.roll === "consultant" && (
               <>
-                <div>
-                  <span>Qualifications </span>
-                  <input type="text" placeholder="Qualifications" />
+                <h2 className="moreDetails">Other Information</h2>
+                <div className="element">
+                  <span>Education Qualifications </span>
+                  <input type="text" placeholder="Education Qualifications" />
                 </div>
-                <div>
+                <div className="element">
                   <span>Institute </span>
                   <input type="text" placeholder="Institute" />
                 </div>
-                <div>
-                  <span>Experiences </span>
-                  <input type="text" placeholder="Experiences" />
+                <div className="element">
+                  <span>Work Experiences </span>
+                  <input type="text" placeholder="Work Experiences" />
                 </div>
-                <div>
+                <div className="element">
                   <span>Consultation Fee </span>
-                  <input type="text" placeholder="Experiences" />
+                  <input type="text" placeholder="Consultation Fee" />
                 </div>
               </>
             )}
             {currentUser.roll === "distributor" && (
               <>
-                <div>
+                <div className="element">
+                  <span>Driving License No </span>
+                  <input type="text" placeholder="Driving License No" />
+                </div>
+                <h2 className="moreDetails">Vehicle Information</h2>
+                <div className="element">
                   <span>Vehicle Type </span>
                   <input type="text" placeholder="Vehicle Type" />
                 </div>
-                <div>
+                <div className="element">
                   <span>Vehicle Number </span>
                   <input type="text" placeholder="Vehicle Number" />
                 </div>
-                <div>
+                <div className="element">
                   <span>Description </span>
                   <input type="text" placeholder="Description" />
                 </div>
               </>
             )}
+            <button className="updateBtn">Update</button>
           </form>
         </div>
       </div>

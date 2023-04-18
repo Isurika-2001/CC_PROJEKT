@@ -30,11 +30,11 @@
     .profileContainer {
       padding: 20px 70px;
 
-      @include mobile{
+      @include mobile {
         padding: 10px;
       }
 
-      @include tablet{
+      @include tablet {
         padding: 20px;
       }
 
@@ -52,7 +52,7 @@
         justify-content: space-between;
         margin-bottom: 20px;
 
-        @include mobile{
+        @include mobile {
           flex-direction: column;
           height: 30vh;
           padding: 20px;
@@ -66,13 +66,13 @@
           gap: 10px;
           color: black;
 
-          .userName{
+          .userName {
             font-size: 20px;
             font-weight: 500;
           }
 
-          .userRoll{
-            font-size: 15px;
+          .userRoll {
+            font-size: 14px;
           }
 
           .info {
@@ -103,11 +103,33 @@
         }
       }
     }
-    .userDetail{
-      .uInfo{
-        form{
-          span{
-            color: black;
+    .userDetails {
+      margin: 10px;
+      padding: 10px;
+      .PInfo {
+        .userForm {
+          h2 {
+            margin-bottom: 20px;
+            color: rgb(86, 86, 86);
+          }
+          .moreDetails {
+            margin-top: 30px;
+          }
+          .element {
+            display: flex;
+            margin: 5px;
+            padding: 5px;
+            span {
+              padding: 7px;
+              font-size: 14px;
+              width: 300px;
+              display: inline-block;
+            }
+            input {
+              padding: 7px;
+              width: 100%;
+              border: none;
+            }
           }
         }
       }
