@@ -1,5 +1,6 @@
 import "./welcome.scss";
 import videoBg from "../../assets/backgroundvideo.mp4";
+import welcomeVideo from "../../assets/welcome video.mp4";
 import allinone from "../../assets//a user freindly.jpg";
 import consultant from "../../assets/consultant.jpg";
 import network from "../../assets/networkk.jpg";
@@ -135,7 +136,7 @@ const Welcome = () => {
         </p>
         <div className="video-container">
           <video controls>
-            <source src={videoBg} type="video/mp4" />
+            <source src={welcomeVideo} type="video/mp4" />
           </video>
         </div>
       </div>
@@ -185,11 +186,11 @@ const Welcome = () => {
                 Contact Us
               </a>
             </nav>
-            <div className="footer__social-icons">
+            {/* <div className="footer__social-icons">
               <a href="/">a</a>
               <a href="/">a</a>
               <a href="/">a</a>
-            </div>
+            </div> */}
           </div>
           <div className="footer__right">
             <p className="footer__copy">
@@ -197,7 +198,6 @@ const Welcome = () => {
               Reserved. Design and Developed By Jayodya, Isurika &amp; Annika
             </p>
           </div>
-          <div>modified</div>
         </div>
       </div>
     </div>
