@@ -1,5 +1,6 @@
 import "./welcome.scss";
 import videoBg from "../../assets/backgroundvideo.mp4";
+import welcomeVideo from "../../assets/welcome video.mp4";
 import allinone from "../../assets//a user freindly.jpg";
 import consultant from "../../assets/consultant.jpg";
 import network from "../../assets/networkk.jpg";
@@ -10,6 +11,10 @@ const Welcome = () => {
     const section = document.getElementById(id);
     section.scrollIntoView({ behavior: "smooth" });
   }
+
+
+  
+  
 
   return (
     <div className="welcome">
@@ -40,7 +45,7 @@ const Welcome = () => {
               Our platform is designed to be easy to use, even for those without
               technical knowledge.
             </p>
-            <button className="features_btn"> Learn More </button>
+            <button className="features_btn"  onClick={() => scrollToSection("user_friendly")}> Learn More </button>
           </div>
           <div className="feature">
             <h3>Knowledge Base</h3>
@@ -49,7 +54,7 @@ const Welcome = () => {
               Our platform provides a vast library of resources to grow your
               business.
             </p>
-            <button className="features_btn">Learn More</button>
+            <button className="features_btn" onClick={() => scrollToSection("EntrepreneurNetwork")}>Learn More</button>
           </div>
           <div className="feature">
             <h3>All-in-One Solution</h3>
@@ -58,12 +63,12 @@ const Welcome = () => {
               You don't need to use multiple tools to manage your business. We
               offer everything in one place.
             </p>
-            <button className="features_btn">Learn More</button>
+            <button className="features_btn" onClick={() => scrollToSection("EntrepreneurNetwork")}>Learn More</button>
           </div>
         </div>
       </div>
 
-      <div className="EntrepreneurNetwork">
+      <div className="EntrepreneurNetwork" id="EntrepreneurNetwork">
         <h1>What we offer - All in One Solution</h1>
         <div className="content">
           <div className="EntrepreneurNetwork__content">
@@ -122,7 +127,7 @@ const Welcome = () => {
         </div>
       </div>
 
-      <div className="user_friendly">
+      <div className="user_friendly" id="user_friendly">
       <h1> User Friendly Interface</h1>
 
       <div className="content">
@@ -135,7 +140,7 @@ const Welcome = () => {
         </p>
         <div className="video-container">
           <video controls>
-            <source src={videoBg} type="video/mp4" />
+            <source src={welcomeVideo} type="video/mp4" />
           </video>
         </div>
       </div>
@@ -185,11 +190,11 @@ const Welcome = () => {
                 Contact Us
               </a>
             </nav>
-            <div className="footer__social-icons">
+            {/* <div className="footer__social-icons">
               <a href="/">a</a>
               <a href="/">a</a>
               <a href="/">a</a>
-            </div>
+            </div> */}
           </div>
           <div className="footer__right">
             <p className="footer__copy">
@@ -197,7 +202,6 @@ const Welcome = () => {
               Reserved. Design and Developed By Jayodya, Isurika &amp; Annika
             </p>
           </div>
-          <div>modified</div>
         </div>
       </div>
     </div>
