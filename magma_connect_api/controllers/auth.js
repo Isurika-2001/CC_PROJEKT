@@ -90,7 +90,7 @@ export const register = (req, res) => {
   db.query(check.username, values.username, (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length) {
-      return res.status(400).json("User already exist!");
+      return res.status(400).json("User already exists!");
     }
 
     // check validations

@@ -3,6 +3,9 @@ import Joi from "joi";
 export const registerValidation = (data) => {
   const schema = Joi.object({
     // common validations
+    roll: Joi.string()
+      .valid("customer", "startup", "existing", "distributor", "consultant")
+      .required(),
     username: Joi.string().alphanum().min(3).max(40).required(),
     email: Joi.string().email().required(),
     password: Joi.string()
@@ -11,9 +14,6 @@ export const registerValidation = (data) => {
       .required(),
     telephone: Joi.string().pattern(new RegExp("^[0-9]{10}$")).required(),
     name: Joi.string().required(),
-    roll: Joi.string()
-      .valid("customer", "startup", "existing", "distributor", "consultant")
-      .required(),
     Paddress: Joi.string().required(),
 
     // startup validations
