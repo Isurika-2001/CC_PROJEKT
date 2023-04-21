@@ -41,7 +41,7 @@ export const StartupRequests = () => {
       return;
     }
 
-    // Delete the user from the database
+    // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
         comment: comments[username],
@@ -146,26 +146,26 @@ export const EntreprenureRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (username) => {
+  const handleApprove = (username, reg_no) => {
     // Update the user's registration status to 1
     axios
-      .put(`http://localhost:8800/api/admins/approveRequests/${username}`)
+      .put(`http://localhost:8800/api/admins/approveRequests/${username}/${reg_no}`)
       .then((res) => {
+        console.log(reg_no);
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
       })
       .catch((err) => console.log(err));
   };
-
+  
   const handleDecline = (username) => {
     // Check if a comment has been entered
     if (!comments[username]) {
       alert("Please enter a comment before declining the request.");
       return;
     }
-
-    // Delete the user from the database
+    // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
         comment: comments[username],
@@ -201,7 +201,7 @@ export const EntreprenureRequests = () => {
               <div className="right">
                 <button
                   className="approveBtn"
-                  onClick={() => handleApprove(user.username)}
+                  onClick={() => handleApprove(user.username, user.reg_no)}
                 >
                   Approve
                 </button>
@@ -293,7 +293,7 @@ export const ConsultantRequests = () => {
       return;
     }
 
-    // Delete the user from the database
+    // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
         comment: comments[username],
@@ -421,7 +421,7 @@ export const DistributorRequests = () => {
       return;
     }
 
-    // Delete the user from the database
+    // Add a comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
         comment: comments[username],

@@ -359,7 +359,7 @@ export const consultationPayment = (req, res) => {
 
 export const getEntreprenures = (req, res) => {
   const sql =
-    "SELECT users.username, business.description, business.category, business.business_name, business.reg_no, business.address FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 1";
+    "SELECT users.username, business.description, business.category, business.business_name, business.reg_no, business.address FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 1 and business.reg_status = 1";
   db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -396,7 +396,8 @@ export const getStartupDetails = (req, res) => {
 };
 
 export const getEntreprenureDetails = (req, res) => {
-  const sql = "SELECT business.* FROM business INNER JOIN entrepreneur ON entrepreneur.id = business.entr_id WHERE entrepreneur.username = ?";
+  const sql =
+    "SELECT business.* FROM business INNER JOIN entrepreneur ON entrepreneur.id = business.entr_id WHERE entrepreneur.username = ?";
   const username = req.params.username;
 
   db.query(sql, username, (err, result) => {
@@ -416,10 +417,28 @@ export const getConsultantDetails = (req, res) => {
 };
 
 export const getDistributorDetails = (req, res) => {
-  const sql = "SELECT distributor.*, vehicle.* FROM distributor, vehicle WHERE distributor.id = vehicle.distributor_id and username = ?";
+  const sql =
+    "SELECT distributor.*, vehicle.* FROM distributor, vehicle WHERE distributor.id = vehicle.distributor_id and username = ?";
   const username = req.params.username;
 
   db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+export const switchRequest = (req, res) => {
+  const sql =
+    "INSERT INTO switch_requests (`username`,`category`,`business_name`,`reg_no`,`address`) VALUES (?)";
+
+  const values = {
+    username: req.params.username,
+    category: req.body.category,
+    businessName: req.body.businessName,
+    regNo: req.body.regNo,
+    address: req.body.address,
+  };
+  db.query(sql, [Object.values(values)], (err, result) => {
     if (err) throw err;
     res.json(result);
   });

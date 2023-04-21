@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/getStartupRequests", getStartupRequests);
-router.put("/approveRequests/:username", approveRequests);
+router.put("/approveRequests/:username/:reg_no", approveRequests);
 router.put("/declineRequests/:username", declineRequests);
 
 router.get("/getEntreprenureRequests", getEntreprenureRequests);

@@ -39,7 +39,7 @@
       }
 
       .uInfo {
-        height: 180px;
+        height: fit-content;
         -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
         -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
         box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
@@ -47,6 +47,7 @@
         background-color: themed("bg");
         color: themed("textColor");
         padding: 50px;
+        padding-top: 100px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -99,6 +100,51 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+          }
+          form {
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            max-height: 500px;
+
+            input {
+              border: none;
+              border-bottom: 1px solid lightgray;
+              padding: 10px 10px;
+            }
+
+            .error {
+              font-size: small;
+              font-style: italic;
+            }
+
+            textarea {
+              border: none;
+              border-bottom: 1px solid lightgray;
+              padding: 30px 10px;
+              margin-top: -20px;
+            }
+
+            .footerN {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 10px;
+
+              button {
+                width: 80%;
+                padding: 10px;
+                border: none;
+                background-color: #9a0f0f;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+              }
+              span{
+                font-weight: bold;
+                cursor: pointer;
+                color: #9a0f0f;
+              }
+            }
           }
         }
       }

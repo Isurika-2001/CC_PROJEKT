@@ -4,8 +4,34 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const Profile = () => {
+  const [inputs, setInputs] = useState({
+    email: "",
+    telephone: "",
+    Paddress: "",
+    category: "",
+    businessName: "",
+    regNo: "",
+    address: "",
+  });
+
   const { currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [err, setErr] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleFocus = () => {
+    setIsTyping(true);
+    setErr(null);
+  };
+
+  const handleBlur = () => {
+    setIsTyping(false);
+  };
 
   useEffect(() => {
     if (currentUser.roll === "startup") {
@@ -56,6 +82,40 @@ const Profile = () => {
     }
   };
 
+  const switchAcc = () => {
+    setShowForm(true);
+  };
+
+  const handleForm = () => {
+    setShowForm(false);
+  };
+
+  const resetInputs = () => {
+    setInputs({
+      email: "",
+      telephone: "",
+      Paddress: "",
+      category: "",
+      businessName: "",
+      regNo: "",
+      address: "",
+    });
+  };
+
+  const submitForm = async (e, username) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `http://localhost:8800/api/auth/switchRequest/${username}`,
+        inputs
+      );
+      resetInputs();
+      setErr("Successfully submitted. Please wait for the approval.");
+    } catch (err) {
+      setErr(err.response.data);
+    }
+  };
+
   return (
     <div className="profile">
       <div className="images">
@@ -76,7 +136,73 @@ const Profile = () => {
             <span className="userName">{currentUser.name}</span>
             <span className="userRoll">{userRoll()}</span>
             {currentUser.roll === "startup" && (
-              <button>Swith to entreprenure</button>
+              <>
+                <button onClick={switchAcc}>Switch to entreprenure</button>
+                {showForm && (
+                  <>
+                    <form onSubmit={(e) => e.preventDefault()}>
+                      <input
+                        type="text"
+                        placeholder="Category"
+                        name="category"
+                        value={inputs.category}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Business Name"
+                        name="businessName"
+                        value={inputs.businessName}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Registration Number"
+                        name="regNo"
+                        value={inputs.regNo}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Business Address"
+                        name="address"
+                        value={inputs.address}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                      />
+                      {err && !isTyping && (
+                        <span
+                          className="error"
+                          style={{
+                            color:
+                              err ===
+                              "Successfully submitted. Please wait for the approval."
+                                ? "rgb(0, 172, 95)"
+                                : "red",
+                          }}
+                        >
+                          {err}
+                        </span>
+                      )}
+                      <div className="footerN">
+                        <button
+                          onClick={(e) => submitForm(e, currentUser.username)}
+                        >
+                          Submit
+                        </button>
+                        <span onClick={handleForm}>^</span>
+                      </div>
+                    </form>
+                  </>
+                )}
+              </>
             )}
             {currentUser.roll === "existing" && (
               <button>Add new Business</button>

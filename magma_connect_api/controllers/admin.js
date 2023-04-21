@@ -41,9 +41,18 @@ export const getDistributorRequests = (req, res) => {
 export const approveRequests = (req, res) => {
   const sql = "UPDATE users SET reg_status = 1 WHERE username = ?";
   const username = req.params.username;
+
+  const sql1 = "UPDATE business SET reg_status = 1 WHERE reg_no = ?";
+  const reg_no = req.params.reg_no;
+
   db.query(sql, username, (err, result) => {
     if (err) throw err;
-    res.json({ message: `users with username ${username} has been approved.` });
+    db.query(sql1, [reg_no], (err, result) => {
+      if (err) throw err;
+      res.json({
+        message: `user with username ${username} and business with registration number ${reg_no} has been approved.`,
+      });
+    });
   });
 };
 
@@ -51,13 +60,9 @@ export const approveRequests = (req, res) => {
 export const declineRequests = (req, res) => {
   const sql = "UPDATE users SET comment = ? WHERE username = ?";
   const { username, comment } = req.body;
-  
+
   db.query(sql, [comment, username], (err, result) => {
     if (err) throw err;
     res.json({ message: `User with username ${username} has been declined.` });
   });
 };
-
-
-
-
