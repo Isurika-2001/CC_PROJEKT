@@ -36,9 +36,6 @@ export const Navbar = () => {
           <span>Buy</span>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span>Dashboard</span>
-        </Link>
-        <Link to="/" style={{ textDecoration: "none" }}>
           <span>Contact Us</span>
         </Link>
       </div>
@@ -140,7 +137,6 @@ export const NavbarDefault = () => {
 export const NavbarAdmin = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentAdmin } = useContext(AuthAdminContext);
-
 
   const logout = () => {
     localStorage.removeItem("admin");

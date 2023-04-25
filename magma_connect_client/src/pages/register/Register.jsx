@@ -85,7 +85,7 @@ const Register = () => {
         await login(inputs);
         navigate("/");
       } else {
-        setErr("Successfully submitted. Please wait for the approval.");
+        setErr("Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data");
       }
     } catch (err) {
       setErr(err.response.data);

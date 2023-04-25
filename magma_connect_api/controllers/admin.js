@@ -19,6 +19,15 @@ export const getEntreprenureRequests = (req, res) => {
   });
 };
 
+export const getSwitchRequests = (req, res) => {
+  const sql =
+    "SELECT switch_requests.*, users.name FROM switch_requests INNER JOIN users ON switch_requests.username = users.username";
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+};
+
 export const getConsultantRequests = (req, res) => {
   const sql =
     "SELECT users.*, consultant.* from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=0)  ";
@@ -56,6 +65,52 @@ export const approveRequests = (req, res) => {
   });
 };
 
+export const approveSwitchRequests = (req, res) => {
+  const queries = {
+    remove: "DELETE from switch_requests where username = ?",
+    update: "UPDATE users SET roll = 'existing' WHERE username = ?",
+    entrepreneur: "INSERT INTO entrepreneur (`username`) VALUE (?)",
+    business:
+      "INSERT INTO business (`category`,`business_name`,`reg_no`,`address`,`entr_id`) VALUES (?)",
+  };
+  const username = req.params.username;
+  const values = {
+    category: req.params.category,
+    business_name: req.params.business_name,
+    reg_no: req.params.reg_no,
+    address: req.params.address,
+  };
+
+  db.query(queries.update, username, (err, result) => {
+    if (err) throw err;
+    let businessArray = Object.values(values);
+    db.query(queries.entrepreneur, username, (err, data) => {
+      const entr_id = data.insertId;
+      businessArray.push(entr_id);
+
+      if (err) {
+        console.error(err);
+        return res.status(500).json("Error while saving entrepreneur data!");
+      }
+
+      db.query(queries.business, [businessArray], (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json("Error while saving business data!");
+        }
+        return res.status(200).json("User added successfully");
+      });
+    });
+  });
+  db.query(queries.remove, username, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json("Error while removing request!");
+    }
+    return res.status(200).json("Removed successfully");
+  });
+};
+
 // Decline requests
 export const declineRequests = (req, res) => {
   const sql = "UPDATE users SET comment = ? WHERE username = ?";
@@ -64,5 +119,22 @@ export const declineRequests = (req, res) => {
   db.query(sql, [comment, username], (err, result) => {
     if (err) throw err;
     res.json({ message: `User with username ${username} has been declined.` });
+  });
+};
+
+export const declineSwitchRequests = (req, res) => {
+  const sql = "UPDATE users SET comment = ? WHERE username = ?";
+  const sql2 = "DELETE from switch_requests where username = ?";
+  const { username, comment } = req.body;
+
+  db.query(sql, [comment, username], (err, result) => {
+    if (err) throw err;
+    db.query(sql2, username, (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json("Error while removing request!");
+      }
+      return res.status(200).json("Removed successfully");
+    });
   });
 };

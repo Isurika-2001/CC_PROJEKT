@@ -5,9 +5,6 @@ import axios from "axios";
 
 const Profile = () => {
   const [inputs, setInputs] = useState({
-    email: "",
-    telephone: "",
-    Paddress: "",
     category: "",
     businessName: "",
     regNo: "",
@@ -92,9 +89,6 @@ const Profile = () => {
 
   const resetInputs = () => {
     setInputs({
-      email: "",
-      telephone: "",
-      Paddress: "",
       category: "",
       businessName: "",
       regNo: "",
@@ -110,7 +104,7 @@ const Profile = () => {
         inputs
       );
       resetInputs();
-      setErr("Successfully submitted. Please wait for the approval.");
+      setErr("Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data.");
     } catch (err) {
       setErr(err.response.data);
     }
@@ -183,7 +177,7 @@ const Profile = () => {
                           style={{
                             color:
                               err ===
-                              "Successfully submitted. Please wait for the approval."
+                              "Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data."
                                 ? "rgb(0, 172, 95)"
                                 : "red",
                           }}
@@ -325,7 +319,6 @@ const Profile = () => {
                 </>
               ))}
             </div>
-            <button className="updateBtn">Update</button>
           </form>
         </div>
       </div>

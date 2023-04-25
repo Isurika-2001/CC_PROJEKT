@@ -17,6 +17,7 @@ import {
   ConsultantReq,
   DistributorReq,
   EntrepreneurReq,
+  SwitchReq,
   Home,
   SearchConsultant,
   SearchEntrepreneur,
@@ -195,6 +196,10 @@ function App() {
         {
           path: "/admin/distributor",
           element: currentAdmin ? <DistributorReq /> : <AdminLogin />,
+        },
+        {
+          path: "/admin/switchAC",
+          element: currentAdmin ? <SwitchReq /> : <AdminLogin />,
         },
       ],
     },

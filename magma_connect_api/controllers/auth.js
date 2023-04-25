@@ -1,7 +1,7 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { registerValidation } from "./validation.js";
+import { registerValidation, switchValidation } from "./validation.js";
 
 export const register = (req, res) => {
   // check queries
@@ -277,8 +277,13 @@ export const login = (req, res) => {
             .status(400)
             .json("Please wait for the approval. Come back later!");
         } else {
-          const comment = data[0].comment;
-          return res.status(400).json(comment);
+          let comment = data[0].comment;
+          comment =
+            comment +
+            ". " +
+            "Sorry! your request has been declined." +
+            "For more details please check your email.";
+          return res.status(400).json(comment.toUpperCase());
         }
       });
     } else {
@@ -431,6 +436,11 @@ export const switchRequest = (req, res) => {
   const sql =
     "INSERT INTO switch_requests (`username`,`category`,`business_name`,`reg_no`,`address`) VALUES (?)";
 
+  const check = {
+    username: "SELECT * FROM switch_requests WHERE username = ?",
+    regNo: "SELECT * FROM business WHERE reg_no = ?",
+  };
+
   const values = {
     username: req.params.username,
     category: req.body.category,
@@ -438,8 +448,35 @@ export const switchRequest = (req, res) => {
     regNo: req.body.regNo,
     address: req.body.address,
   };
-  db.query(sql, [Object.values(values)], (err, result) => {
-    if (err) throw err;
-    res.json(result);
+
+  let businessArray = Object.values(values);
+
+  const regNo = req.body.regNo;
+
+  // check validations
+  const { error } = switchValidation(req.body);
+
+  db.query(check.username, values.username, (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length) {
+      return res.status(400).json("You have already submitted your request!");
+    } else {
+      if (error) {
+        const errorMessages = error.details.map((detail) => detail.message);
+        return res.status(400).send(errorMessages);
+      } else {
+        db.query(check.regNo, values.regNo, (err, data) => {
+          if (err) return res.status(500).json(err);
+          if (data.length) {
+            return res.status(400).json("Your business is already registered!");
+          } else {
+            db.query(sql, [businessArray], (err, result) => {
+              if (err) throw err;
+              res.json(result);
+            });
+          }
+        });
+      }
+    }
   });
 };

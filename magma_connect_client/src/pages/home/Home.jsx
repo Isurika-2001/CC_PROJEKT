@@ -9,6 +9,7 @@ import {
   EntreprenureRequests,
   ConsultantRequests,
   DistributorRequests,
+  SwitchAccountRequests,
 } from "../../components/admin/admin";
 import "./home.scss";
 
@@ -88,6 +89,14 @@ export const DistributorReq = () => {
   return (
     <div className="home">
       <DistributorRequests />
+    </div>
+  );
+};
+
+export const SwitchReq = () => {
+  return (
+    <div className="home">
+      <SwitchAccountRequests />
     </div>
   );
 };

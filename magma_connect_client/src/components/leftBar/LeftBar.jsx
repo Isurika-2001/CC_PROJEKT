@@ -225,6 +225,14 @@ export const LeftBarAdmin = () => {
               <span>Distributor Requests</span>
             </NavLink>
           </div>
+          <div></div>
+          <div></div>
+          <div className="item">
+            <img src={DistributorReq} alt="" />
+            <NavLink activeClassName="active" to="/admin/switchAC">
+              <span>Switch Account Requests</span>
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>
