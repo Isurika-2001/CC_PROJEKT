@@ -86,10 +86,31 @@ export const registerValidation = (data) => {
 
 export const switchValidation = (data) => {
   const schema = Joi.object({
+    name: Joi.string().allow(""),
+    email: Joi.string().email().allow(""),
+    paddress: Joi.string().allow(""),
+    telephone: Joi.string().allow(""),
     category: Joi.string().required(),
     businessName: Joi.string().max(40).required(),
     regNo: Joi.string().min(6).max(20).required(),
     address: Joi.string().max(128).required(),
+    description: Joi.string().allow(""),
+  });
+
+  return schema.validate(data);
+};
+
+export const updateValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    paddress: Joi.string().required(),
+    telephone: Joi.string().required(),
+    category: Joi.string().allow(""),
+    businessName: Joi.string().max(40).allow(""),
+    regNo: Joi.string().min(6).max(20).allow(""),
+    address: Joi.string().max(128).allow(""),
+    description: Joi.string().allow(""),
   });
 
   return schema.validate(data);

@@ -67,6 +67,12 @@
           gap: 10px;
           color: black;
 
+          .uploadButton {
+            margin: 10px;
+            padding: 8px;
+            background-color: #9a0f0f;
+          }
+
           .userName {
             font-size: 20px;
             font-weight: 500;
@@ -139,7 +145,7 @@
                 font-weight: bold;
                 cursor: pointer;
               }
-              span{
+              span {
                 font-weight: bold;
                 cursor: pointer;
                 color: #9a0f0f;
@@ -161,6 +167,28 @@
           .moreDetails {
             margin-top: 30px;
           }
+          .usual{
+            .foot {
+              display: flex;
+              flex-direction: column;
+              .error {
+                color: red;
+                font-size: small;
+                font-style: italic;
+                text-align: center;
+              }
+              button {
+                width: 97.5%;
+                margin: 10px;
+                padding: 8px;
+                background-color: #9a0f0f;
+                color: white;
+                border: none;
+                font-weight: bold;
+                border-radius: 10px;
+              }
+            }
+          }
           .element {
             display: flex;
             margin: 5px;
@@ -171,10 +199,33 @@
               width: 300px;
               display: inline-block;
             }
-            input {
+            input,
+            textArea {
               padding: 7px;
               width: 100%;
               border: none;
+            }
+          }
+          .extra {
+            .foot {
+              display: flex;
+              flex-direction: column;
+              .error {
+                color: red;
+                font-size: small;
+                font-style: italic;
+                text-align: center;
+              }
+              button {
+                width: 97.5%;
+                margin: 10px;
+                padding: 8px;
+                background-color: #9a0f0f;
+                color: white;
+                border: none;
+                font-weight: bold;
+                border-radius: 10px;
+              }
             }
           }
         }

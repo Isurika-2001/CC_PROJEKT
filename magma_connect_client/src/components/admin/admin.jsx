@@ -92,7 +92,7 @@ export const StartupRequests = () => {
             <hr />
             <div className="content">
               <span>
-                <span className="label">Phone No : </span>
+                <span className="label">Contact No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
               <span>
@@ -218,7 +218,7 @@ export const EntreprenureRequests = () => {
             <hr />
             <div className="content">
               <span>
-                <span className="label">Phone No : </span>
+                <span className="label">Contact No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
               <span>
@@ -346,7 +346,7 @@ export const ConsultantRequests = () => {
             <hr />
             <div className="content">
               <span>
-                <span className="label">Phone No : </span>
+                <span className="label">Contact No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
               <span>
@@ -474,7 +474,7 @@ export const DistributorRequests = () => {
             <hr />
             <div className="content">
               <span>
-                <span className="label">Phone No : </span>
+                <span className="label">Contact No : </span>
                 <span className="data">{user.telephone}</span>
               </span>
               <span>

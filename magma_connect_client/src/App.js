@@ -1,5 +1,4 @@
 import Login from "./pages/login/Login";
-//Hi
 import AdminLogin from "./pages/adminLogin/AdminLogin"; //------------
 import Register from "./pages/register/Register";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
@@ -27,7 +26,7 @@ import {
   Consultations,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
-import Profile from "./pages/profile/Profile";
+import { Profile } from "./pages/profile/Profile";
 import "./style.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";

@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, logout, switchRequest, getStartupDetails, getDistributorDetails, getEntreprenureDetails, getConsultantDetails, adminLogin, consultationPayment, getEntreprenures, getConsultants, getConsultations } from "../controllers/auth.js";
+import { login, checkConnectEntr, connectEntr, register, logout, switchRequest, updateProfile, getStartupDetails, getDistributorDetails, getEntreprenureDetails, getConsultantDetails, adminLogin, consultationPayment, getEntreprenures, getConsultants, getConsultations } from "../controllers/auth.js";
 
 const router = express.Router();
 
@@ -16,5 +16,8 @@ router.get("/getEntreprenureDetails/:username", getEntreprenureDetails);
 router.get("/getConsultantDetails/:username", getConsultantDetails);
 router.get("/getDistributorDetails/:username", getDistributorDetails);
 router.post("/switchRequest/:username", switchRequest);
+router.post("/updateProfile/:username", updateProfile);
+router.post("/connectEntr/:username/:currentUsername", connectEntr);
+router.post("/checkConnectEntr/:username/:currentUsername", checkConnectEntr);
 
 export default router

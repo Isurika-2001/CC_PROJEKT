@@ -3,15 +3,21 @@ import { AuthContext } from "../../context/authContext";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-const Profile = () => {
+export const Profile = () => {
+  const { currentUser, updateUser } = useContext(AuthContext);
+
   const [inputs, setInputs] = useState({
+    name: currentUser.name,
+    email: currentUser.email,
+    paddress: currentUser.address,
+    telephone: currentUser.telephone,
     category: "",
     businessName: "",
     regNo: "",
     address: "",
+    description: "",
   });
 
-  const { currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [err, setErr] = useState(null);
@@ -87,12 +93,21 @@ const Profile = () => {
     setShowForm(false);
   };
 
+  const handleProfilePic = () => {
+    console.log("profile");
+  };
+
   const resetInputs = () => {
     setInputs({
+      name: "",
+      email: "",
+      paddress: "",
+      telephone: "",
       category: "",
       businessName: "",
       regNo: "",
       address: "",
+      description: "",
     });
   };
 
@@ -104,8 +119,36 @@ const Profile = () => {
         inputs
       );
       resetInputs();
-      setErr("Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data.");
+      setErr(
+        "Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data."
+      );
     } catch (err) {
+      setErr(err.response.data);
+    }
+  };
+
+  const handleUpdate = async (e, username) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `http://localhost:8800/api/auth/updateProfile/${username}`,
+        inputs
+      );
+
+      const updatedUser = {
+        ...JSON.parse(localStorage.getItem("user")),
+        name: inputs.name,
+        email: inputs.email,
+        address: inputs.paddress,
+        telephone: inputs.telephone,
+      };
+
+      updateUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      alert("Details updated successfully");
+      resetInputs();
+    } catch (err) {
+      console.log(err.response.data);
       setErr(err.response.data);
     }
   };
@@ -122,11 +165,16 @@ const Profile = () => {
           src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
           alt=""
           className="profilePic"
+          onClick={handleProfilePic}
         />
       </div>
       <div className="profileContainer">
         <div className="uInfo">
           <div className="center">
+            <div>
+              <input type="text"></input>
+              <button className="uploadButton">Upload</button>
+            </div>
             <span className="userName">{currentUser.name}</span>
             <span className="userRoll">{userRoll()}</span>
             {currentUser.roll === "startup" && (
@@ -198,12 +246,6 @@ const Profile = () => {
                 )}
               </>
             )}
-            {currentUser.roll === "existing" && (
-              <button>Add new Business</button>
-            )}
-            {currentUser.roll === "distributor" && (
-              <button>Add new Vehicle</button>
-            )}
           </div>
         </div>
       </div>
@@ -214,38 +256,89 @@ const Profile = () => {
             <div className="usual">
               <div className="element">
                 <span>Name </span>
-                <input type="text" placeholder={currentUser.name} />
+                <input
+                  type="text"
+                  name="name"
+                  value={inputs.name}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={currentUser.name}
+                />
               </div>
               <div className="element">
                 <span>Email </span>
-                <input type="text" placeholder={currentUser.email} />
+                <input
+                  type="text"
+                  name="email"
+                  value={inputs.email}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={currentUser.email}
+                />
               </div>
               <div className="element">
                 <span>Address </span>
-                <input type="text" placeholder={currentUser.address} />
+                <input
+                  type="text"
+                  name="paddress"
+                  value={inputs.paddress}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={currentUser.address}
+                />
               </div>
               <div className="element">
                 <span>Contact Number </span>
-                <input type="text" placeholder={currentUser.telephone} />
+                <input
+                  type="text"
+                  name="telephone"
+                  value={inputs.telephone}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  placeholder={currentUser.telephone}
+                />
               </div>
+
+              {currentUser.roll === "customer" && (
+                <div className="foot">
+                  {err && !isTyping && <span className="error">{err}</span>}
+                  <button
+                    onClick={(e) => handleUpdate(e, currentUser.username)}
+                  >
+                    UPDATE
+                  </button>
+                </div>
+              )}
             </div>
             <div className="extra">
               {users.map((user) => (
                 <>
                   {currentUser.roll === "startup" && (
                     <>
-                      <div className="element">
-                        <span>NIC </span>
-                        <input type="text" placeholder={user.nic} />
-                      </div>
                       <h2 className="moreDetails">Other Information</h2>
                       <div className="element">
+                        <span>NIC </span>
+                        <input type="text" placeholder={user.nic} readOnly />
+                      </div>
+                      <div className="element">
                         <span>Expected Business Category </span>
-                        <input type="text" placeholder={user.category} />
+                        <input
+                          type="text"
+                          placeholder={user.category}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Target Business Area </span>
-                        <input type="text" placeholder={user.target_area} />
+                        <input
+                          type="text"
+                          placeholder={user.target_area}
+                          readOnly
+                        />
                       </div>
                     </>
                   )}
@@ -254,23 +347,43 @@ const Profile = () => {
                       <h2 className="moreDetails">Business Information</h2>
                       <div className="element">
                         <span>Business Category </span>
-                        <input type="text" placeholder={user.category} />
+                        <input
+                          type="text"
+                          placeholder={user.category}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Business Name </span>
-                        <input type="text" placeholder={user.business_name} />
+                        <input
+                          type="text"
+                          placeholder={user.business_name}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Registration Number </span>
-                        <input type="text" placeholder={user.reg_no} />
+                        <input type="text" placeholder={user.reg_no} readOnly />
                       </div>
                       <div className="element">
                         <span>Business Address </span>
-                        <input type="text" placeholder={user.address} />
+                        <input
+                          type="text"
+                          placeholder={user.address}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Description </span>
-                        <input type="text" placeholder={user.description} />
+                        <textarea
+                          type="text"
+                          placeholder={user.description}
+                          onChange={handleChange}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                          name="description"
+                          value={inputs.description}
+                        />
                       </div>
                     </>
                   )}
@@ -279,43 +392,79 @@ const Profile = () => {
                       <h2 className="moreDetails">Other Information</h2>
                       <div className="element">
                         <span>Education Qualifications </span>
-                        <input type="text" placeholder={user.qualification} />
+                        <input
+                          type="text"
+                          placeholder={user.qualification}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Institute </span>
-                        <input type="text" placeholder={user.institute} />
+                        <input
+                          type="text"
+                          placeholder={user.institute}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Work Experiences </span>
-                        <input type="text" placeholder={user.experiences} />
+                        <input
+                          type="text"
+                          placeholder={user.experiences}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Consultation Fee </span>
-                        <input type="text" placeholder={user.fee} />
+                        <input type="text" placeholder={user.fee} readOnly />
                       </div>
                     </>
                   )}
                   {currentUser.roll === "distributor" && (
                     <>
-                      <div className="element">
-                        <span>Driving License No </span>
-                        <input type="text" placeholder="Driving License No" />
-                      </div>
                       <h2 className="moreDetails">Vehicle Information</h2>
                       <div className="element">
+                        <span>Driving License No </span>
+                        <input type="text" placeholder={user.drl_no} readOnly />
+                      </div>
+                      <div className="element">
                         <span>Vehicle Type </span>
-                        <input type="text" placeholder={user.vehicle_type} />
+                        <input
+                          type="text"
+                          placeholder={user.vehicle_type}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Vehicle Number </span>
-                        <input type="text" placeholder={user.vehicle_no} />
+                        <input
+                          type="text"
+                          placeholder={user.vehicle_no}
+                          readOnly
+                        />
                       </div>
                       <div className="element">
                         <span>Description </span>
-                        <input type="text" placeholder={user.description} />
+                        <textarea
+                          type="text"
+                          placeholder={user.description}
+                          onChange={handleChange}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                          name="description"
+                          value={inputs.description}
+                        />
                       </div>
                     </>
                   )}
+                  <div className="foot">
+                    {err && !isTyping && <span className="error">{err}</span>}
+                    <button
+                      onClick={(e) => handleUpdate(e, currentUser.username)}
+                    >
+                      UPDATE
+                    </button>
+                  </div>
                 </>
               ))}
             </div>
@@ -325,5 +474,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

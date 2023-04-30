@@ -1,7 +1,11 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { registerValidation, switchValidation } from "./validation.js";
+import {
+  registerValidation,
+  switchValidation,
+  updateValidation,
+} from "./validation.js";
 
 export const register = (req, res) => {
   // check queries
@@ -373,7 +377,7 @@ export const getEntreprenures = (req, res) => {
 
 export const getConsultants = (req, res) => {
   const sql =
-    "SELECT users.username, users.name, consultant.id, consultant.description, consultant.qualification, consultant.fee from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=1)  ";
+    "SELECT users.username, users.name, consultant.* from users, consultant where users.username = consultant.username and users.username in (select username from users where reg_status=1)  ";
   db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -480,3 +484,83 @@ export const switchRequest = (req, res) => {
     }
   });
 };
+
+export const updateProfile = (req, res) => {
+  const { name, email, paddress, telephone } = req.body;
+  const { username } = req.params;
+
+  let update = "UPDATE users SET ";
+  const updateDes =
+    "UPDATE business SET description = ? WHERE entr_id = (SELECT id FROM entrepreneur WHERE username = ?)";
+
+  let values = [];
+
+  if (name !== null) {
+    update += "name = ?, ";
+    values.push(name);
+  }
+  if (email !== null) {
+    update += "email = ?, ";
+    values.push(email);
+  }
+  if (paddress !== null) {
+    update += "address = ?, ";
+    values.push(paddress);
+  }
+  if (telephone !== null) {
+    update += "telephone = ?, ";
+    values.push(telephone);
+  }
+
+  update = update.slice(0, -2);
+
+  update += " WHERE username = ?";
+
+  values.push(username);
+
+  const description = req.body.description;
+
+  // check validations
+  const { error } = updateValidation(req.body);
+  if (error) {
+    const errorMessages = error.details.map((detail) => detail.message);
+    return res.status(400).send(errorMessages);
+  } else {
+    db.query(update, values, (err, result) => {
+      if (err) throw err;
+      if (description !== null && description !== "") {
+        db.query(updateDes, [description, username], (err, result) => {
+          if (err) throw err;
+          res.json(result);
+        });
+      } else {
+        res.json(result);
+      }
+    });
+  }
+};
+
+export const connectEntr = (req, res) => {
+  const insert = "INSERT INTO connect (entre1, entre2) VALUES (?, ?)";
+  const { username, currentUsername } = req.params; 
+  console.log(username, currentUsername);
+  db.query(insert, [username, currentUsername], (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+export const checkConnectEntr = (req, res) => {
+  const select = "SELECT * FROM connect WHERE (entre1 = ? AND entre2 = ?) OR (entre1 = ? AND entre2 = ?)";
+  const { username, currentUsername } = req.params;
+  console.log(username, currentUsername);
+  db.query(select, [username, currentUsername, currentUsername, username], (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      res.json({ connected: true });
+    } else {
+      res.json({ connected: false });
+    }
+  });
+};
+

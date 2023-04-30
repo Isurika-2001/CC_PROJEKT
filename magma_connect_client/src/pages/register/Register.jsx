@@ -338,7 +338,7 @@ const Register = () => {
                 style={{
                   color:
                     err ===
-                    "Successfully submitted. Please wait for the approval."
+                    "Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data"
                       ? "rgb(0, 172, 95)"
                       : "red",
                 }}

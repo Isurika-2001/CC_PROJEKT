@@ -8,29 +8,33 @@ import "./search.scss";
 export const Entrepreneur = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { currentUser } = useContext(AuthContext);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
     axios
       .get("http://localhost:8800/api/auth/getEntreprenures")
-      .then((res) => setUsers(res.data))
+      .then((res) => {
+        // Filter out the current user's information from the fetched data
+        const filteredData = res.data.filter(
+          (user) => user.username !== currentUser.username
+        );
+        setUsers(filteredData);
+      })
       .catch((err) => console.log(err));
   }, []);
 
-  const handleProfile = (username) => {
-    // go to the target profile
-  };
-
-  const handleHire = (username) => {
-    // sent an request to the target entrepreneur
-    // axios
-    //   .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
-    //   .then((res) => {
-    //     console.log(res.data.message);
-    //     // Remove the user from the list
-    //     setUsers(users.filter((user) => user.username !== username));
-    //   })
-    //   .catch((err) => console.log(err));
+  const handleConnect = async (e, username, currentUsername) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `http://localhost:8800/api/auth/connectEntr/${username}/${currentUsername}`
+      );
+      console.log("Successfully added to database.");
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   const handleSearch = (event) => {
@@ -40,18 +44,24 @@ export const Entrepreneur = () => {
   const filteredUsers = users.filter((user) => {
     const business_name = user.business_name.toLowerCase();
     const category = user.category.toLowerCase();
+    const address = user.address.toLowerCase();
     const lowerSearchTerm = searchTerm.toLowerCase();
 
     return (
       business_name.includes(lowerSearchTerm) ||
-      category.includes(lowerSearchTerm)
+      category.includes(lowerSearchTerm) ||
+      address.includes(lowerSearchTerm)
     );
   });
 
   return (
     <div className="Home">
       <div className="searchBar">
-        <input type="text" placeholder="Search" onChange={handleSearch} />
+        <input
+          type="text"
+          placeholder="Search by business category, name, or address "
+          onChange={handleSearch}
+        />
       </div>
       {filteredUsers.map((user) => (
         <div className="request" key={user.username}>
@@ -59,25 +69,33 @@ export const Entrepreneur = () => {
             <div className="top">
               <h2 className="left">{user.business_name}</h2>
               <div className="right">
-                <button
-                  className="profileBtn"
-                  onClick={() => handleProfile(user.username)}
-                >
-                  Profile
-                </button>
-                <button
-                  className="hireBtn"
-                  onClick={() => handleHire(user.username)}
-                >
-                  Connect
-                </button>
+                {isConnected ? (
+                  <button className="hireBtn">Disconnect</button>
+                ) : (
+                  <button
+                    className="hireBtn"
+                    onClick={(e) =>
+                      handleConnect(e, user.username, currentUser.username)
+                    }
+                  >
+                    Connect
+                  </button>
+                )}
               </div>
             </div>
             <hr />
             <div className="content">
               <span>
+                <span className="label">Business Name : </span>
+                <span className="data">{user.business_name}</span>
+              </span>
+              <span>
                 <span className="label">Category : </span>
                 <span className="data">{user.category}</span>
+              </span>
+              <span>
+                <span className="label">Address : </span>
+                <span className="data">{user.address}</span>
               </span>
               <span>
                 <span className="label">Description : </span>
@@ -104,10 +122,6 @@ export const Consultant = () => {
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
   }, []);
-
-  const handleProfile = (username) => {
-    // go to the target profile
-  };
 
   const handleToken = async (token, user) => {
     try {
@@ -148,7 +162,11 @@ export const Consultant = () => {
   return (
     <div className="Home">
       <div className="searchBar">
-        <input type="text" placeholder="Search" onChange={handleSearch} />
+        <input
+          type="text"
+          placeholder="Search by consultant name, or consultant fee"
+          onChange={handleSearch}
+        />
       </div>
       {filteredUsers.map((user) => (
         <div className="request" key={user.username}>
@@ -156,12 +174,6 @@ export const Consultant = () => {
             <div className="top">
               <h2 className="left">{user.name}</h2>
               <div className="right">
-                <button
-                  className="profileBtn"
-                  onClick={() => handleProfile(user.username)}
-                >
-                  Profile
-                </button>
                 <StripeCheckout
                   className="hireBtn"
                   stripeKey="pk_test_51MjHDhIEmwpzpx2CznjamGPiR01TA7FIV9TJyvlDFMPLMcwJvpZLTeU0YX3uknfaJ16v6Yzr7pABzqY1WeIAIS4g007Do8qbJI"
@@ -170,13 +182,6 @@ export const Consultant = () => {
                   description="Consultation Fee"
                   token={(token) => handleToken(token, user)}
                 ></StripeCheckout>
-
-                {/* <button
-                  className="hireBtn"
-                  onClick={() => handleHire(user.username)}
-                >
-                  Hire
-                </button> */}
               </div>
             </div>
             <hr />
@@ -187,11 +192,16 @@ export const Consultant = () => {
               </span>
               <span>
                 <span className="label">Consultation Fee Per Session : </span>
+                <span className="data">LKR</span>
                 <span className="data">{user.fee}</span>
               </span>
               <span>
-                <span className="label">Description : </span>
-                <span className="data">{user.description}</span>
+                <span className="label">Institute : </span>
+                <span className="data">{user.institute}</span>
+              </span>
+              <span>
+                <span className="label">Experiences : </span>
+                <span className="data">{user.experiences}</span>
               </span>
             </div>
           </div>
