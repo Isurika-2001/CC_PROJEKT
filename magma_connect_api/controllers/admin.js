@@ -68,6 +68,7 @@ export const approveRequests = (req, res) => {
 export const approveSwitchRequests = (req, res) => {
   const queries = {
     remove: "DELETE from switch_requests where username = ?",
+    remove2: "DELETE from startup where username = ?",
     update: "UPDATE users SET roll = 'existing' WHERE username = ?",
     entrepreneur: "INSERT INTO entrepreneur (`username`) VALUE (?)",
     business:
@@ -98,16 +99,21 @@ export const approveSwitchRequests = (req, res) => {
           console.error(err);
           return res.status(500).json("Error while saving business data!");
         }
-        return res.status(200).json("User added successfully");
+        db.query(queries.remove, username, (err, data) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json("Error while removing request!");
+          }
+          db.query(queries.remove2, username, (err, data) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).json("Error while removing startup!");
+            }
+          });
+          return res.status(200).json("User added successfully");
+        });
       });
     });
-  });
-  db.query(queries.remove, username, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json("Error while removing request!");
-    }
-    return res.status(200).json("Removed successfully");
   });
 };
 

@@ -461,27 +461,30 @@ export const switchRequest = (req, res) => {
   const { error } = switchValidation(req.body);
 
   db.query(check.username, values.username, (err, data) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      return res.status(500).json(err);
+    }
+    
     if (data.length) {
       return res.status(400).json("You have already submitted your request!");
-    } else {
-      if (error) {
-        const errorMessages = error.details.map((detail) => detail.message);
-        return res.status(400).send(errorMessages);
-      } else {
-        db.query(check.regNo, values.regNo, (err, data) => {
-          if (err) return res.status(500).json(err);
-          if (data.length) {
-            return res.status(400).json("Your business is already registered!");
-          } else {
-            db.query(sql, [businessArray], (err, result) => {
-              if (err) throw err;
-              res.json(result);
-            });
-          }
-        });
-      }
     }
+
+    if (error) {
+      const errorMessages = error.details.map((detail) => detail.message);
+      return res.status(400).send(errorMessages);
+    }
+
+    db.query(check.regNo, values.regNo, (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.length) {
+        return res.status(400).json("Your business is already registered!");
+      }
+
+      db.query(sql, [businessArray], (err, result) => {
+        if (err) throw err;
+        res.json(result);
+      });
+    });
   });
 };
 
@@ -542,7 +545,7 @@ export const updateProfile = (req, res) => {
 
 export const connectEntr = (req, res) => {
   const insert = "INSERT INTO connect (entre1, entre2) VALUES (?, ?)";
-  const { username, currentUsername } = req.params; 
+  const { username, currentUsername } = req.params;
   console.log(username, currentUsername);
   db.query(insert, [username, currentUsername], (err, result) => {
     if (err) throw err;
@@ -551,16 +554,20 @@ export const connectEntr = (req, res) => {
 };
 
 export const checkConnectEntr = (req, res) => {
-  const select = "SELECT * FROM connect WHERE (entre1 = ? AND entre2 = ?) OR (entre1 = ? AND entre2 = ?)";
+  const select =
+    "SELECT * FROM connect WHERE (entre1 = ? AND entre2 = ?) OR (entre1 = ? AND entre2 = ?)";
   const { username, currentUsername } = req.params;
   console.log(username, currentUsername);
-  db.query(select, [username, currentUsername, currentUsername, username], (err, result) => {
-    if (err) throw err;
-    if (result.length > 0) {
-      res.json({ connected: true });
-    } else {
-      res.json({ connected: false });
+  db.query(
+    select,
+    [username, currentUsername, currentUsername, username],
+    (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+        res.json({ connected: true });
+      } else {
+        res.json({ connected: false });
+      }
     }
-  });
+  );
 };
-

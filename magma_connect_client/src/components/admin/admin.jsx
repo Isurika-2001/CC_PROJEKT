@@ -545,6 +545,8 @@ export const SwitchAccountRequests = () => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
+        
+        localStorage.removeItem('user');
       })
       .catch((err) => console.log(err));
   };
