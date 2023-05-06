@@ -12,7 +12,7 @@ export const getStartupRequests = (req, res) => {
 
 export const getEntreprenureRequests = (req, res) => {
   const sql =
-    "SELECT users.username, users.name, users.telephone, users.email, users.address as pddress, business.* FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 0";
+    "SELECT users.username, users.name, users.telephone, users.email, users.address as pddress, business.* FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 0 and users.comment is null";
   db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);

@@ -85,7 +85,9 @@ const Register = () => {
         await login(inputs);
         navigate("/");
       } else {
-        setErr("Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data");
+        setErr(
+          "Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data"
+        );
       }
     } catch (err) {
       setErr(err.response.data);
@@ -190,15 +192,33 @@ const Register = () => {
 
             {showAdditionalFields && inputs.roll === "existing" && (
               <>
-                <input
-                  type="text"
-                  placeholder="Category"
-                  name="category"
-                  value={inputs.category}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                />
+                <div>
+                  <select
+                    name="category"
+                    value={inputs.category}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Food">Food</option>
+                    <option value="Apperal">Apperal</option>
+                    <option value="stationary">stationary</option>
+                    <option value="export">export</option>
+                    <option value="import">import</option>
+                    <option value="">other</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Type here"
+                    name="category"
+                    value={inputs.category}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  />
+                </div>
+
                 <input
                   type="text"
                   placeholder="Business Name"
@@ -240,15 +260,32 @@ const Register = () => {
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                 />
-                <input
-                  type="text"
-                  placeholder="Your Expected Business Category (ex: Apparel Industry)"
-                  name="ex_category"
-                  value={inputs.ex_category}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                />
+                <div>
+                  <select
+                    name="category"
+                    value={inputs.ex_category}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  >
+                    <option value="">Select Business category</option>
+                    <option value="Food">Food</option>
+                    <option value="Apperal">Apperal</option>
+                    <option value="stationary">stationary</option>
+                    <option value="export">export</option>
+                    <option value="import">import</option>
+                    <option value="">other</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Type here"
+                    name="ex_category"
+                    value={inputs.ex_category}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  />
+                </div>
                 <input
                   type="text"
                   placeholder="Target area (ex: Colombo West)"
