@@ -68,8 +68,7 @@ export const Entrepreneur = () => {
             <div className="top">
               <h2 className="left">{user.business_name}</h2>
               <div className="right">
-                  <button className="connectBtn">Connect</button>
-                
+                <button className="connectBtn">Connect</button>
               </div>
             </div>
             <hr />
@@ -164,15 +163,18 @@ export const Consultant = () => {
               <h2 className="left">{user.name}</h2>
               <div className="right">
                 <StripeCheckout
-                  locale="es"
+                  locale="en"
                   className="hireBtn"
                   stripeKey="pk_test_51MjHDhIEmwpzpx2CznjamGPiR01TA7FIV9TJyvlDFMPLMcwJvpZLTeU0YX3uknfaJ16v6Yzr7pABzqY1WeIAIS4g007Do8qbJI"
                   amount={user.fee * 100}
+                  currency="LKR"
                   name={user.name}
-                  description="Consultation Fee"
+                  description={`Pay LKR ${user.fee}`}
                   token={(token) => handleToken(token, user)}
                 >
-                  <button className="btnHire" type="button">Hire</button>
+                  <button className="btnHire" type="button">
+                    Hire
+                  </button>
                 </StripeCheckout>
               </div>
             </div>
