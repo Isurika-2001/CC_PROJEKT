@@ -9,7 +9,6 @@ export const Entrepreneur = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { currentUser } = useContext(AuthContext);
-  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
@@ -69,18 +68,8 @@ export const Entrepreneur = () => {
             <div className="top">
               <h2 className="left">{user.business_name}</h2>
               <div className="right">
-                {isConnected ? (
-                  <button className="hireBtn">Disconnect</button>
-                ) : (
-                  <button
-                    className="hireBtn"
-                    onClick={(e) =>
-                      handleConnect(e, user.username, currentUser.username)
-                    }
-                  >
-                    Connect
-                  </button>
-                )}
+                  <button className="connectBtn">Connect</button>
+                
               </div>
             </div>
             <hr />
@@ -175,13 +164,16 @@ export const Consultant = () => {
               <h2 className="left">{user.name}</h2>
               <div className="right">
                 <StripeCheckout
+                  locale="es"
                   className="hireBtn"
                   stripeKey="pk_test_51MjHDhIEmwpzpx2CznjamGPiR01TA7FIV9TJyvlDFMPLMcwJvpZLTeU0YX3uknfaJ16v6Yzr7pABzqY1WeIAIS4g007Do8qbJI"
                   amount={user.fee * 100}
                   name={user.name}
                   description="Consultation Fee"
                   token={(token) => handleToken(token, user)}
-                ></StripeCheckout>
+                >
+                  <button className="btnHire" type="button">Hire</button>
+                </StripeCheckout>
               </div>
             </div>
             <hr />
