@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import ProfilePic from "../../assets/user.png";
 import StartupReq from "../../assets/startup request 2.png";
 import EntreReq from "../../assets/entrepreneur requests 1.png";
+import SwitchReq from "../../assets/interaction.png";
 import DistributorReq from "../../assets/distributor requests.png";
 import ConsultantReq from "../../assets/consultant requests.png";
 import Blog from "../../assets/blog.png";
@@ -230,7 +231,7 @@ export const LeftBarAdmin = () => {
           <div></div>
           <div></div>
           <div className="item">
-            <img src={DistributorReq} alt="" />
+            <img src={SwitchReq} alt="" />
             <NavLink activeClassName="active" to="/admin/switchAC">
               <span>Switch Account Requests</span>
             </NavLink>
