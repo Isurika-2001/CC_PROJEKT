@@ -3,6 +3,7 @@ import Share from "../../components/share/Share";
 import { Payment } from "../../components/payment/payment";
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur";
 import { GetCustomers } from "../../components/search/consultant";
+import { ListProduct } from "../../components/listProducts/ListProduct";
 import {
   UserRequests,
   StartupRequests,
@@ -97,6 +98,15 @@ export const SwitchReq = () => {
   return (
     <div className="home">
       <SwitchAccountRequests />
+    </div>
+  );
+};
+
+
+export const ListProducts = () => {
+  return (
+    <div className="home">
+      <ListProduct />
     </div>
   );
 };
