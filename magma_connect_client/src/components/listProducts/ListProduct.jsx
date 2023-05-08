@@ -1,8 +1,41 @@
 import "./listProduct.scss";
+import axios from "axios";
 
-import React from 'react'
+
+import React, { useState, useContext } from 'react'
 
 export const ListProduct = () => {
+  const [inputs, setInputs] =useState({
+    name: "",
+    category: "",
+    description: "",
+  });
+
+
+  const resetInputs = () => {
+    setInputs({
+      name: "",
+      category: "",
+      description: "",
+    });
+  };
+ 
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8800/api/auth/listproduct", inputs);
+      resetInputs();
+    
+    } catch (err) {
+     
+    }
+  };
+
+
+
+
+
   return (
     <div class="form-wrapper">
   <h2>Add New Product or Service</h2>

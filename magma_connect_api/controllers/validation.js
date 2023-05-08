@@ -105,7 +105,7 @@ export const updateValidation = (data) => {
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     paddress: Joi.string().required(),
-    telephone: Joi.string().required(),
+    telephone: Joi.string().min(10).max(10).required(),
     category: Joi.string().allow(""),
     businessName: Joi.string().max(40).allow(""),
     regNo: Joi.string().min(6).max(20).allow(""),
