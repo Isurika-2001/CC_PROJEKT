@@ -23,16 +23,8 @@ export const GetCustomers = () => {
     // go to the target profile
   };
 
-  const handleHire = (username) => {
-    // sent an request to the target entrepreneur
-    // axios
-    //   .put(`http://localhost:8800/api/admins/declineRequests/${username}`)
-    //   .then((res) => {
-    //     console.log(res.data.message);
-    //     // Remove the user from the list
-    //     setUsers(users.filter((user) => user.username !== username));
-    //   })
-    //   .catch((err) => console.log(err));
+  const handleClickChat = (username) => {
+    // handle click chat
   };
 
   const handleSearch = (event) => {
@@ -60,16 +52,10 @@ export const GetCustomers = () => {
               <h2 className="left">{user.name}</h2>
               <div className="right">
                 <button
-                  className="profileBtn"
-                  onClick={() => handleProfile(user.username)}
+                  className="connectBtn"
+                  onClick={() => handleClickChat(user.username)}
                 >
-                  Profile
-                </button>
-                <button
-                  className="hireBtn"
-                  onClick={() => handleHire(user.username)}
-                >
-                  Connect
+                  Chat
                 </button>
               </div>
             </div>
