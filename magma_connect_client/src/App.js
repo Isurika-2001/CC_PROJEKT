@@ -24,6 +24,7 @@ import {
   UserReq,
   PaymentP,
   Consultations,
+  ListProducts,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
 import { Profile } from "./pages/profile/Profile";
@@ -116,8 +117,8 @@ function App() {
           path: "/searchentrepreneur",
           element:
             currentUser &&
-            (currentUser.roll === "existing" ||
-              currentUser.roll === "startup") ? (
+              (currentUser.roll === "existing" ||
+                currentUser.roll === "startup") ? (
               <SearchEntrepreneur />
             ) : !currentUser ? (
               <Welcome />
@@ -129,8 +130,8 @@ function App() {
           path: "/searchconsultant",
           element:
             currentUser &&
-            (currentUser.roll === "existing" ||
-              currentUser.roll === "startup") ? (
+              (currentUser.roll === "existing" ||
+                currentUser.roll === "startup") ? (
               <SearchConsultant />
             ) : !currentUser ? (
               <Welcome />
@@ -142,9 +143,20 @@ function App() {
           path: "/payment",
           element:
             currentUser &&
-            (currentUser.roll === "existing" ||
-              currentUser.roll === "startup") ? (
+              (currentUser.roll === "existing" ||
+                currentUser.roll === "startup") ? (
               <PaymentP />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
+        },
+        {
+          path: "/listproducts",
+          element:
+            currentUser && currentUser.roll === "existing" ? (
+              <ListProducts />
             ) : !currentUser ? (
               <Welcome />
             ) : (
