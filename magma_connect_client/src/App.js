@@ -45,10 +45,12 @@ function App() {
   const Layout = () => {
     return (
       <>
+        {/* If there is a logged-in user, show the main app layout */}
         {currentUser ? (
           <div className={`theme-${darkMode ? "dark" : "light"}`}>
             <Navbar />
             <div style={{ display: "flex" }}>
+        {/* Display the appropriate sidebar based on the user's role */}
               {currentUser.roll === "consultant" ? (
                 <LeftBarConsultant />
               ) : currentUser.roll === "distributor" ? (
@@ -63,10 +65,12 @@ function App() {
               <div style={{ flex: 6 }}>
                 <Outlet />
               </div>
+          {/* Display the chat sidebar for all user roles except customers */}
               {currentUser.roll !== "customer" && <RightBarChat />}
             </div>
           </div>
         ) : (
+           // If there is no logged-in user, show the default layout with only the navbar and app content
           <div className={`theme-${darkMode ? "dark" : "light"}`}>
             <NavbarDefault />
             <div style={{ flex: 6, margin: "0 auto" }}>
@@ -78,6 +82,7 @@ function App() {
     );
   };
 
+  // This component is responsible for rendering the admin layout of the application
   const LayoutAdmin = () => {
     return (
       <>
@@ -100,6 +105,8 @@ function App() {
     );
   };
 
+
+  // This creates the application's router with different routes and their respective components
   const router = createBrowserRouter([
     {
       path: "/",
