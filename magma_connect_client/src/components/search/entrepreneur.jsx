@@ -6,34 +6,34 @@ import { AuthContext } from "../../context/authContext";
 import "./search.scss";
 
 export const Entrepreneur = () => {
-  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { currentUser } = useContext(AuthContext);
   const [connectedUsers, setConnectedUsers] = useState([]);
-
+  const [users, setUsers] = useState([]);
   useEffect(() => {
-    // Fetch all connected users from the backend API
-    axios
-      .get("http://localhost:8800/api/auth/getConnectedUsers")
-      .then((res) => {
-        setConnectedUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const fetchUserData = async () => {
+      try {
+        const [connectedUsersRes, usersRes] = await Promise.all([
+          axios.get(
+            `http://localhost:8800/api/auth/getConnectedUsers/${currentUser.username}`
+          ),
+          axios.get("http://localhost:8800/api/auth/getEntreprenures"),
+        ]);
 
-  useEffect(() => {
-    // Fetch all users with registration status = 1 from the backend API
-    axios
-      .get("http://localhost:8800/api/auth/getEntreprenures")
-      .then((res) => {
-        // Filter out the current user's information from the fetched data
-        const filteredData = res.data.filter(
+        const connectedUsersData = connectedUsersRes.data;
+        const usersData = usersRes.data.filter(
           (user) => user.username !== currentUser.username
         );
-        setUsers(filteredData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+
+        setConnectedUsers(connectedUsersData);
+        setUsers(usersData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser.username]);
 
   const handleConnect = async (e, username, currentUsername) => {
     e.preventDefault();
@@ -84,7 +84,12 @@ export const Entrepreneur = () => {
                   onClick={(e) =>
                     handleConnect(e, user.username, currentUser.username)
                   }
-                >Connect</button>
+                  disabled={connectedUsers.includes(user.username)}
+                >
+                  {connectedUsers.includes(user.username)
+                    ? "Connected"
+                    : "Connect"}
+                </button>
               </div>
             </div>
             <hr />
