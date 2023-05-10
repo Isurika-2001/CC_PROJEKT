@@ -528,13 +528,10 @@ export const SwitchAccountRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (
-    username,
-    category,
-    business_name,
-    address,
-    reg_no
-  ) => {
+
+  const handleApprove = (params) => {
+    const [username, category, business_name, address, reg_no] = params;
+  
     // Update the user's registration status to 1
     axios
       .put(
@@ -545,11 +542,14 @@ export const SwitchAccountRequests = () => {
         console.log(res.data.message);
         // Remove the user from the list
         setUsers(users.filter((user) => user.username !== username));
-        
+  
         localStorage.removeItem('user');
       })
       .catch((err) => console.log(err));
   };
+
+
+
 
   const handleDecline = (username) => {
     // Check if a comment has been entered
