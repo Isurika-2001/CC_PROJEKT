@@ -171,10 +171,6 @@ export const Profile = () => {
       <div className="profileContainer">
         <div className="uInfo">
           <div className="center">
-            <div>
-              <input type="text"></input>
-              <button className="uploadButton">Upload</button>
-            </div>
             <span className="userName">{currentUser.name}</span>
             <span className="userRoll">{userRoll()}</span>
             {currentUser.roll === "startup" && (
