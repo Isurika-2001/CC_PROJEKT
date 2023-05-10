@@ -12,6 +12,16 @@ export const Entrepreneur = () => {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
+    // Fetch all connected users from the backend API
+    axios
+      .get("http://localhost:8800/api/auth/getConnectedUsers")
+      .then((res) => {
+        setConnectedUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
     axios
       .get("http://localhost:8800/api/auth/getEntreprenures")
@@ -21,16 +31,6 @@ export const Entrepreneur = () => {
           (user) => user.username !== currentUser.username
         );
         setUsers(filteredData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    // Fetch all connected users from the backend API
-    axios
-      .get("http://localhost:8800/api/auth/getConnectedUsers")
-      .then((res) => {
-        setConnectedUsers(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -84,12 +84,7 @@ export const Entrepreneur = () => {
                   onClick={(e) =>
                     handleConnect(e, user.username, currentUser.username)
                   }
-                  disabled={connectedUsers.includes(user.username)}
-                >
-                  {connectedUsers.includes(user.username)
-                    ? "Connected"
-                    : "Connect"}
-                </button>
+                >Connect</button>
               </div>
             </div>
             <hr />
