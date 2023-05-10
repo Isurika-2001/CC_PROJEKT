@@ -10,7 +10,6 @@ import ProfilePic from "../../assets/user.png";
 import React, { useState, useEffect } from "react";
 
 export const Navbar = () => {
-  const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
 
   const logout = () => {
@@ -41,11 +40,6 @@ export const Navbar = () => {
       </div>
 
       <div className="right">
-        {darkMode ? (
-          <WbSunnyOutlinedIcon onClick={toggle} />
-        ) : (
-          <DarkModeOutlinedIcon onClick={toggle} />
-        )}
         <button className="logout_btn" onClick={logout}>
           Logout
         </button>

@@ -39,7 +39,7 @@ export const LeftBarEntre = () => {
           <div className="item">
             <img src={Payment} alt="" />
             <NavLink activeClassName="active" to="/payment">
-              <span>Payment</span>
+              <span>Hired</span>
             </NavLink>
           </div>
           <hr />
@@ -90,7 +90,7 @@ export const LeftBarSEntre = () => {
           <div className="item">
             <img src={Payment} alt="" />
             <NavLink activeClassName="active" to="/payment">
-              <span>Payment</span>
+              <span>Hired</span>
             </NavLink>
           </div>
           <hr />

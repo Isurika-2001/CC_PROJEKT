@@ -553,6 +553,15 @@ export const connectEntr = (req, res) => {
   });
 };
 
+export const getConnectedUsers = (req, res) => {
+  const selectAll = "SELECT * FROM connect";
+  db.query(selectAll, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
+
 export const checkConnectEntr = (req, res) => {
   const select =
     "SELECT * FROM connect WHERE (entre1 = ? AND entre2 = ?) OR (entre1 = ? AND entre2 = ?)";
@@ -570,4 +579,14 @@ export const checkConnectEntr = (req, res) => {
       }
     }
   );
+};
+
+export const getHiredConsultants = (req, res) => {
+  const sql = "SELECT consultation_payment.*, users.*, consultant.fee FROM consultation_payment INNER JOIN users ON users.username = consultation_payment.const_id INNER JOIN consultant ON consultant.username = users.username WHERE consultation_payment.username = ? ";
+  const username = req.params.username;
+
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
 };
