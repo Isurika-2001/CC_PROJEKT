@@ -23,7 +23,31 @@ export const RightBarChat = () => {
   return(
     <div className="rightbar">
 
-<div className="chat-container">
+
+      <div className="whomYouChatWith">
+        <div className="heading">
+            <h1>Select to chat with</h1>
+        </div>
+
+        <div className="chatheads">
+            <div className="selectchat">
+            <img src={ProfilePic} alt="" />
+            <span > Jayodya</span>
+            </div>
+            <div className="selectchat">
+            <img src={ProfilePic} alt="" />
+            <span > Josua Gray</span>
+            </div>
+            <div className="selectchat">
+            <img src={ProfilePic} alt="" />
+            <span > Isurika</span>
+            </div>
+
+
+        </div>
+         
+      </div>
+      <div className="chat-container">
       <div className="chat-header">
         <h2>Chat</h2>
       </div>
@@ -38,7 +62,9 @@ export const RightBarChat = () => {
         <input type="text" name="message" placeholder="Type your message" />
         <button type="submit">Send</button>
       </form>
-    </div>
+      </div>
+
+
 
 
 
