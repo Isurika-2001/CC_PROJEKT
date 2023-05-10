@@ -1,12 +1,24 @@
 import "./rightBar.scss";
-import { AuthContext } from "../../context/authContext";
-import { useContext } from "react";
 import ProfilePic from "../../assets/user.png";
-import { NavLink } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import axios from "axios";
 
 export const RightBarChat = () => {
   const [messages, setMessages] = useState([]);
+  const [connectedUsers, setConnectedUsers] = useState([]);
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    // Fetch all connected users from the backend API
+    const username = currentUser.username;
+    axios
+      .get(`http://localhost:8800/api/auth/getConnectedUsers/${username}`)
+      .then((res) => {
+        setConnectedUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   function handleMessageSend(event) {
     event.preventDefault();
@@ -24,20 +36,13 @@ export const RightBarChat = () => {
         <div className="heading">
           <h1>Select to chat with</h1>
         </div>
-
         <div className="chatheads">
-          <div className="selectchat">
-            <img src={ProfilePic} alt="" />
-            <span> Jayodya</span>
-          </div>
-          <div className="selectchat">
-            <img src={ProfilePic} alt="" />
-            <span> Josua Gray</span>
-          </div>
-          <div className="selectchat">
-            <img src={ProfilePic} alt="" />
-            <span> Isurika</span>
-          </div>
+          {connectedUsers.map((connectedUser) => (
+            <div key={connectedUser.entre1} className="selectchat">
+              <img src={ProfilePic} alt="" />
+              <span>{connectedUser.business_name}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="chat-container">

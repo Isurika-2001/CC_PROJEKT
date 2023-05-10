@@ -39,6 +39,6 @@ router.post("/updateProfile/:username", updateProfile);
 router.post("/connectEntr/:username/:currentUsername", connectEntr);
 router.post("/checkConnectEntr/:username/:currentUsername", checkConnectEntr);
 router.get("/getHiredConsultants/:username", getHiredConsultants);
-router.get("/getConnectedUsers", getConnectedUsers);
+router.get("/getConnectedUsers/:username", getConnectedUsers);
 
 export default router;

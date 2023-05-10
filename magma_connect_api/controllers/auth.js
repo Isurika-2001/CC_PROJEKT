@@ -368,7 +368,7 @@ export const consultationPayment = (req, res) => {
 
 export const getEntreprenures = (req, res) => {
   const sql =
-    "SELECT users.username, business.description, business.category, business.business_name, business.reg_no, business.address FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 1 and business.reg_status = 1";
+    "SELECT users.username, business.description, business.category, business.business_name, business.reg_no, business.address FROM users INNER JOIN entrepreneur ON users.username = entrepreneur.username INNER JOIN business ON entrepreneur.id = business.entr_id WHERE users.reg_status = 1";
   db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -464,7 +464,7 @@ export const switchRequest = (req, res) => {
     if (err) {
       return res.status(500).json(err);
     }
-    
+
     if (data.length) {
       return res.status(400).json("You have already submitted your request!");
     }
@@ -554,13 +554,14 @@ export const connectEntr = (req, res) => {
 };
 
 export const getConnectedUsers = (req, res) => {
-  const selectAll = "SELECT * FROM connect";
-  db.query(selectAll, (err, result) => {
+  const selectAll =
+    "SELECT connect.*, business.business_name FROM connect INNER JOIN entrepreneur ON entrepreneur.username = connect.entre1 INNER JOIN business ON entrepreneur.id = business.entr_id WHERE entre2 = ?;";
+  const entre2 = req.params.username;
+  db.query(selectAll, [entre2], (err, result) => {
     if (err) throw err;
     res.json(result);
   });
 };
-
 
 export const checkConnectEntr = (req, res) => {
   const select =
@@ -582,7 +583,8 @@ export const checkConnectEntr = (req, res) => {
 };
 
 export const getHiredConsultants = (req, res) => {
-  const sql = "SELECT consultation_payment.*, users.*, consultant.fee FROM consultation_payment INNER JOIN users ON users.username = consultation_payment.const_id INNER JOIN consultant ON consultant.username = users.username WHERE consultation_payment.username = ? ";
+  const sql =
+    "SELECT consultation_payment.*, users.*, consultant.fee FROM consultation_payment INNER JOIN users ON users.username = consultation_payment.const_id INNER JOIN consultant ON consultant.username = users.username WHERE consultation_payment.username = ? ";
   const username = req.params.username;
 
   db.query(sql, username, (err, result) => {
