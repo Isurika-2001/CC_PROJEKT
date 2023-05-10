@@ -204,8 +204,9 @@ const Register = () => {
                     <option value="Food">Food</option>
                     <option value="Apperal">Apperal</option>
                     <option value="stationary">stationary</option>
-                    <option value="export">export</option>
-                    <option value="import">import</option>
+                    <option value="export">Export</option>
+                    <option value="import">Import</option>
+                    <option value="import">Buty</option>
                     <option value="">other</option>
                   </select>
                   <input
@@ -262,7 +263,7 @@ const Register = () => {
                 />
                 <div>
                   <select
-                    name="category"
+                    name="ex_category"
                     value={inputs.ex_category}
                     onChange={handleChange}
                     onFocus={handleFocus}

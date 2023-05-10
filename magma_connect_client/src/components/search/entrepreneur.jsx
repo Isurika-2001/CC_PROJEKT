@@ -42,7 +42,7 @@ export const Entrepreneur = () => {
         `http://localhost:8800/api/auth/connectEntr/${username}/${currentUsername}`
       );
       console.log("Successfully added to database.");
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       console.error("Error:", err);
     }
