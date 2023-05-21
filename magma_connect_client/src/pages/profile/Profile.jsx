@@ -2,6 +2,8 @@ import "./profile.scss";
 import { AuthContext } from "../../context/authContext";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import ProfilePic from "../../assets/user profile.png";
+import BackgroundPic from "../../assets/background.jpg";
 
 export const Profile = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
@@ -157,12 +159,12 @@ export const Profile = () => {
     <div className="profile">
       <div className="images">
         <img
-          src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          src={BackgroundPic}
           alt=""
           className="cover"
         />
         <img
-          src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+          src={ProfilePic}
           alt=""
           className="profilePic"
           onClick={handleProfilePic}

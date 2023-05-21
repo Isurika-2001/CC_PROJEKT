@@ -529,8 +529,13 @@ export const SwitchAccountRequests = () => {
   }, []);
 
 
-  const handleApprove = (params) => {
-    const [username, category, business_name, address, reg_no] = params;
+  const handleApprove = (
+    username,
+    category,
+    business_name,
+    address,
+    reg_no
+  ) => {
   
     // Update the user's registration status to 1
     axios
