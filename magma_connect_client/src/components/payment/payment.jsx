@@ -46,6 +46,10 @@ export const Payment = () => {
                 <span className="label">Paid  : </span>
                 <span className="data">{user.date}</span>
               </span>
+              <span>
+                <span className="label">Valid for  : </span>
+                <span className="data">One month</span>
+              </span>
             </div>
           </div>
         </div>

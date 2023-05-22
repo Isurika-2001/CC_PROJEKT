@@ -151,6 +151,7 @@ export const Consultant = () => {
 
       console.log("Payment success");
     } catch (err) {
+      alert(err)
       console.log(err);
     }
   };

@@ -386,7 +386,7 @@ export const getConsultants = (req, res) => {
 
 export const getConsultations = (req, res) => {
   const sql =
-    "SELECT consultation_payment.username, consultation_payment.amount, consultation_payment.description, consultation_payment.date, users.name from consultation_payment, users where consultation_payment.username = users.username and const_id = ?";
+    "SELECT consultation_payment.username, consultation_payment.amount, consultation_payment.date, users.* from consultation_payment, users where consultation_payment.username = users.username and const_id = ?";
   const thisUser = req.query.thisUser;
   db.query(sql, thisUser, (err, results) => {
     if (err) throw err;
