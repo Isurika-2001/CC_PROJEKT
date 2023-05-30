@@ -1,15 +1,34 @@
 import React, { useState } from 'react';
+import { useEffect } from "react";
+import axios from "axios";
 import "./ecom.scss";
+// import { navBar } from "";
 const Ecom = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [cartItems, setCartItems] = useState([]);
 
   // Sample product data
-  const products = [
-    { id: 1, name: 'Product 1', price: 10 },
-    { id: 2, name: 'Product 2', price: 20 },
-    { id: 3, name: 'Product 3', price: 30 },
-  ];
+  // const products = [
+  //   { id: 1, name: 'Product 1', price: 10 },
+  //   { id: 2, name: 'Product 2', price: 20 },
+  //   { id: 3, name: 'Product 3', price: 30 },
+  // ];
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/api/auth/getProducts");
+        setProducts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllProducts();
+    
+  }, [])
+
 
   // Handler for adding an item to the cart
   const addToCart = (product) => {
@@ -33,7 +52,11 @@ const Ecom = () => {
       {filteredProducts.map((product) => (
         <div key={product.id} className="product">
           <h3>{product.name}</h3>
-          <p>Price: ${product.price}</p>
+          <p>Desc: ${product.desc}</p>
+          <p>Category: ${product.category}</p>
+          <div>
+            <img src={product.imageurl} alt="" />
+          </div>
           <button onClick={() => addToCart(product)}>Add to Cart</button>
         </div>
       ))}

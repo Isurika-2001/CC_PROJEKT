@@ -617,3 +617,15 @@ export const listProducts = (req, res) => {
 };
 
 
+export const getProducts =(req, res) => {
+  
+  const q = "SELECT * FROM product_table";
+  db.query(q, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    }
+    return res.json(data);
+  });
+};
+
