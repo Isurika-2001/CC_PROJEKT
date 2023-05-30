@@ -1,4 +1,5 @@
 import Login from "./pages/login/Login";
+import Ecom from "./pages/ecommerce/Ecom";
 import AdminLogin from "./pages/adminLogin/AdminLogin"; //------------
 import Register from "./pages/register/Register";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
@@ -50,7 +51,7 @@ function App() {
           <div className={`theme-${darkMode ? "dark" : "light"}`}>
             <Navbar />
             <div style={{ display: "flex" }}>
-        {/* Display the appropriate sidebar based on the user's role */}
+              {/* Display the appropriate sidebar based on the user's role */}
               {currentUser.roll === "consultant" ? (
                 <LeftBarConsultant />
               ) : currentUser.roll === "distributor" ? (
@@ -65,12 +66,12 @@ function App() {
               <div style={{ flex: 6 }}>
                 <Outlet />
               </div>
-          {/* Display the chat sidebar for all user roles except customers */}
+              {/* Display the chat sidebar for all user roles except customers */}
               {currentUser.roll !== "customer" && <RightBarChat />}
             </div>
           </div>
         ) : (
-           // If there is no logged-in user, show the default layout with only the navbar and app content
+          // If there is no logged-in user, show the default layout with only the navbar and app content
           <div className={`theme-${darkMode ? "dark" : "light"}`}>
             <NavbarDefault />
             <div style={{ flex: 6, margin: "0 auto" }}>
@@ -186,6 +187,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/ecom",
+      element: <Ecom />,
     },
     {
       path: "/register",

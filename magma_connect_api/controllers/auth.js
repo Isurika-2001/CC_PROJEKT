@@ -592,3 +592,11 @@ export const getHiredConsultants = (req, res) => {
     res.json(result);
   });
 };
+
+
+
+
+export const listProducts = (req, res) => {
+ 
+};
+

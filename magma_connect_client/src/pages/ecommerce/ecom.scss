@@ -1,0 +1,74 @@
+$product-card-bg-color: #f8e7e7;
+$product-card-border-color: #f5c6c6;
+$button-bg-color: #f44336;
+$button-text-color: #ffffff;
+
+$input-border-color: #f44336;
+$input-placeholder-color: #f44336;
+$cart-bg-color: #fce5e5;
+$cart-text-color: #f44336;
+
+$product-list-bg-color: #ffffff;
+$product-list-padding: 10px;
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $product-list-bg-color;
+  padding: $product-list-padding;
+}
+
+.product {
+  border: 1px solid $product-card-border-color;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  background-color: $product-card-bg-color;
+
+  h3 {
+    color: $button-bg-color;
+  }
+
+  p {
+    color: $product-card-border-color;
+  }
+
+  button {
+    background-color: $button-bg-color;
+    color: $button-text-color;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+}
+
+.cart {
+  margin-top: 20px;
+  background-color: $cart-bg-color;
+
+  h2 {
+    color: $button-bg-color;
+  }
+
+  p {
+    color: $cart-text-color;
+  }
+
+  ul {
+    li {
+      color: $cart-text-color;
+    }
+  }
+}
+
+// input[type='text'] {
+//   border: 1px solid $input-border-color;
+//   border-radius: 4px;
+//   padding: 5px;
+//   color: $input-border-color;
+//   &::placeholder {
+//     color: $input-placeholder-color;
+//   }
+// }

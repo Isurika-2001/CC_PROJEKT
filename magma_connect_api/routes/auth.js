@@ -18,6 +18,7 @@ import {
   getConsultants,
   getConsultations,
   getConnectedUsers,
+  listProducts,
 } from "../controllers/auth.js";
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.post("/register", register);
 router.post("/logout", logout);
 router.post("/adminlogin", adminLogin);
 router.post("/consultationPayment", consultationPayment);
+router.post("/listProduct/:username", listProducts);
 router.get("/getEntreprenures", getEntreprenures);
 router.get("/getConsultants", getConsultants);
 router.get("/getConsultations", getConsultations);
