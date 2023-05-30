@@ -597,6 +597,23 @@ export const getHiredConsultants = (req, res) => {
 
 
 export const listProducts = (req, res) => {
- 
+  const insert2 = "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`) VALUES (?)";
+  const username = req.params;
+  console.log(username);
+
+  const values = [req.body.name, req.body.category, req.body.desc, req.body.imageurl];
+
+  console.log(values);
+
+  db.query(insert2, [values], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length) {
+      return res.status(400).json("error!");
+    }
+
+    // If the query is successful and there is no error, send a success response
+    return res.status(200).json("Success!");
+  });
 };
+
 
