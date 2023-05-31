@@ -1,7 +1,7 @@
 // Styling for the search input
-.search-input[type="text"] {
+input[type="text"].search-input {
   margin-top: 30px;
-  padding-left: 30px;;
+  padding-left: 30px;
   width: 95%;
   padding: 10px;
   font-size: 16px;
@@ -11,53 +11,85 @@
 
 // Styling for the product list
 .product-list {
-  margin-top: 20px;;
+  margin-top: 20px;
   display: flex;
+  padding: 30px;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-// Styling for each product
-.product {
-  width: 300px;
-  padding: 20px;
-  background-color: #f1f1f1;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
 
-  &:hover {
-    transform: scale(1.05);
-  }
+// Styling for the product list
+.product-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+// Styling for the product list
+.product-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+// Styling for each product
+.product-list .product {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  max-width: 310px; /* Set a maximum width */
+
 
   h3 {
-    margin: 0;
-    font-size: 20px;
-  }
-
-  p {
-    margin: 10px 0;
+    font-size: 18px;
+    margin-bottom: 10px;
   }
 
   img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
+    max-width: 250px; /* Set a maximum width for the image */
+    max-height: 300px; /* Set a maximum height for the image */
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 50px;
+      padding: 5px;
+      margin-left: 5px;
+    }
   }
 
   button {
     padding: 10px 20px;
-    font-size: 16px;
+    background-color: #000000;
     color: #fff;
-    background-color: #333;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 
     &:hover {
-      background-color: #555;
+      background-color: #8b0000;
     }
   }
 }
+
+
 
 // Styling for the cart
 .cart {

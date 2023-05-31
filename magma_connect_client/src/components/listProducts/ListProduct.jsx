@@ -79,9 +79,14 @@ export const ListProduct = () => {
             onChange={handleInputChange}
           >
             <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="beauty">Beauty</option>
-            <option value="home">Home</option>
+            <option value="clothing">Clothing & Accessories</option>
+            <option value="beauty">Home & Kitchen</option>
+            <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+            <option value="Sports & Fitness">Sports & Fitness</option>
+            <option value="Books & Stationery">Books & Stationery</option>
+            <option value="Toys & Games">Toys & Games</option>
+            <option value="Health & Wellness">Health & Wellness</option>
+            <option value="Automotive">Automotive</option>
           </select>
         </div>
         <div className="form-group">
