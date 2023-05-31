@@ -1,13 +1,16 @@
 import "./rightBar.scss";
 import ProfilePic from "../../assets/user.png";
-import { React, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 export const RightBarChat = () => {
   const [messages, setMessages] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
+  const [chatUser, setChatUser] = useState(""); // Set initial value to an empty string
   const { currentUser } = useContext(AuthContext);
+  const socket = io("http://localhost:8800");
 
   useEffect(() => {
     // Fetch all connected users from the backend API
@@ -18,17 +21,36 @@ export const RightBarChat = () => {
         setConnectedUsers(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+
+    // Listen for incoming messages
+    socket.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    // Clean up the WebSocket connection on component unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, [currentUser.username]);
 
   function handleMessageSend(event) {
     event.preventDefault();
     const messageInput = event.target.elements.message;
     const newMessage = messageInput.value.trim();
     if (newMessage !== "") {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      socket.emit("message", {
+        content: newMessage,
+        sender: currentUser.username,
+        receiver: chatUser,
+      });
       messageInput.value = "";
     }
   }
+
+  const handleClick = (user) => {
+    console.log(user);
+    setChatUser(user);
+  };
 
   return (
     <div className="rightbar">
@@ -38,7 +60,11 @@ export const RightBarChat = () => {
         </div>
         <div className="chatheads">
           {connectedUsers.map((connectedUser) => (
-            <div key={connectedUser.entre1} className="selectchat">
+            <div
+              onClick={() => handleClick(connectedUser.entre1)}
+              key={connectedUser.entre1}
+              className="selectchat"
+            >
               <img src={ProfilePic} alt="" />
               <span>{connectedUser.business_name}</span>
             </div>
@@ -47,12 +73,13 @@ export const RightBarChat = () => {
       </div>
       <div className="chat-container">
         <div className="chat-header">
-          <h2>Chat</h2>
+          <span>Chat</span>
+          <span className="chatName">{chatUser}</span>
         </div>
         <div className="chat-messages">
           {messages.map((message, index) => (
             <div key={index} className="message">
-              <span>{message}</span>
+              <span>{message.content}</span>
             </div>
           ))}
         </div>

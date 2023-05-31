@@ -1,6 +1,8 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { io } from "../index.js";
+
 import {
   registerValidation,
   switchValidation,
@@ -549,7 +551,10 @@ export const connectEntr = (req, res) => {
   console.log(username, currentUsername);
   db.query(insert, [username, currentUsername], (err, result) => {
     if (err) throw err;
-    res.json(result);
+    db.query(insert, [currentUsername, username], (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    });
   });
 };
 
@@ -560,6 +565,12 @@ export const getConnectedUsers = (req, res) => {
   db.query(selectAll, [entre2], (err, result) => {
     if (err) throw err;
     res.json(result);
+
+    // Emit a message to the connected users
+    const connectedUsers = result.map((user) => user.entre1);
+    connectedUsers.forEach((user) => {
+      io.to(user).emit("newMessage", { message: "New message received!" });
+    });
   });
 };
 
