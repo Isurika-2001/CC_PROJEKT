@@ -1,4 +1,7 @@
 import express from "express";
+const app = express();
+import http from "http";
+const port = process.env.PORT || 8800;
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
@@ -7,16 +10,7 @@ import likeRoutes from "./routes/likes.js";
 import adminRoutes from "./routes/admins.js";
 import bodyparser from "body-parser";
 import stripe from "stripe";
-import http from "http";
-import { createServer } from "http";
 import { Server } from "socket.io";
-
-const app = express();
-const port = process.env.PORT || 8800;
-const server = createServer(app);
-const io = new Server(server);
-
-export { io };
 
 const stripeInstance = stripe(
   "sk_test_51MjHDhIEmwpzpx2CGoiDIpUEfhrkpP1nVmhlCymV7sABjegHCxctfP1RTyKARhlGaCvDSrACzTYy4QYYttDjobxN00eUIe3RY4"
@@ -40,6 +34,35 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("user connected to socket", socket.id);
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log("user joined room", socket.id, data);
+  });
+
+  socket.on("send_message", (data) => {
+    console.log("message sent", data);
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+
+  socket.on("disconnect", () => {
+    console.log("a user disconnected", socket.id);
+  });
+});
+
 app.use(cookieParser());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
@@ -51,23 +74,6 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api/admins", adminRoutes);
 
-io.on("connection", (socket) => {
-  console.log("A user connected");
-
-  // Handle incoming messages
-  socket.on("message", (data) => {
-    // Process the message and emit it to the appropriate recipient
-    const { content, sender, receiver } = data;
-    io.to(receiver).emit("message", { content, sender });
-  });
-
-  // Handle disconnections
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-});
-
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("API listening on");
 });

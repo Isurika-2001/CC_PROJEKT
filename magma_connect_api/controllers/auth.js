@@ -1,7 +1,6 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { io } from "../index.js";
 
 import {
   registerValidation,
@@ -546,17 +545,29 @@ export const updateProfile = (req, res) => {
 };
 
 export const connectEntr = (req, res) => {
-  const insert = "INSERT INTO connect (entre1, entre2) VALUES (?, ?)";
+  const insert = "INSERT INTO connect (entre1, entre2, room) VALUES (?, ?, ?)";
   const { username, currentUsername } = req.params;
+  const roomCode = generateRoomCode(10); // Generate a random room code with 10 characters
   console.log(username, currentUsername);
-  db.query(insert, [username, currentUsername], (err, result) => {
+  db.query(insert, [username, currentUsername, roomCode], (err, result) => {
     if (err) throw err;
-    db.query(insert, [currentUsername, username], (err, result) => {
+    db.query(insert, [currentUsername, username, roomCode], (err, result) => {
       if (err) throw err;
       res.json(result);
     });
   });
 };
+
+function generateRoomCode(length) {
+  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let code = "";
+  for (let i = 0; i < length; i++) {
+    let randomIndex = Math.floor(Math.random() * characters.length);
+    code += characters.charAt(randomIndex);
+  }
+  return code;
+}
+
 
 export const getConnectedUsers = (req, res) => {
   const selectAll =
@@ -565,12 +576,6 @@ export const getConnectedUsers = (req, res) => {
   db.query(selectAll, [entre2], (err, result) => {
     if (err) throw err;
     res.json(result);
-
-    // Emit a message to the connected users
-    const connectedUsers = result.map((user) => user.entre1);
-    connectedUsers.forEach((user) => {
-      io.to(user).emit("newMessage", { message: "New message received!" });
-    });
   });
 };
 

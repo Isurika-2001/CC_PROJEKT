@@ -3,14 +3,16 @@ import ProfilePic from "../../assets/user.png";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import axios from "axios";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
+const socket = io("ws://localhost:8800");
 
 export const RightBarChat = () => {
   const [messages, setMessages] = useState([]);
+  const [messageList, setMessageList] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
-  const [chatUser, setChatUser] = useState(""); // Set initial value to an empty string
+  const [room, setRoom] = useState("");
+  const [chatUser, setChatUser] = useState("");
   const { currentUser } = useContext(AuthContext);
-  const socket = io("http://localhost:8800");
 
   useEffect(() => {
     // Fetch all connected users from the backend API
@@ -19,38 +21,46 @@ export const RightBarChat = () => {
       .get(`http://localhost:8800/api/auth/getConnectedUsers/${username}`)
       .then((res) => {
         setConnectedUsers(res.data);
+        setRoom(res.data[0].room);
       })
       .catch((err) => console.log(err));
+  }, []);
 
-    // Listen for incoming messages
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    // Clean up the WebSocket connection on component unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, [currentUser.username]);
-
-  function handleMessageSend(event) {
+  const handleMessageSend = async (event) => {
     event.preventDefault();
     const messageInput = event.target.elements.message;
-    const newMessage = messageInput.value.trim();
-    if (newMessage !== "") {
-      socket.emit("message", {
-        content: newMessage,
-        sender: currentUser.username,
-        receiver: chatUser,
-      });
+    const data = {
+      newMessage: messageInput.value.trim(),
+      author: currentUser.username,
+      room: room,
+    };
+    //const newMessage = messageInput.value.trim();
+    if (data.newMessage !== "") {
+      setMessages((prevMessages) => [...prevMessages, data.newMessage]);
       messageInput.value = "";
+      await socket.emit("send_message", data);
+      setMessageList((prevMessageList) => [...prevMessageList, data]);
     }
-  }
+  };
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      if (data.author === chatUser && data.room === room) {
+        setMessageList((prevMessageList) => [...prevMessageList, data]);
+      }
+    });
+  }, [socket, chatUser, room]);
 
   const handleClick = (user) => {
-    console.log(user);
     setChatUser(user);
+    console.log(room);
   };
+
+  useEffect(() => {
+    if (chatUser !== "" && room !== "") {
+      socket.emit("join_room", room);
+    }
+  }, [chatUser, room]);
 
   return (
     <div className="rightbar">
@@ -77,12 +87,20 @@ export const RightBarChat = () => {
           <span className="chatName">{chatUser}</span>
         </div>
         <div className="chat-messages">
-          {messages.map((message, index) => (
-            <div key={index} className="message">
-              <span>{message.content}</span>
+          {messageList.map((message) => (
+            <div
+              className={
+                currentUser.username === message.author
+                  ? "message you"
+                  : "message other"
+              }
+              key={message.id}
+            >
+              <span>{message.newMessage}</span>
             </div>
           ))}
         </div>
+
         <form className="chat-form" onSubmit={handleMessageSend}>
           <input type="text" name="message" placeholder="Type your message" />
           <button type="submit">Send</button>

@@ -91,15 +91,23 @@
       flex-direction: column;
 
       .message {
-        background-color: #4e77ff;
         padding: 5px;
         color: #ffffff;
         max-width: 60%;
         font-weight: 400;
         font-size: 14px;
-        align-self: flex-end;
         margin-bottom: 10px;
         border-radius: 5px;
+
+        &.you {
+          background-color: #4e77ff;
+          align-self: flex-end;
+        }
+
+        &.other {
+          background-color: #727272;
+          align-self: flex-start;
+        }
       }
     }
 
