@@ -613,11 +613,11 @@ export const getHiredConsultants = (req, res) => {
 
 
 export const listProducts = (req, res) => {
-  const insert2 = "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`) VALUES (?)";
+  const insert2 = "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`) VALUES (?)";
   const username = req.params;
   console.log(username);
 
-  const values = [req.body.name, req.body.category, req.body.desc, req.body.imageurl];
+  const values = [req.body.name, req.body.category, req.body.desc, req.body.imageurl, req.body.price, req.body.quantity];
 
   console.log(values);
 
