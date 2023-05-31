@@ -12,10 +12,6 @@ const Welcome = () => {
     section.scrollIntoView({ behavior: "smooth" });
   }
 
-
-  
-  
-
   return (
     <div className="welcome">
       <div className="main-sec">

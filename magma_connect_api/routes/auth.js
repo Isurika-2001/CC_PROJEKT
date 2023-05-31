@@ -18,6 +18,8 @@ import {
   getConsultants,
   getConsultations,
   getConnectedUsers,
+  listProducts,
+  getProducts,
 } from "../controllers/auth.js";
 
 const router = express.Router();
@@ -27,6 +29,7 @@ router.post("/register", register);
 router.post("/logout", logout);
 router.post("/adminlogin", adminLogin);
 router.post("/consultationPayment", consultationPayment);
+router.post("/listProduct/:username", listProducts);
 router.get("/getEntreprenures", getEntreprenures);
 router.get("/getConsultants", getConsultants);
 router.get("/getConsultations", getConsultations);
@@ -40,5 +43,6 @@ router.post("/connectEntr/:username/:currentUsername", connectEntr);
 router.post("/checkConnectEntr/:username/:currentUsername", checkConnectEntr);
 router.get("/getHiredConsultants/:username", getHiredConsultants);
 router.get("/getConnectedUsers/:username", getConnectedUsers);
+router.get("/getProducts", getProducts);
 
 export default router;
