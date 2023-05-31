@@ -107,6 +107,10 @@ function App() {
   };
 
 
+
+
+
+
   // This creates the application's router with different routes and their respective components
   const router = createBrowserRouter([
     {
@@ -117,6 +121,7 @@ function App() {
           path: "/",
           element: currentUser ? <Home /> : <Welcome />,
         },
+
         {
           path: "/profile/:id",
           element: currentUser ? <Profile /> : <Welcome />,
@@ -165,6 +170,17 @@ function App() {
           element:
             currentUser && currentUser.roll === "existing" ? (
               <ListProducts />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
+        },
+        {
+          path: "/ecommerce",
+          element:
+            currentUser && currentUser.roll === "customer" ? (
+              <Ecom />
             ) : !currentUser ? (
               <Welcome />
             ) : (

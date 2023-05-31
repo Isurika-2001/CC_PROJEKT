@@ -185,11 +185,13 @@ export const LeftBarCustomer = () => {
             </NavLink>
           </div>
 
-          {/* <div className="item">
-            <img src={OrdersRequests} alt="" />
-            <span>Order Requests</span>
-          </div>
           <div className="item">
+            <img src={OrdersRequests} alt="" />
+            <NavLink activeClassName="active" to="/ecommerce">
+            <span>Browse catelog</span>
+            </NavLink>
+          </div>
+          {/* <div className="item">
             <img src={OnGoing} alt="" />
             <span>Ongoing Orders</span>
           </div> */}

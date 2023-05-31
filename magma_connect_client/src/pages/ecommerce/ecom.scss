@@ -1,74 +1,87 @@
-$product-card-bg-color: #f8e7e7;
-$product-card-border-color: #f5c6c6;
-$button-bg-color: #f44336;
-$button-text-color: #ffffff;
-
-$input-border-color: #f44336;
-$input-placeholder-color: #f44336;
-$cart-bg-color: #fce5e5;
-$cart-text-color: #f44336;
-
-$product-list-bg-color: #ffffff;
-$product-list-padding: 10px;
-
-.product-list {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: $product-list-bg-color;
-  padding: $product-list-padding;
+// Styling for the search input
+.search-input[type="text"] {
+  margin-top: 30px;
+  padding-left: 30px;;
+  width: 95%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
+// Styling for the product list
+.product-list {
+  margin-top: 20px;;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+// Styling for each product
 .product {
-  border: 1px solid $product-card-border-color;
+  width: 300px;
+  padding: 20px;
+  background-color: #f1f1f1;
   border-radius: 4px;
-  padding: 10px;
-  margin: 10px;
-  width: 200px;
-  background-color: $product-card-bg-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   h3 {
-    color: $button-bg-color;
+    margin: 0;
+    font-size: 20px;
   }
 
   p {
-    color: $product-card-border-color;
+    margin: 10px 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
   button {
-    background-color: $button-bg-color;
-    color: $button-text-color;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #333;
     border: none;
     border-radius: 4px;
-    padding: 5px 10px;
     cursor: pointer;
-  }
-}
 
-.cart {
-  margin-top: 20px;
-  background-color: $cart-bg-color;
-
-  h2 {
-    color: $button-bg-color;
-  }
-
-  p {
-    color: $cart-text-color;
-  }
-
-  ul {
-    li {
-      color: $cart-text-color;
+    &:hover {
+      background-color: #555;
     }
   }
 }
 
-// input[type='text'] {
-//   border: 1px solid $input-border-color;
-//   border-radius: 4px;
-//   padding: 5px;
-//   color: $input-border-color;
-//   &::placeholder {
-//     color: $input-placeholder-color;
-//   }
-// }
+// Styling for the cart
+.cart {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  p {
+    margin: 10px 0;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+  }
+}

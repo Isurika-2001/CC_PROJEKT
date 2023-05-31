@@ -43,11 +43,24 @@ const Ecom = () => {
   return (
     <div>
     <input
+      className="search-input"
       type="text"
       placeholder="Search products..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
     />
+    <div className="cart">
+      <h2>Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <ul>
+          {cartItems.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
+    </div>
     <div className="product-list">
       {filteredProducts.map((product) => (
         <div key={product.id} className="product">
@@ -61,18 +74,7 @@ const Ecom = () => {
         </div>
       ))}
     </div>
-    <div className="cart">
-      <h2>Cart</h2>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <ul>
-          {cartItems.map((item) => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul>
-      )}
-    </div>
+    
   </div>
   )
 }

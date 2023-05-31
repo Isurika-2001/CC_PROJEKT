@@ -8,6 +8,8 @@ export const ListProduct = () => {
     desc: "",
     category: "",
     imageurl: '',
+    price: "",
+    quantity:"",
     // image: null,
   });
 
@@ -18,7 +20,9 @@ export const ListProduct = () => {
       desc: '',
       category: '',
       imageurl: '',
-      // image: null,
+      price: "",
+      quantity:"",
+    // image: null,
     });
   };
 
@@ -91,6 +95,7 @@ export const ListProduct = () => {
             required
           ></textarea>
         </div>
+        
         <div className="form-group">
           <label htmlFor="imageurl">ImageUrl:</label>
           <input
@@ -102,6 +107,31 @@ export const ListProduct = () => {
             required
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="name">Price:</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={inputs.price}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="name"> Product Quantity : </label>
+          <input
+            type="number"
+            id="quantitity"
+            name="quantity"
+            value={inputs.quantity}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
         {/* <div className="form-group">
           <label htmlFor="image">Product/Service Image:</label>
           <input
