@@ -205,10 +205,6 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/ecom",
-      element: <Ecom />,
-    },
-    {
       path: "/register",
       element: <Register />,
     },

@@ -10,6 +10,7 @@ const Ecom = () => {
   const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => {
+
     const fetchAllProducts = async () => {
       try {
         const res = await axios.get("http://localhost:8800/api/auth/getProducts");
@@ -21,6 +22,8 @@ const Ecom = () => {
     fetchAllProducts();
   }, []);
 
+
+  
   // Handler for adding an item to the cart
   const addToCart = (product) => {
     const existingItem = cartItems.find(item => item.id === product.id);

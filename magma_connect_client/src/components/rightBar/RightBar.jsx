@@ -27,21 +27,24 @@ export const RightBarChat = () => {
   }, []);
 
   const handleMessageSend = async (event) => {
-    event.preventDefault();
-    const messageInput = event.target.elements.message;
+    event.preventDefault(); // Prevent the default form submission behavior
+  
+    const messageInput = event.target.elements.message; // Get the input field for the message
     const data = {
-      newMessage: messageInput.value.trim(),
-      author: currentUser.username,
-      room: room,
+      newMessage: messageInput.value.trim(), // Get the trimmed value of the input field
+      author: currentUser.username, // Get the username of the current user
+      room: room, // Get the room information
     };
-    //const newMessage = messageInput.value.trim();
+  
+    // Check if the new message is not empty
     if (data.newMessage !== "") {
-      setMessages((prevMessages) => [...prevMessages, data.newMessage]);
-      messageInput.value = "";
-      await socket.emit("send_message", data);
-      setMessageList((prevMessageList) => [...prevMessageList, data]);
+      setMessages((prevMessages) => [...prevMessages, data.newMessage]); // Update the messages state by adding the new message
+      messageInput.value = ""; // Clear the input field value
+      await socket.emit("send_message", data); // Send the message data to the server using the socket
+      setMessageList((prevMessageList) => [...prevMessageList, data]); // Update the message list state by adding the new message data
     }
   };
+  
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
