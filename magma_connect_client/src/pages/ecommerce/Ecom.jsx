@@ -10,7 +10,6 @@ const Ecom = () => {
   const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => {
-
     const fetchAllProducts = async () => {
       try {
         const res = await axios.get("http://localhost:8800/api/auth/getProducts");
@@ -22,14 +21,10 @@ const Ecom = () => {
     fetchAllProducts();
   }, []);
 
-
-  
-  // Handler for adding an item to the cart
   const addToCart = (product) => {
     const existingItem = cartItems.find(item => item.id === product.id);
 
     if (existingItem) {
-      // If the item is already in the cart, update the quantity
       const updatedCartItems = cartItems.map(item => {
         if (item.id === product.id) {
           return {
@@ -42,27 +37,23 @@ const Ecom = () => {
 
       setCartItems(updatedCartItems);
     } else {
-      // If the item is not in the cart, add it with quantity 1
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
 
     setTotalValue(totalValue + product.price);
   };
 
-  // Handler for removing an item from the cart
   const removeFromCart = (itemId) => {
     const updatedCartItems = cartItems.filter(item => item.id !== itemId);
     setCartItems(updatedCartItems);
     calculateTotalValue(updatedCartItems);
   };
 
-  // Handler for clearing the entire cart
   const clearCart = () => {
     setCartItems([]);
     setTotalValue(0);
   };
 
-  // Handler for changing the quantity of an item in the cart
   const changeQuantity = (itemId, quantity) => {
     const updatedCartItems = cartItems.map(item => {
       if (item.id === itemId) {
@@ -78,36 +69,29 @@ const Ecom = () => {
     calculateTotalValue(updatedCartItems);
   };
 
-  // Handler for placing an order
   const placeOrder = () => {
-    // Show alert box and confirm order placement
     const confirmed = window.confirm("Are you sure you want to proceed with the order?");
+    console.log(cartItems);
     
     if (confirmed) {
-      // Send cart items to the backend
       axios.post("http://localhost:8800/api/auth/placeOrder", { cartItems })
         .then((res) => {
           console.log(res.data);
-          // Handle successful order placement
         })
         .catch((err) => {
           console.log(err);
-          // Handle error in order placement
         });
 
-      // Clear the cart and total value
       setCartItems([]);
       setTotalValue(0);
     }
   };
 
-  // Calculate the total value based on the cart items
   const calculateTotalValue = (cartItems) => {
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     setTotalValue(total);
   };
 
-  // Filter products based on search query
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -127,21 +111,38 @@ const Ecom = () => {
           <p>Your cart is empty.</p>
         ) : (
           <div>
-            <ul>
-              {cartItems.map((item) => (
-                <li key={item.id}>
-                  {item.name} - Quantity: 
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => changeQuantity(item.id, parseInt(e.target.value))}
-                    min="1"
-                  />
-                  <button onClick={() => removeFromCart(item.id)}>Remove</button>
-                </li>
-              ))}
-            </ul>
-            <p>Total Value: LKR {totalValue}</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.name}</td>
+                    <td>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => changeQuantity(item.id, parseInt(e.target.value))}
+                        min="1"
+                      />
+                    </td>
+                    <td> LKR {item.price}.00</td>
+                    <td>LKR {item.price * item.quantity}.00</td>
+                    <td>
+                      <button onClick={() => removeFromCart(item.id)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p>Total Value: LKR {totalValue}.00</p>
             <button onClick={placeOrder}>Place Order</button>
             <button onClick={clearCart}>Clear All</button>
           </div>
