@@ -19,8 +19,6 @@ const transporter = nodemailer.createTransport({
 });
 
 function generateRandomCode() {
-  // Generate a random code here (e.g., using a library like 'crypto-random-string')
-  // For simplicity, let's assume the code is a six-digit number
   return Math.floor(100000 + Math.random() * 900000);
 }
 
@@ -28,8 +26,50 @@ function sendConfirmationEmail(userEmail, code) {
   const mailOptions = {
     from: "empowerlanka@gmail.com",
     to: userEmail,
-    subject: "Account Confirmation",
-    text: `Thank you for registering! Your verification code is: ${code}`,
+    subject: "Verify your email address",
+    html: `
+      <html>
+        <head>
+          <style>
+            body {
+              background-color: #ffffff;
+              font-family: Arial, sans-serif;
+              text-align: center;
+              color: #000000;
+            }
+            .container {
+              padding: 20px;
+              border: 1px solid #dddddd;
+              border-radius: 5px;
+            }
+            h1 {
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+            p {
+              font-size: 16px;
+              margin-bottom: 10px;
+            }
+            span {
+              font-size: 12px;
+              color: #aaaaaa;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Email Confirmation</h1>
+            <p>Hello!</p>
+            <p>You are almost ready to start your journey with Empower Lanka.</p><br><br>
+            <p>Your verification code is: ${code}</p>
+            <p>Please use this code to verify your email address.</p><br><br>
+            <p>Thank you</p>
+            <p>Empower Lanka</p>
+            <span>© 2021 Empower Lanka</span>
+          </div>
+        </body>
+      </html>
+    `,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -344,7 +384,7 @@ export const verify = (req, res) => {
   const { username, code } = req.body;
   const sql = "SELECT * FROM users WHERE username = ?";
   const sql2 = "UPDATE users SET reg_status = 1 WHERE username = ?";
-  
+
   db.query(sql, username, (err, result) => {
     if (err) throw err;
     if (result.length) {
@@ -374,7 +414,6 @@ export const verify = (req, res) => {
     }
   });
 };
-
 
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE username = ?";
