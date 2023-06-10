@@ -3,6 +3,7 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import Swal from 'sweetalert2';
 import "./search.scss";
 
 export const Entrepreneur = () => {
@@ -37,15 +38,31 @@ export const Entrepreneur = () => {
 
   const handleConnect = async (e, username, currentUsername) => {
     e.preventDefault();
-    try {
-      await axios.post(
-        `http://localhost:8800/api/auth/connectEntr/${username}/${currentUsername}`
-      );
-      console.log("Successfully added to database.");
-      // window.location.reload();
-    } catch (err) {
-      console.error("Error:", err);
-    }
+
+    // Display confirmation dialog using SweetAlert2
+    Swal.fire({
+      title: "Do you want to connect?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.post(
+            `http://localhost:8800/api/auth/connectEntr/${username}/${currentUsername}`
+          );
+          Swal.fire("Successfully connected!", "", "success");
+          console.log("Successfully added to database.");
+          window.location.reload();
+        } catch (err) {
+          Swal.fire("Error", `${err}`, "error");
+          console.error("Error:", err);
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Connection canceled", "", "info");
+      }
+    });
   };
 
   const handleSearch = (event) => {
@@ -151,7 +168,7 @@ export const Consultant = () => {
 
       console.log("Payment success");
     } catch (err) {
-      alert(err)
+      alert(err);
       console.log(err);
     }
   };
