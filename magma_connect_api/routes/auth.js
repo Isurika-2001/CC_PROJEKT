@@ -20,6 +20,7 @@ import {
   getConnectedUsers,
   listProducts,
   getProducts,
+  verify,
 } from "../controllers/auth.js";
 
 const router = express.Router();
@@ -44,5 +45,6 @@ router.post("/checkConnectEntr/:username/:currentUsername", checkConnectEntr);
 router.get("/getHiredConsultants/:username", getHiredConsultants);
 router.get("/getConnectedUsers/:username", getConnectedUsers);
 router.get("/getProducts", getProducts);
+router.post("/verify", verify);
 
 export default router;

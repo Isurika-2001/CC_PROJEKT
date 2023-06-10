@@ -1,12 +1,45 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 import {
   registerValidation,
   switchValidation,
   updateValidation,
 } from "./validation.js";
+
+const transporter = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "cd258f01e65898",
+    pass: "47e7f4c95fa55d",
+  },
+});
+
+function generateRandomCode() {
+  // Generate a random code here (e.g., using a library like 'crypto-random-string')
+  // For simplicity, let's assume the code is a six-digit number
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+function sendConfirmationEmail(userEmail, code) {
+  const mailOptions = {
+    from: "empowerlanka@gmail.com",
+    to: userEmail,
+    subject: "Account Confirmation",
+    text: `Thank you for registering! Your verification code is: ${code}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log("Error sending confirmation email:", error);
+    } else {
+      console.log("Confirmation email sent:", info.response);
+    }
+  });
+}
 
 export const register = (req, res) => {
   // check queries
@@ -106,21 +139,27 @@ export const register = (req, res) => {
     }
 
     if (values.roll === "customer") {
-      const sql = "UPDATE users SET reg_status = 1 WHERE username = ?";
+      const sql2 = "UPDATE users SET code = ? WHERE username = ?";
+      const verificationCode = generateRandomCode();
       db.query(q, [Object.values(values)], (err, data) => {
         if (err) {
           return res.status(500).json("Error while saving user!");
         }
-        db.query(sql, values.username, (err, result) => {
+        sendConfirmationEmail(values.email, verificationCode);
+
+        if (err) throw err;
+        db.query(sql2, [verificationCode, values.username], (err, result) => {
           if (err) throw err;
           res.status(200).json({
-            message: "Customer added successfully and user has been approved.",
+            message: "Customer added successfully for verification.",
           });
         });
       });
     }
 
     if (values.roll === "startup") {
+      const verificationCode = generateRandomCode();
+      const sql2 = "UPDATE users SET code = ? WHERE username = ?";
       db.query(check.nic, startupValues.nic, (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length) {
@@ -141,9 +180,17 @@ export const register = (req, res) => {
                     .status(500)
                     .json("Error while saving startup data!");
                 }
-                return res
-                  .status(200)
-                  .json("User added to startup table successfully");
+                sendConfirmationEmail(values.email, verificationCode);
+                db.query(
+                  sql2,
+                  [verificationCode, values.username],
+                  (err, result) => {
+                    if (err) throw err;
+                    res.status(200).json({
+                      message: "user added successfully for verification.",
+                    });
+                  }
+                );
               }
             );
           });
@@ -152,6 +199,8 @@ export const register = (req, res) => {
     }
 
     if (values.roll === "existing") {
+      const verificationCode = generateRandomCode();
+      const sql2 = "UPDATE users SET code = ? WHERE username = ?";
       db.query(check.regNo, businessValues.regNo, (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length) {
@@ -183,8 +232,17 @@ export const register = (req, res) => {
                       .status(500)
                       .json("Error while saving business data!");
                   }
-
-                  return res.status(200).json("User added successfully");
+                  sendConfirmationEmail(values.email, verificationCode);
+                  db.query(
+                    sql2,
+                    [verificationCode, values.username],
+                    (err, result) => {
+                      if (err) throw err;
+                      res.status(200).json({
+                        message: "user added successfully for verification.",
+                      });
+                    }
+                  );
                 });
               }
             );
@@ -194,6 +252,8 @@ export const register = (req, res) => {
     }
 
     if (values.roll === "distributor") {
+      const verificationCode = generateRandomCode();
+      const sql2 = "UPDATE users SET code = ? WHERE username = ?";
       db.query(check.driveLicNo, distributorValues.driveLicNo, (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length) {
@@ -225,8 +285,17 @@ export const register = (req, res) => {
                       .status(500)
                       .json("Error while saving vehihcle data!");
                   }
-
-                  return res.status(200).json("User added successfully");
+                  sendConfirmationEmail(values.email, verificationCode);
+                  db.query(
+                    sql2,
+                    [verificationCode, values.username],
+                    (err, result) => {
+                      if (err) throw err;
+                      res.status(200).json({
+                        message: "user added successfully for verification.",
+                      });
+                    }
+                  );
                 });
               }
             );
@@ -236,6 +305,8 @@ export const register = (req, res) => {
     }
 
     if (values.roll === "consultant") {
+      const verificationCode = generateRandomCode();
+      const sql2 = "UPDATE users SET code = ? WHERE username = ?";
       // run insert queries
       db.query(q, [Object.values(values)], (err, data) => {
         if (err) {
@@ -251,9 +322,53 @@ export const register = (req, res) => {
                 .status(500)
                 .json("Error while saving consultant data!");
             }
-            return res.status(200).json("User added successfully");
+            sendConfirmationEmail(values.email, verificationCode);
+            db.query(
+              sql2,
+              [verificationCode, values.username],
+              (err, result) => {
+                if (err) throw err;
+                res.status(200).json({
+                  message: "user added successfully for verification.",
+                });
+              }
+            );
           }
         );
+      });
+    }
+  });
+};
+
+export const verify = (req, res) => {
+  const { username, code } = req.body;
+  const sql = "SELECT * FROM users WHERE username = ?";
+  const sql2 = "UPDATE users SET reg_status = 1 WHERE username = ?";
+  db.query(sql, username, (err, result) => {
+    if (err) throw err;
+    if (result.length) {
+      const user = result[0];
+      if (user.code === code) {
+        if (user.role === "customer") {
+          db.query(sql2, username, (err, result) => {
+            if (err) throw err;
+            res.status(200).json({
+              message: "User has been approved.",
+            });
+          });
+        } else {
+          res.status(200).json({
+            message: "User has been approved.",
+          });
+        }
+      } else {
+        res.status(400).json({
+          message: "Invalid code.",
+        });
+      }
+    } else {
+      res.status(400).json({
+        message: "User not found.",
       });
     }
   });
@@ -559,7 +674,8 @@ export const connectEntr = (req, res) => {
 };
 
 function generateRoomCode(length) {
-  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let code = "";
   for (let i = 0; i < length; i++) {
     let randomIndex = Math.floor(Math.random() * characters.length);
@@ -567,7 +683,6 @@ function generateRoomCode(length) {
   }
   return code;
 }
-
 
 export const getConnectedUsers = (req, res) => {
   const selectAll =
@@ -609,15 +724,20 @@ export const getHiredConsultants = (req, res) => {
   });
 };
 
-
-
-
 export const listProducts = (req, res) => {
-  const insert2 = "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`) VALUES (?)";
+  const insert2 =
+    "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`) VALUES (?)";
   const username = req.params;
   console.log(username);
 
-  const values = [req.body.name, req.body.category, req.body.desc, req.body.imageurl, req.body.price, req.body.quantity];
+  const values = [
+    req.body.name,
+    req.body.category,
+    req.body.desc,
+    req.body.imageurl,
+    req.body.price,
+    req.body.quantity,
+  ];
 
   console.log(values);
 
@@ -632,9 +752,7 @@ export const listProducts = (req, res) => {
   });
 };
 
-
-export const getProducts =(req, res) => {
-  
+export const getProducts = (req, res) => {
   const q = "SELECT * FROM product_table";
   db.query(q, (err, data) => {
     if (err) {
@@ -644,4 +762,3 @@ export const getProducts =(req, res) => {
     return res.json(data);
   });
 };
-
