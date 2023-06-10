@@ -81,7 +81,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
-
+  
       Swal.fire({
         title: "Enter your verification code that you received via email",
         input: "text",
@@ -100,7 +100,7 @@ const Register = () => {
                 code: code,
               }
             );
-
+  
             if (response.data.message === "User has been approved.") {
               Swal.fire({
                 title: "Verification Successful",
@@ -125,13 +125,14 @@ const Register = () => {
             Swal.showValidationMessage(`Request failed: ${error}`);
           }
         },
-        allowOutsideClick: () => !Swal.isLoading(),
+        allowOutsideClick: false, // Disable outside click to close the dialog
       });
       resetInputs();
     } catch (err) {
       setErr(err.response.data);
     }
   };
+  
 
   console.log(err);
 

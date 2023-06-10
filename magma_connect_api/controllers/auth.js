@@ -344,13 +344,14 @@ export const verify = (req, res) => {
   const { username, code } = req.body;
   const sql = "SELECT * FROM users WHERE username = ?";
   const sql2 = "UPDATE users SET reg_status = 1 WHERE username = ?";
+  
   db.query(sql, username, (err, result) => {
     if (err) throw err;
     if (result.length) {
       const user = result[0];
       if (user.code === code) {
-        if (user.role === "customer") {
-          db.query(sql2, username, (err, result) => {
+        if (user.roll === "customer") {
+          db.query(sql2, username, (err, result2) => {
             if (err) throw err;
             res.status(200).json({
               message: "User has been approved.",
@@ -373,6 +374,7 @@ export const verify = (req, res) => {
     }
   });
 };
+
 
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE username = ?";
