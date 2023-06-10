@@ -735,6 +735,16 @@ export const getConnectedUsers = (req, res) => {
   });
 };
 
+export const getPaidConsultants = (req, res) => {
+  const selectPaidConsultants = 
+  "SELECT const_id from consultation_payment where username = ? ;";
+  const username = req.params.username;
+  db.query(selectPaidConsultants, [username], (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
 export const checkConnectEntr = (req, res) => {
   const select =
     "SELECT * FROM connect WHERE (entre1 = ? AND entre2 = ?) OR (entre1 = ? AND entre2 = ?)";

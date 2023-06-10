@@ -1,11 +1,13 @@
 @import "../../style.scss";
 
+
 .Home {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 1px;
   padding-left: 10px;
+  
 
   .searchBar {
     width: 100%;
@@ -65,14 +67,24 @@
             }
           }
 
-          .connectBtn{
+          .connectBtn {
             color: black;
             background-color: #5271ff;
+          }
+          .connectBtn.connected {
+            background-color: gray;
+            cursor: not-allowed;
+            opacity: 0.5;
           }
 
           .btnHire {
             color: black;
             background-color: #5271ff;
+          }
+          .btnHired {
+            background-color: gray;
+            cursor: not-allowed;
+            opacity: 0.5;
           }
         }
 
