@@ -65,6 +65,10 @@ export const registerValidation = (data) => {
       is: "consultant",
       then: Joi.string().max(256).required(),
     }),
+    type: Joi.when("roll", {
+      is: "consultant",
+      then: Joi.string().required(),
+    }),
 
     // distributor validations
     driveLicNo: Joi.when("roll", {
