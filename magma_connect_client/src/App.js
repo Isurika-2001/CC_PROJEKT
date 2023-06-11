@@ -28,6 +28,7 @@ import {
   ListProducts,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
+import { Blog } from "./components/blog/Blog";
 import { Profile } from "./pages/profile/Profile";
 import "./style.scss";
 import { useContext } from "react";
@@ -120,6 +121,10 @@ function App() {
         {
           path: "/",
           element: currentUser ? <Home /> : <Welcome />,
+        },
+        {
+          path: "/blog",
+          element: currentUser ? <Blog /> : <Welcome />,
         },
 
         {
