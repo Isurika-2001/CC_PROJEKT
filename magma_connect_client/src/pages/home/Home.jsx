@@ -1,5 +1,3 @@
-import Posts from "../../components/posts/Posts";
-import Share from "../../components/share/Share";
 import { Payment } from "../../components/payment/payment";
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur";
 import { GetCustomers } from "../../components/search/consultant";
@@ -17,7 +15,14 @@ import "./home.scss";
 export const Home = () => {
   return (
     <div className="home">
-      <h1> Home </h1>
+      <div className="welcome-page">
+      <h1 className="welcome-heading">
+        <span className="welcome-text">Welcome back, user!</span>
+      </h1>
+      <p className="platform-description">
+         Simply click on the left bar menu to get started.
+      </p>
+    </div>
     </div>
   );
 };
