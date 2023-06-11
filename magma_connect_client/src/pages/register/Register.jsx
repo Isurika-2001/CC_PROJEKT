@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import Swal from "sweetalert2";
 
 import { Link } from "react-router-dom";
 import "./register.scss";
@@ -80,19 +81,58 @@ const Register = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
+  
+      Swal.fire({
+        title: "Enter your verification code that you received via email",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Verify",
+        showLoaderOnConfirm: true,
+        preConfirm: async (code) => {
+          try {
+            const response = await axios.post(
+              "http://localhost:8800/api/auth/verify",
+              {
+                username: inputs.username,
+                code: code,
+              }
+            );
+  
+            if (response.data.message === "User has been approved.") {
+              Swal.fire({
+                title: "Verification Successful",
+                text: response.data.message,
+                icon: "success",
+              });
+              if (inputs.roll === "customer") {
+                navigate("/login");
+              } else {
+                setErr(
+                  "Successfully submitted. Please wait for the approval. It will take 24 hours to process your data."
+                );
+              }
+            } else {
+              Swal.fire({
+                title: "Verification Failed",
+                text: response.data.message,
+                icon: "error",
+              });
+            }
+          } catch (error) {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          }
+        },
+        allowOutsideClick: false, // Disable outside click to close the dialog
+      });
       resetInputs();
-      if (inputs.roll === "customer") {
-        await login(inputs);
-        navigate("/");
-      } else {
-        setErr(
-          "Successfully submitted. Please wait for the approval. It will takes 24 hours to process your data"
-        );
-      }
     } catch (err) {
       setErr(err.response.data);
     }
   };
+  
 
   console.log(err);
 
