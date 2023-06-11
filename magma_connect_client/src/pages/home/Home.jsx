@@ -1,5 +1,3 @@
-import Posts from "../../components/posts/Posts";
-import Share from "../../components/share/Share";
 import { Payment } from "../../components/payment/payment";
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur";
 import { GetCustomers } from "../../components/search/consultant";
