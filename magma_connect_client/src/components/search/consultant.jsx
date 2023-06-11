@@ -8,8 +8,6 @@ export const GetCustomers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { currentUser } = useContext(AuthContext);
 
-  
-
   useEffect(() => {
     // Fetch all users with registration status = 1 from the backend API
     const thisUser = currentUser.username

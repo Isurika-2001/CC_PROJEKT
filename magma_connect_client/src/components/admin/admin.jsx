@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import "./admin.scss";
 
 export const UserRequests = () => {
@@ -22,28 +23,51 @@ export const StartupRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (username) => {
+  const handleApprove = (username, email) => {
     // Update the user's registration status to 1
-    axios
-      .put(`http://localhost:8800/api/admins/approveRequests/${username}`)
-      .then((res) => {
-        console.log(res.data.message);
-        // Remove the user from the list
-        setUsers(users.filter((user) => user.username !== username));
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Do you want to approve this request?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Approve",
+      denyButtonText: `Don't Approve`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      axios
+        .put(
+          `http://localhost:8800/api/admins/approveRequests/${username}/${email}`
+        )
+        .then((res) => {
+          console.log(res.data.message);
+          // Remove the user from the list
+          setUsers(users.filter((user) => user.username !== username));
+        })
+        .catch((err) => console.log(err));
+      if (result.isConfirmed) {
+        Swal.fire("Approved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Request is not approved", "", "info");
+      }
+    });
   };
 
-  const handleDecline = (username) => {
+  const handleDecline = (username, email) => {
     // Check if a comment has been entered
     if (!comments[username]) {
-      alert("Please enter a comment before declining the request.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a comment before declining the request.!",
+      });
       return;
     }
+
+    console.log(comments);
 
     // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        email: email,
         comment: comments[username],
         username: username,
       })
@@ -77,13 +101,14 @@ export const StartupRequests = () => {
               <div className="right">
                 <button
                   className="approveBtn"
-                  onClick={() => handleApprove(user.username)}
+                  onClick={() => handleApprove(user.username, user.email)}
                 >
                   Approve
                 </button>
+
                 <button
                   className="declineBtn"
-                  onClick={() => handleDecline(user.username)}
+                  onClick={() => handleDecline(user.username, user.email)}
                 >
                   Decline
                 </button>
@@ -146,30 +171,50 @@ export const EntreprenureRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (username, reg_no) => {
+  const handleApprove = (username, reg_no, email) => {
     // Update the user's registration status to 1
-    axios
-      .put(
-        `http://localhost:8800/api/admins/approveRequests/${username}/${reg_no}`
-      )
-      .then((res) => {
-        console.log(reg_no);
-        console.log(res.data.message);
-        // Remove the user from the list
-        setUsers(users.filter((user) => user.username !== username));
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Do you want to approve this request?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Approve",
+      denyButtonText: `Don't Approve`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      axios
+        .put(
+          `http://localhost:8800/api/admins/approveRequests/${username}/${reg_no}/${email}`
+        )
+        .then((res) => {
+          console.log(reg_no);
+          console.log(res.data.message);
+          // Remove the user from the list
+          setUsers(users.filter((user) => user.username !== username));
+        })
+        .catch((err) => console.log(err));
+      if (result.isConfirmed) {
+        Swal.fire("Approved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Request is not approved", "", "info");
+      }
+    });
+    console.log(email);
   };
 
-  const handleDecline = (username) => {
+  const handleDecline = (username, email) => {
     // Check if a comment has been entered
     if (!comments[username]) {
-      alert("Please enter a comment before declining the request.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a comment before declining the request.!",
+      });
       return;
     }
     // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        email: email,
         comment: comments[username],
         username: username,
       })
@@ -203,13 +248,15 @@ export const EntreprenureRequests = () => {
               <div className="right">
                 <button
                   className="approveBtn"
-                  onClick={() => handleApprove(user.username, user.reg_no)}
+                  onClick={() =>
+                    handleApprove(user.username, user.reg_no, user.email)
+                  }
                 >
                   Approve
                 </button>
                 <button
                   className="declineBtn"
-                  onClick={() => handleDecline(user.username)}
+                  onClick={() => handleDecline(user.username, user.email)}
                 >
                   Decline
                 </button>
@@ -276,28 +323,49 @@ export const ConsultantRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (username) => {
+  const handleApprove = (username, email) => {
     // Update the user's registration status to 1
-    axios
-      .put(`http://localhost:8800/api/admins/approveRequests/${username}`)
-      .then((res) => {
-        console.log(res.data.message);
-        // Remove the user from the list
-        setUsers(users.filter((user) => user.username !== username));
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Do you want to approve this request?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Approve",
+      denyButtonText: `Don't Approve`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios
+          .put(
+            `http://localhost:8800/api/admins/approveRequests/${username}/${email}`
+          )
+          .then((res) => {
+            console.log(res.data.message);
+            // Remove the user from the list
+            setUsers(users.filter((user) => user.username !== username));
+          })
+          .catch((err) => console.log(err));
+        Swal.fire("Approved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Request is not approved", "", "info");
+      }
+    });
   };
 
-  const handleDecline = (username) => {
+  const handleDecline = (username, email) => {
     // Check if a comment has been entered
     if (!comments[username]) {
-      alert("Please enter a comment before declining the request.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a comment before declining the request.!",
+      });
       return;
     }
 
     // Add comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        email: email,
         comment: comments[username],
         username: username,
       })
@@ -331,13 +399,13 @@ export const ConsultantRequests = () => {
               <div className="right">
                 <button
                   className="approveBtn"
-                  onClick={() => handleApprove(user.username)}
+                  onClick={() => handleApprove(user.username, user.email)}
                 >
                   Approve
                 </button>
                 <button
                   className="declineBtn"
-                  onClick={() => handleDecline(user.username)}
+                  onClick={() => handleDecline(user.username, user.email)}
                 >
                   Decline
                 </button>
@@ -404,28 +472,49 @@ export const DistributorRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (username) => {
+  const handleApprove = (username, email) => {
     // Update the user's registration status to 1
-    axios
-      .put(`http://localhost:8800/api/admins/approveRequests/${username}`)
-      .then((res) => {
-        console.log(res.data.message);
-        // Remove the user from the list
-        setUsers(users.filter((user) => user.username !== username));
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Do you want to approve this request?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Approve",
+      denyButtonText: `Don't Approve`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios
+          .put(
+            `http://localhost:8800/api/admins/approveRequests/${username}/${email}`
+          )
+          .then((res) => {
+            console.log(res.data.message);
+            // Remove the user from the list
+            setUsers(users.filter((user) => user.username !== username));
+          })
+          .catch((err) => console.log(err));
+        Swal.fire("Approved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Request is not approved", "", "info");
+      }
+    });
   };
 
-  const handleDecline = (username) => {
+  const handleDecline = (username, email) => {
     // Check if a comment has been entered
     if (!comments[username]) {
-      alert("Please enter a comment before declining the request.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a comment before declining the request.!",
+      });
       return;
     }
 
     // Add a comment to the user's registration request
     axios
       .put(`http://localhost:8800/api/admins/declineRequests/${username}`, {
+        email: email,
         comment: comments[username],
         username: username,
       })
@@ -459,13 +548,13 @@ export const DistributorRequests = () => {
               <div className="right">
                 <button
                   className="approveBtn"
-                  onClick={() => handleApprove(user.username)}
+                  onClick={() => handleApprove(user.username, user.email)}
                 >
                   Approve
                 </button>
                 <button
                   className="declineBtn"
-                  onClick={() => handleDecline(user.username)}
+                  onClick={() => handleDecline(user.username, user.email)}
                 >
                   Decline
                 </button>
@@ -528,38 +617,52 @@ export const SwitchAccountRequests = () => {
       .catch((err) => console.log(err));
   }, []);
 
-
   const handleApprove = (
     username,
     category,
     business_name,
     address,
-    reg_no
+    reg_no,
+    email
   ) => {
-  
     // Update the user's registration status to 1
-    axios
-      .put(
-        `http://localhost:8800/api/admins/approveSwitchRequests/${username}/${category}/${business_name}/${address}/${reg_no}`
-      )
-      .then((res) => {
-        console.log(reg_no);
-        console.log(res.data.message);
-        // Remove the user from the list
-        setUsers(users.filter((user) => user.username !== username));
-  
-        localStorage.removeItem('user');
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Do you want to approve this request?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Approve",
+      denyButtonText: `Don't Approve`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios
+          .put(
+            `http://localhost:8800/api/admins/approveSwitchRequests/${username}/${category}/${business_name}/${address}/${reg_no}/${email}`
+          )
+          .then((res) => {
+            console.log(reg_no);
+            console.log(res.data.message);
+            // Remove the user from the list
+            setUsers(users.filter((user) => user.username !== username));
+
+            localStorage.removeItem("user");
+          })
+          .catch((err) => console.log(err));
+        Swal.fire("Approved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Request is not approved", "", "info");
+      }
+    });
   };
 
-
-
-
-  const handleDecline = (username) => {
+  const handleDecline = (username, email) => {
     // Check if a comment has been entered
     if (!comments[username]) {
-      alert("Please enter a comment before declining the request.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a comment before declining the request.!",
+      });
       return;
     }
     // Add comment to the user's registration request
@@ -567,6 +670,7 @@ export const SwitchAccountRequests = () => {
       .put(
         `http://localhost:8800/api/admins/declineSwitchRequests/${username}`,
         {
+          email: email,
           comment: comments[username],
           username: username,
         }
@@ -607,7 +711,8 @@ export const SwitchAccountRequests = () => {
                       user.category,
                       user.business_name,
                       user.address,
-                      user.reg_no
+                      user.reg_no,
+                      user.email
                     )
                   }
                 >
@@ -615,7 +720,7 @@ export const SwitchAccountRequests = () => {
                 </button>
                 <button
                   className="declineBtn"
-                  onClick={() => handleDecline(user.username)}
+                  onClick={() => handleDecline(user.username, user.email)}
                 >
                   Decline
                 </button>
