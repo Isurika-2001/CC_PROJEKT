@@ -105,7 +105,7 @@ function sendDeclineEmail(userEmail, comment) {
           <div class="container">
             <h1>Your account has been declined</h1>
             <p>Dear customer!</p>
-            <p>Sorry! Your account has been declined regarding to the bellow issue</p><br><br>
+            <p>Sorry! Your account has been declined due to the issue below</p><br><br>
             <p>${comment}</p><br><br>
             <p>Thank you</p>
             <p>Empower Lanka</p>
@@ -163,7 +163,7 @@ function sendSwitchConfirmationEmail(userEmail) {
           <div class="container">
             <h1>Switch account confirmation</h1>
             <p>Hello!</p>
-            <p>Congratulations! You are now a member of entreprenur community of Empower Lanka.</p>
+            <p>Congratulations! You are now a member of the entreprenur community of Empower Lanka.</p>
             <p>Please visit and relogin to our website to explore your new features</p><br><br>
             <p>Thank you</p>
             <p>Empower Lanka</p>
@@ -221,7 +221,7 @@ function sendSwitchDeclineEmail(userEmail, comment) {
           <div class="container">
             <h1>Your switch request has been declined</h1>
             <p>Dear customer!</p>
-            <p>Sorry! Your account switch request has been declined regarding to the bellow issue</p><br><br>
+            <p>Sorry! Your account switch request has been declined due to the issue below</p><br><br>
             <p>${comment}</p><br><br>
             <p>Thank you</p>
             <p>Empower Lanka</p>
