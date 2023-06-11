@@ -54,7 +54,7 @@ export const DeleteProduct = () => {
   
 
   return (
-    <div className="form-wrapper">
+    <div className="unlist-products ">
     <h2>Your Listed Products</h2>
     <table>
       <thead>
