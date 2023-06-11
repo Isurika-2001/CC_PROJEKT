@@ -62,6 +62,12 @@ export const LeftBarEntre = () => {
             <span>List Products</span>
             </NavLink>
           </div>
+          <div className="item">
+            <img src={ListProd} alt="" />
+            <NavLink activeClassName="active" to="/deleteproducts">
+            <span>Delete Products</span>
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>

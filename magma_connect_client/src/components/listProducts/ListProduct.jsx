@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
+import Swal from "sweetalert2";
 import "./listProduct.scss"
 export const ListProduct = () => {
   const [inputs, setInputs] = useState({
@@ -46,14 +47,27 @@ export const ListProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
-
       await axios.post(`http://localhost:8800/api/auth/listproduct/${username}`,inputs);
       resetInputs();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Product/Service added successfully',
+      });
     } catch (err) {
-      // Handle error
+      if (err.response && err.response.data) {
+        const errorMessages = Array.isArray(err.response.data) ? err.response.data : [err.response.data];
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessages.join("\n"),
+        });
+      } else {
+        console.log(err);
+      }
     }
   };
+  
 
   return (
     <div className="form-wrapper">
@@ -67,7 +81,6 @@ export const ListProduct = () => {
             name="name"
             value={inputs.name}
             onChange={handleInputChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -78,6 +91,7 @@ export const ListProduct = () => {
             value={inputs.category}
             onChange={handleInputChange}
           >
+            <option value="">Select Category</option>
             <option value="electronics">Electronics</option>
             <option value="clothing">Clothing & Accessories</option>
             <option value="beauty">Home & Kitchen</option>
@@ -97,7 +111,6 @@ export const ListProduct = () => {
             rows="5"
             value={inputs.desc}
             onChange={handleInputChange}
-            required
           ></textarea>
         </div>
         
@@ -109,7 +122,6 @@ export const ListProduct = () => {
             name="imageurl"
             value={inputs.imageurl}
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -121,7 +133,6 @@ export const ListProduct = () => {
             name="price"
             value={inputs.price}
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -133,7 +144,6 @@ export const ListProduct = () => {
             name="quantity"
             value={inputs.quantity}
             onChange={handleInputChange}
-            required
           />
         </div>
 

@@ -7,6 +7,7 @@ import {
   registerValidation,
   switchValidation,
   updateValidation,
+  validateValues,
 } from "./validation.js";
 
 const transporter = nodemailer.createTransport({
@@ -737,8 +738,8 @@ export const getConnectedUsers = (req, res) => {
 };
 
 export const getPaidConsultants = (req, res) => {
-  const selectPaidConsultants = 
-  "SELECT const_id from consultation_payment where username = ? ;";
+  const selectPaidConsultants =
+    "SELECT const_id from consultation_payment where username = ? ;";
   const username = req.params.username;
   db.query(selectPaidConsultants, [username], (err, result) => {
     if (err) throw err;
@@ -778,9 +779,9 @@ export const getHiredConsultants = (req, res) => {
 
 export const listProducts = (req, res) => {
   const insert2 =
-    "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`) VALUES (?)";
-  const username = req.params;
-  console.log(username);
+    "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`,`username`) VALUES (?)";
+    const username = req.params.username;
+    console.log(username);
 
   const values = [
     req.body.name,
@@ -789,19 +790,23 @@ export const listProducts = (req, res) => {
     req.body.imageurl,
     req.body.price,
     req.body.quantity,
+    req.params.username,
   ];
 
-  console.log(values);
+  const error = validateValues(req.body);
+  if (error) {
+    return res.status(400).send(error);
+  } else {
+    console.log(values);
 
-  db.query(insert2, [values], (err, data) => {
-    if (err) return res.status(500).json(err);
-    if (data.length) {
-      return res.status(400).json("error!");
-    }
-
-    // If the query is successful and there is no error, send a success response
-    return res.status(200).json("Success!");
-  });
+    db.query(insert2, [values], (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.length) {
+        return res.status(400).json("error!");
+      }
+      return res.status(200).json("Success!");
+    });
+  }
 };
 
 export const getProducts = (req, res) => {
@@ -812,5 +817,34 @@ export const getProducts = (req, res) => {
       return res.json(err);
     }
     return res.json(data);
+  });
+};
+
+export const getEntrProducts = (req, res) => {
+  const username = req.params.username;
+  console.log(username);
+  const query = 'SELECT * FROM product_table WHERE username = ?';
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      res.status(500).json({ error: 'Failed to fetch products' });
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const deleteProduct = (req, res) => {
+  const { productId } = req.params;
+  const query = 'DELETE FROM product_table WHERE id = ?';
+  db.query(query, [productId], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      res.status(500).json({ error: 'Failed to delete product' });
+    } else if (results.affectedRows === 0) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      res.sendStatus(204); // Success, no content
+    }
   });
 };

@@ -119,3 +119,38 @@ export const updateValidation = (data) => {
 
   return schema.validate(data);
 };
+
+export const validateValues = (values) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    category: Joi.string().valid(
+      'electronics',
+      'clothing',
+      'beauty',
+      'Beauty & Personal Care',
+      'Sports & Fitness',
+      'Books & Stationery',
+      'Toys & Games',
+      'Health & Wellness',
+      'Automotive'
+    ).required(),
+    desc: Joi.string().min(10).required(),
+    imageurl: Joi.string().required(),
+    price: Joi.number().required(),
+    quantity: Joi.number().min(6).required(),
+  });
+
+  const { error } = schema.validate(values);
+
+  if (error) {
+    return error.details[0].message;
+  }
+
+  return null; // Return null if there are no validation errors
+};
+
+
+
+
+
+

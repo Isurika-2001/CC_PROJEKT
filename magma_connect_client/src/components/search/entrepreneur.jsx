@@ -195,7 +195,7 @@ export const Consultant = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: {err},
+        text: { err },
       });
       console.log(err);
     }
