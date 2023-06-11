@@ -777,9 +777,9 @@ export const getHiredConsultants = (req, res) => {
 
 export const listProducts = (req, res) => {
   const insert2 =
-    "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`) VALUES (?)";
-  const username = req.params;
-  console.log(username);
+    "INSERT INTO product_table (`name`,`category`,`desc`,`imageurl`,`price`,`quantity`,`username`) VALUES (?)";
+    const username = req.params.username;
+    console.log(username);
 
   const values = [
     req.body.name,
@@ -788,6 +788,7 @@ export const listProducts = (req, res) => {
     req.body.imageurl,
     req.body.price,
     req.body.quantity,
+    req.params.username,
   ];
 
   console.log(values);
@@ -811,5 +812,34 @@ export const getProducts = (req, res) => {
       return res.json(err);
     }
     return res.json(data);
+  });
+};
+
+export const getEntrProducts = (req, res) => {
+  const username = req.params.username;
+  console.log(username);
+  const query = 'SELECT * FROM product_table WHERE username = ?';
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      res.status(500).json({ error: 'Failed to fetch products' });
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const deleteProduct = (req, res) => {
+  const { productId } = req.params;
+  const query = 'DELETE FROM product_table WHERE id = ?';
+  db.query(query, [productId], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      res.status(500).json({ error: 'Failed to delete product' });
+    } else if (results.affectedRows === 0) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      res.sendStatus(204); // Success, no content
+    }
   });
 };

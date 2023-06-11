@@ -47,7 +47,6 @@ export const ListProduct = () => {
     e.preventDefault();
     try {
       
-
       await axios.post(`http://localhost:8800/api/auth/listproduct/${username}`,inputs);
       resetInputs();
     } catch (err) {

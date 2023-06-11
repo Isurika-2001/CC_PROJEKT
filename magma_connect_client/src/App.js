@@ -26,6 +26,7 @@ import {
   PaymentP,
   Consultations,
   ListProducts,
+  DeleteProducts,
 } from "./pages/home/Home";
 import Welcome from "./pages/welcome/welcome";
 import { Blog } from "./components/blog/Blog";
@@ -175,6 +176,17 @@ function App() {
           element:
             currentUser && currentUser.roll === "existing" ? (
               <ListProducts />
+            ) : !currentUser ? (
+              <Welcome />
+            ) : (
+              <Home />
+            ),
+        },
+        {
+          path: "/deleteproducts",
+          element:
+            currentUser && currentUser.roll === "existing" ? (
+              <DeleteProducts />
             ) : !currentUser ? (
               <Welcome />
             ) : (

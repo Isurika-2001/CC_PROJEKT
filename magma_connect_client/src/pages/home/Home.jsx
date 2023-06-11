@@ -2,6 +2,8 @@ import { Payment } from "../../components/payment/payment";
 import { Entrepreneur, Consultant } from "../../components/search/entrepreneur";
 import { GetCustomers } from "../../components/search/consultant";
 import { ListProduct } from "../../components/listProducts/ListProduct";
+import { DeleteProduct } from "../../components/deleteProducts/DeleteProducts";
+
 import {
   UserRequests,
   StartupRequests,
@@ -115,3 +117,12 @@ export const ListProducts = () => {
     </div>
   );
 };
+
+
+export const DeleteProducts = () => {
+  return (
+    <div className="home">
+    <DeleteProduct/>
+  </div>
+  );
+}

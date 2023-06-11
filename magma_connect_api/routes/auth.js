@@ -22,6 +22,8 @@ import {
   getProducts,
   verify,
   getPaidConsultants,
+  getEntrProducts,
+  deleteProduct,
 } from "../controllers/auth.js";
 
 const router = express.Router();
@@ -48,5 +50,8 @@ router.get("/getConnectedUsers/:username", getConnectedUsers);
 router.get("/getProducts", getProducts);
 router.post("/verify", verify);
 router.get("/getPaidConsultants/:username", getPaidConsultants);
+
+router.delete("/deleteProduct/:productId", deleteProduct);
+router.get("/getEntrProducts/:username", getEntrProducts);
 
 export default router;
