@@ -23,7 +23,6 @@ const Register = () => {
     address: "",
     qualification: "",
     consultationFee: "",
-    type: "",
     driveLicNo: "",
     vehicleType: "",
     vehicleNo: "",
@@ -399,22 +398,6 @@ const Register = () => {
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                 />
-                <select
-                    name="type"
-                    value={inputs.type}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                  >
-                    <option value="">Select Category</option>
-                    <option value="management">Management</option>
-                    <option value="strategy">Strategy</option>
-                    <option value="human resource">human resource</option>
-                    <option value="financial advisory">financial advisory</option>
-                    <option value="IT/tech">IT/tech</option>
-                    <option value="non-profit">non-profit</option>
-                    <option value="sales consultants">sales consultants</option>
-                  </select>
                 <input
                   type="text"
                   placeholder="Consultation Fee Per Session (LKR)"

@@ -161,18 +161,18 @@ export const Consultant = () => {
       .get("http://localhost:8800/api/auth/getConsultants")
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
-
+  
     // Fetch hired consultants
     axios
-      .get(
-        `http://localhost:8800/api/auth/getPaidConsultants/${currentUser.username}`
-      )
-      .then((res) => {
-        const hiredConsultants = res.data.map((item) => item.const_id);
-        setHiredConsultants(hiredConsultants);
-      })
-      .catch((err) => console.log(err));
+    .get(`http://localhost:8800/api/auth/getPaidConsultants/${currentUser.username}`)
+    .then((res) => {
+      const hiredConsultants = res.data.map((item) => item.const_id);
+      setHiredConsultants(hiredConsultants);
+    })
+    .catch((err) => console.log(err));
   }, []);
+  
+  
 
   const handleToken = async (token, user) => {
     try {
@@ -192,11 +192,7 @@ export const Consultant = () => {
 
       console.log("Payment success");
     } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: { err },
-      });
+      alert( err );
       console.log(err);
     }
   };
@@ -208,13 +204,10 @@ export const Consultant = () => {
   const filteredUsers = users.filter((user) => {
     const name = user.name.toLowerCase();
     const fee = user.fee;
-    const type = user.type.toLowerCase();
     const lowerSearchTerm = searchTerm.toLowerCase();
 
     return (
-      name.includes(lowerSearchTerm) ||
-      fee.toString().includes(lowerSearchTerm) ||
-      type.includes(lowerSearchTerm)
+      name.includes(lowerSearchTerm) || fee.toString().includes(lowerSearchTerm)
     );
   });
 
@@ -229,7 +222,7 @@ export const Consultant = () => {
       </div>
       {filteredUsers.map((user) => {
         const isHired = hiredConsultants.includes(user.username); // Check if the user is a hired consultant
-
+        
         return (
           <div className="request" key={user.username}>
             <div className="container">
@@ -261,10 +254,6 @@ export const Consultant = () => {
               <hr />
               <div className="content">
                 <span>
-                  <span className="label">Category : </span>
-                  <span className="data">{user.type}</span>
-                </span>
-                <span>
                   <span className="label">Qualifications : </span>
                   <span className="data">{user.qualification}</span>
                 </span>
@@ -288,4 +277,5 @@ export const Consultant = () => {
       })}
     </div>
   );
+  
 };

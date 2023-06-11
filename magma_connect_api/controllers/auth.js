@@ -104,7 +104,7 @@ export const register = (req, res) => {
 
     distributor: "INSERT INTO distributor (`username`,`drl_no`) VALUE (?)",
     consultant:
-      "INSERT INTO consultant (`username`,`qualification`,`fee`,`institute`,`experiences`, `type`) VALUE (?)",
+      "INSERT INTO consultant (`username`,`qualification`,`fee`,`institute`,`experiences`) VALUE (?)",
   };
 
   // inner queries
@@ -163,7 +163,6 @@ export const register = (req, res) => {
     consultationFee: req.body.consultationFee,
     institute: req.body.institute,
     experiences: req.body.experiences,
-    type: req.body.type,
   };
 
   // run check queries

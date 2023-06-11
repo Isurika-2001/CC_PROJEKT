@@ -426,10 +426,6 @@ export const ConsultantRequests = () => {
                 <span className="data">{user.address}</span>
               </span>
               <span>
-                <span className="label">Consultation category : </span>
-                <span className="data">{user.type}</span>
-              </span>
-              <span>
                 <span className="label">Qualifications : </span>
                 <span className="data">{user.qualification}</span>
               </span>

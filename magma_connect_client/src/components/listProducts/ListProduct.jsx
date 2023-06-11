@@ -47,8 +47,6 @@ export const ListProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
-
       await axios.post(`http://localhost:8800/api/auth/listproduct/${username}`,inputs);
       resetInputs();
       Swal.fire({

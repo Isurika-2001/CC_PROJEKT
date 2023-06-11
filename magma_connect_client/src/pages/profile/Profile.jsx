@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import ProfilePic from "../../assets/user profile.png";
 import BackgroundPic from "../../assets/background.jpg";
-import Swal from "sweetalert2";
 
 export const Profile = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
@@ -132,46 +131,29 @@ export const Profile = () => {
 
   const handleUpdate = async (e, username) => {
     e.preventDefault();
-    Swal.fire({
-      title: 'Do you want to save the changes?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      denyButtonText: `No`,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.post(
-            `http://localhost:8800/api/auth/updateProfile/${username}`,
-            inputs
-          );
-  
-          const updatedUser = {
-            ...JSON.parse(localStorage.getItem("user")),
-            name: inputs.name,
-            email: inputs.email,
-            address: inputs.paddress,
-            telephone: inputs.telephone,
-          };
-  
-          updateUser(updatedUser);
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          resetInputs();
-  
-          Swal.fire('Updated successfully!', '', 'success');
-        } catch (err) {
-          console.log(err.response.data);
-          setErr(err.response.data);
-          Swal.fire('Error occurred!', err.response.data, 'error');
-        }
-      } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info');
-      }
-    });
+    try {
+      await axios.post(
+        `http://localhost:8800/api/auth/updateProfile/${username}`,
+        inputs
+      );
+
+      const updatedUser = {
+        ...JSON.parse(localStorage.getItem("user")),
+        name: inputs.name,
+        email: inputs.email,
+        address: inputs.paddress,
+        telephone: inputs.telephone,
+      };
+
+      updateUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      alert("Details updated successfully");
+      resetInputs();
+    } catch (err) {
+      console.log(err.response.data);
+      setErr(err.response.data);
+    }
   };
-  
-  
-  
 
   return (
     <div className="profile">
@@ -427,14 +409,6 @@ export const Profile = () => {
                         <input
                           type="text"
                           placeholder={user.experiences}
-                          readOnly
-                        />
-                      </div>
-                      <div className="element">
-                        <span>Consultation category </span>
-                        <input
-                          type="text"
-                          placeholder={user.type}
                           readOnly
                         />
                       </div>
