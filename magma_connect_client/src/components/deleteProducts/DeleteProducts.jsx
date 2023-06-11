@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
 import "./deleteProducts.scss";
+import Swal from 'sweetalert2';
 
 export const DeleteProduct = () => {
   const { currentUser } = useContext(AuthContext);
@@ -22,16 +23,35 @@ export const DeleteProduct = () => {
     fetchProducts();
   }, [username]);
 
+
   const handleDelete = async (productId) => {
     try {
-      // Delete the product with the given ID
-      await axios.delete(`http://localhost:8800/api/auth/deleteProduct/${productId}`);
-      // Remove the deleted product from the state
-      setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
+      // Show a sweet alert to confirm the deletion
+      const result = await Swal.fire({
+        title: 'Confirmation',
+        text: 'Do you want to unlist this product?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, unlist it!',
+        cancelButtonText: 'Cancel'
+      });
+  
+      if (result.isConfirmed) {
+        // Delete the product with the given ID
+        await axios.delete(`http://localhost:8800/api/auth/deleteProduct/${productId}`);
+        // Remove the deleted product from the state
+        setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
+  
+        // Show a success sweet alert
+        Swal.fire('Unlisted!', 'The product has been successfully unlisted.', 'success');
+      }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <div className="form-wrapper">
