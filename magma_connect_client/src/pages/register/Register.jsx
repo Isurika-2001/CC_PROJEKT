@@ -117,7 +117,7 @@ const Register = () => {
             } else {
               Swal.fire({
                 title: "Verification Failed",
-                text: response.data.message,
+                text: "Your email verified successfully.",
                 icon: "error",
               });
             }
