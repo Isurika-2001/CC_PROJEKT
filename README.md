@@ -1,4 +1,4 @@
-# 🌟 Magma Connect - All-in-One Platform for Entrepreneurs
+# 🌟 Empower Lanka - Platform for entrepreneurs
 Magma Connect is a dynamic web-based platform designed specifically for startup entrepreneurs to enhance their business ideas and connect with experts. This platform facilitates the hiring of consultants by providing clear guidelines on selecting the right consultants based on specific issues.
 
 ## 🚀 Key Features:
